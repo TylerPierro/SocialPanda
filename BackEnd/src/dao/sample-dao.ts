@@ -8,15 +8,7 @@ const awsConfig: ConfigurationOptions = {
 aws.config.update(awsConfig);
 // const dynamodb = new aws.DynamoDB();
 const docClient = new aws.DynamoDB.DocumentClient(); // subset of functionality of dynamodb
-// const group1 = {
-//     Location: "Tampa",
-//     Tag: "Night Life",
-//     message: {
-//         user: "Tyler",
-//         box: "I made the group.",
-//         time: "6/15/18"
-//     }
-// }
+
 var params = {
     TableName : 'Messages',
     Item: {
@@ -29,6 +21,14 @@ var params = {
         }
   }
 }
+
+var groups = {
+  TableName : 'Groups',
+  Item: {
+      Location_Tag: "Tampa-NightLyfe",
+      Users: "Tyler",
+  }
+}
 // function createGroup(group) {
 //     console.log(group)
 //   return docClient.put({
@@ -36,6 +36,11 @@ var params = {
 //     Item: group
 //   })
 // }
+
+docClient.put(groups, function(err, data) {
+  if (err) console.log(err);
+  else console.log(data);
+});
 
 docClient.put(params, function(err, data) {
     if (err) console.log(err);
