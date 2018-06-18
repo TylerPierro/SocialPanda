@@ -1,0 +1,1 @@
+ssh -i /c/Users/LightningRain/Documents/Revature/dev-ops/TampaTesting2.pem ec2-user@ec2-52-15-153-131.us-east-2.compute.amazonaws.com
