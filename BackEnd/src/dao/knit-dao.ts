@@ -9,18 +9,41 @@ aws.config.update(awsConfig);
 // const dynamodb = new aws.DynamoDB();
 const docClient = new aws.DynamoDB.DocumentClient(); // subset of functionality of dynamodb
 
+// var params = {
+//     TableName : 'Messages',
+//     Item: {
+//         Location: "Tampa",
+//         Tag: "Night Life",
+//         messages: [
+//           {
+//             user: "Ferdinand",
+//             box: "I joined the group.",
+//             time: Date.parse("January 1, 2018, 3:45 PM")
+//           },
+//           {
+//             user: "Eric",
+//             box: "I also joined.",
+//             time: Date.parse("January 1, 2018, 4:00 PM")
+//           }
+//         ]
+//   }
+// }
 var params = {
-    TableName : 'Messages',
-    Item: {
-        Location: "Tampa",
-        Tag: "Night Life",
-        message: {
-            user: "Tyler",
-            box: "I made the group.",
-            time: "6/15/18"
+  TableName : 'Messages',
+  Item: {
+      Location: "Tampa",
+      Tag: "Night Life",
+      messages: [
+        {
+          user: "Blake",
+          box: "I am a teacher.",
+          time: Date.parse("January 1, 2018, 4:30 PM")
         }
-  }
+      ]
 }
+}
+
+let time = new Date(params.Item.messages[0].time).toLocaleString('en', {});
 
 var groups = {
   TableName : 'Groups',
@@ -37,15 +60,29 @@ var groups = {
 //   })
 // }
 
-docClient.put(groups, function(err, data) {
+// docClient.put(groups, function(err, data) {
+//   if (err) console.log(err);
+//   else console.log(data);
+// });
+
+// docClient.put(params, function(err, data) {
+//     if (err) console.log(err);
+//     else console.log(data);
+//   });
+
+docClient.update({
+  TableName: 'Messages',
+  Key: {
+    Location: params.Item.Location,
+    Tag: params.Item.Tag
+  },
+  UpdateExpression: 'ADD #messages :message',
+  ExpressionAttributeNames: { "#messages" : "messages" },
+  ExpressionAttributeValues: { ":message" : docClient.createSet([JSON.stringify(params.Item.messages)]) }
+}, function(err, data) {
   if (err) console.log(err);
   else console.log(data);
-});
-
-docClient.put(params, function(err, data) {
-    if (err) console.log(err);
-    else console.log(data);
-  });
+})
 // createGroup(group1);
 // export function findAllByYear(year: number): Promise<any> {
 //   return docClient.query({
