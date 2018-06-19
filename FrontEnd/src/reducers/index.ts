@@ -1,5 +1,11 @@
 import { combineReducers } from "redux";
 import { signInReducer } from "./sign-in.reducer";
+import { homeReducer } from "./home.reducer";
+import { Post } from "../model/Post";
+
+export interface IHome {
+  msgBoard: Post[];
+}
 
 export interface ISignIn {
   username: string,
@@ -9,8 +15,10 @@ export interface ISignIn {
 
 export interface IState {
   signIn: ISignIn,
+  home: IHome,
 };
 
 export const state = combineReducers<IState>({
-  signIn: signInReducer,
+  home: homeReducer,
+  signIn: signInReducer
 });
