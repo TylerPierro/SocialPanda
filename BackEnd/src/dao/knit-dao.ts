@@ -28,6 +28,39 @@ const docClient = new aws.DynamoDB.DocumentClient(); // subset of functionality 
 //         ]
 //   }
 // }
+
+
+// Params for Query -EF
+var paramsx = {
+  TableName: 'Messages',
+  KeyConditionExpression: '#l = :hkey',
+  ExpressionAttributeNames: {"#l": "Location"},
+  ExpressionAttributeValues: {
+    ':hkey': 'Tampa',
+  }
+};
+
+
+var groups = {
+  TableName : 'Groups',
+  Item: {
+      Location_Tag: "Tampa-NightLyfe",
+      Users: "Tyler",
+  }
+}
+
+// docClient.put(groups, function(err, data) {
+//   if (err) console.log(err);
+//   else console.log(data);
+// });
+
+// docClient.put(params, function(err, data) {
+//     if (err) console.log(err);
+//     else console.log(data);
+//   });
+
+// let time = new Date(params.Item.messages[0].time).toLocaleString('en', {});
+
 var params = {
   TableName : 'Messages',
   Item: {
@@ -43,33 +76,6 @@ var params = {
 }
 }
 
-let time = new Date(params.Item.messages[0].time).toLocaleString('en', {});
-
-var groups = {
-  TableName : 'Groups',
-  Item: {
-      Location_Tag: "Tampa-NightLyfe",
-      Users: "Tyler",
-  }
-}
-// function createGroup(group) {
-//     console.log(group)
-//   return docClient.put({
-//     TableName: 'Messages',
-//     Item: group
-//   })
-// }
-
-// docClient.put(groups, function(err, data) {
-//   if (err) console.log(err);
-//   else console.log(data);
-// });
-
-// docClient.put(params, function(err, data) {
-//     if (err) console.log(err);
-//     else console.log(data);
-//   });
-
 docClient.update({
   TableName: 'Messages',
   Key: {
@@ -83,6 +89,20 @@ docClient.update({
   if (err) console.log(err);
   else console.log(data);
 })
+
+
+
+// DocClient For Query -EF
+docClient.query(paramsx, function(err, data) {
+  console.log("Data Queried")
+  console.log(data)
+  if (err) console.log(err);
+  else console.log(data);
+});
+
+
+
+
 // createGroup(group1);
 // export function findAllByYear(year: number): Promise<any> {
 //   return docClient.query({
