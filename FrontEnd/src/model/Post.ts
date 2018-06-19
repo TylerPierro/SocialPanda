@@ -1,5 +1,5 @@
 export class Post {
     public user: string = '';
     public box: string = '';
-    public time: number = 0;
+    public time: number = Date.now();
 }
