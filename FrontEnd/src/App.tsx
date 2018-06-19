@@ -9,6 +9,7 @@ import { store } from './Store';
 import { SignInContainer } from './components/sign-in/sign-in.container';
 import { HomeComponent } from './components/home/home.component';
 
+
 class App extends React.Component<any, any> {
 
   public render() {
@@ -20,6 +21,7 @@ class App extends React.Component<any, any> {
             <Switch>
               <Route path="/home" component={HomeComponent} />
               <Route path="/sign-in" component={SignInContainer} />
+              <Route path="/groups" component={GroupsContainer} />
             </Switch>
           </div>
         </HashRouter>
