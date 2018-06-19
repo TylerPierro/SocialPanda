@@ -28,6 +28,18 @@ const docClient = new aws.DynamoDB.DocumentClient(); // subset of functionality 
 //         ]
 //   }
 // }
+
+
+// Params for Query -EF
+var paramsx = {
+  TableName: 'Messages',
+  KeyConditionExpression: '#l = :hkey',
+  ExpressionAttributeNames: {"#l": "Location"},
+  ExpressionAttributeValues: {
+    ':hkey': 'Tampa',
+  }
+};
+
 var params = {
   TableName : 'Messages',
   Item: {
@@ -83,6 +95,20 @@ docClient.update({
   if (err) console.log(err);
   else console.log(data);
 })
+
+
+
+// DocClient For Query -EF
+docClient.query(paramsx, function(err, data) {
+  console.log("Data Queried")
+  console.log(data)
+  if (err) console.log(err);
+  else console.log(data);
+});
+
+
+
+
 // createGroup(group1);
 // export function findAllByYear(year: number): Promise<any> {
 //   return docClient.query({
