@@ -1,5 +1,8 @@
 
 import * as React from 'react';
+import { Link } from 'react-router-dom';
+import './signIn.css';
+
 
 export class SignInComponent extends React.Component<any, any> {
 
@@ -22,7 +25,7 @@ export class SignInComponent extends React.Component<any, any> {
     e.preventDefault();
     const { username, password } = this.props; // destructuring
     fetch('http://localhost:3001/users/login', {
-      body: JSON.stringify({username, password}),
+      body: JSON.stringify({ username, password }),
       credentials: 'include',
       headers: {
         'content-type': 'application/json'
@@ -53,7 +56,7 @@ export class SignInComponent extends React.Component<any, any> {
     return (
       <form className="form-signin" onSubmit={this.submit}>
         <img className="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72" />
-        <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
+        <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1> <br/>
         <label htmlFor="inputUsername" className="sr-only">Username</label>
         <input value={this.props.username}
           onChange={this.updateUsername}
@@ -69,18 +72,21 @@ export class SignInComponent extends React.Component<any, any> {
           className="form-control"
           placeholder="Password"
           required />
-        { this.props.errorMessage !== '' &&
+        {this.props.errorMessage !== '' &&
           <div id="error-message">
             {this.props.errorMessage}
           </div>
         }
         <div className="checkbox mb-3">
-          <label>
+          {/* <label>
             <input type="checkbox" value="remember-me" /> Remember me
-          </label>
+          </label> */}
         </div>
         <button className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-        <p className="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+        <p className="mt-5 mb-3 text-muted">Dont have an account?
+          <Link to="/register" className="unset-anchor">&nbsp;Create an account
+          </Link>
+        </p>
       </form>
     );
   }
