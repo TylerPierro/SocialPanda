@@ -23,27 +23,27 @@ export const NavComponent: React.StatelessComponent<{}> = () => {
               <Link to="/sign-in" className="unset-anchor nav-link">Sign In</Link>
             </li>
             <li className="nav-item active">
-              <Link to="/first" className="unset-anchor nav-link">First</Link>
+              <Link to="/groups" className="unset-anchor nav-link">Groups</Link>
             </li>
-            <li className="nav-item active">
+            {/* <li className="nav-item active">
               <Link to="/second" className="unset-anchor nav-link">Second</Link>
             </li>
             <li className="nav-item active">
               <Link to="/clicker" className="unset-anchor nav-link">Clicker</Link>
-            </li>
-            <li className="nav-item active dropdown">
+            </li> */}
+            {/* <li className="nav-item active dropdown">
               <a className="nav-link dropdown-toggle pointer" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Examples</a>
               <div className="dropdown-menu" aria-labelledby="dropdown04">
-                <div className="dropdown-item"><Link to="/movies" className="unset-anchor nav-link active">Movies</Link></div>
+                { <div className="dropdown-item"><Link to="/movies" className="unset-anchor nav-link active">Movies</Link></div>
                 <div className="dropdown-item"><Link to="/clicker" className="unset-anchor nav-link active">Clicker Game</Link></div>
                 <div className="dropdown-item"><Link to="/tic-tac-toe" className="unset-anchor nav-link active">Tic Tac Toe Game</Link></div>
                 <div className="dropdown-item"><Link to="/chuck-norris" className="unset-anchor nav-link active">Chuck Norris Jokes</Link></div>
-                <div className="dropdown-item"><Link to="/pokemon" className="unset-anchor nav-link active">Pokemon</Link></div>
+                <div className="dropdown-item"><Link to="/pokemon" className="unset-anchor nav-link active">Pokemon</Link></div> }
               </div>
             </li>
             <li className="nav-item active">
               <Link to="/nested" className="unset-anchor nav-link">Nested</Link>
-            </li>
+            </li> */}
           </ul>
         </div>
       </nav>
