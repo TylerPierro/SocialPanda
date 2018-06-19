@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 import { store } from './Store';
 import { SignInContainer } from './components/sign-in/sign-in.container';
 import { GroupsContainer } from './components/groups/groups.container';
+import { RegisterContainer } from './components/register/register.container';
 
 
 class App extends React.Component<any, any> {
@@ -21,6 +22,7 @@ class App extends React.Component<any, any> {
             <Switch>
               <Route path="/groups" component={GroupsContainer} />
               <Route path="/sign-in" component={SignInContainer} />
+              <Route path="/register" componenter={RegisterContainer} />
             </Switch>
           </div>
         </HashRouter>
