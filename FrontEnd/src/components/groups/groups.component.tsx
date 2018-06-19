@@ -54,7 +54,6 @@ export class GroupsComponent extends React.Component<any, any> {
   public render() {
     return (
       <div>
-        {/* <img className="img-adjust-position" src={SkyLine} alt="skyline" /> */}
         <div className="searchBar">
           <input className="searchBar" type="search" placeholder="Search by Location" />
           <input type="submit" className="btn search-submit" value="Search" />
