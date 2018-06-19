@@ -1,5 +1,7 @@
 
 import * as React from 'react';
+import './groupsSearch.css';
+// import SkyLine from 'src/assets/SkyLine.jpg';
 
 export class GroupsComponent extends React.Component<any, any> {
 
@@ -22,7 +24,7 @@ export class GroupsComponent extends React.Component<any, any> {
     e.preventDefault();
     const { username, password } = this.props; // destructuring
     fetch('http://localhost:3001/users/login', {
-      body: JSON.stringify({username, password}),
+      body: JSON.stringify({ username, password }),
       credentials: 'include',
       headers: {
         'content-type': 'application/json'
@@ -51,37 +53,13 @@ export class GroupsComponent extends React.Component<any, any> {
 
   public render() {
     return (
-      <form className="form-signin" onSubmit={this.submit}>
-        <img className="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72" />
-        <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
-        <label htmlFor="inputUsername" className="sr-only">Username</label>
-        <input value={this.props.username}
-          onChange={this.updateUsername}
-          type="text" id="inputUsername"
-          className="form-control"
-          placeholder="Username"
-          required />
-        <label htmlFor="inputPassword" className="sr-only">Password</label>
-        <input value={this.props.password}
-          onChange={this.updatePassword}
-          type="password"
-          id="inputPassword"
-          className="form-control"
-          placeholder="Password"
-          required />
-        { this.props.errorMessage !== '' &&
-          <div id="error-message">
-            {this.props.errorMessage}
-          </div>
-        }
-        <div className="checkbox mb-3">
-          <label>
-            <input type="checkbox" value="remember-me" /> Remember me
-          </label>
+      <div>
+        {/* <img className="img-adjust-position" src={SkyLine} alt="skyline" /> */}
+        <div className="searchBar">
+          <input className="searchBar" type="search" placeholder="Search by Location" />
+          <input type="submit" className="btn search-submit" value="Search" />
         </div>
-        <button className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-        <p className="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
-      </form>
+      </div>
     );
   }
 }

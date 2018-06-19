@@ -17,13 +17,13 @@ export const NavComponent: React.StatelessComponent<{}> = () => {
         <div className="collapse navbar-collapse" id="navbarsExample04">
           <ul className="navbar-nav ml-auto margin-nav">
             <li className="nav-item active">
-              <Link to="/home" className="unset-anchor nav-link">Home</Link>
+              <Link to="/groups" className="unset-anchor nav-link">Explore Groups</Link>
+            </li>
+            <li className="nav-item active">
+              <Link to="/groups" className="unset-anchor nav-link">New Groups</Link>
             </li>
             <li className="nav-item active">
               <Link to="/sign-in" className="unset-anchor nav-link">Sign In</Link>
-            </li>
-            <li className="nav-item active">
-              <Link to="/groups" className="unset-anchor nav-link">Groups</Link>
             </li>
             {/* <li className="nav-item active">
               <Link to="/second" className="unset-anchor nav-link">Second</Link>
