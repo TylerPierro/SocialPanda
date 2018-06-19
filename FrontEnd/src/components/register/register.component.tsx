@@ -53,7 +53,7 @@ export class RegisterComponent extends React.Component<any, any> {
     return (
       <form className="form-signin" onSubmit={this.submit}>
         <img className="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72" />
-        <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
+        <h1 className="h3 mb-3 font-weight-normal">Create account</h1>
         <label htmlFor="inputUsername" className="sr-only">Username</label>
         <input value={this.props.username}
           onChange={this.updateUsername}

@@ -3,7 +3,7 @@ import { IState } from '../../reducers';
 import { RegisterComponent } from './register.component';
 import { updateUsername, updatePassword, updateError } from '../../actions/register/register.actions';
 
-const mapStateToProps = (state: IState) => (state.signIn);
+const mapStateToProps = (state: IState) => (state.register);
 
 export const mapDispatchToProps = {
   updateError,
