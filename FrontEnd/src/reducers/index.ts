@@ -1,11 +1,14 @@
 import { combineReducers } from "redux";
 import { signInReducer } from "./sign-in.reducer";
-import { homeReducer } from "./home.reducer";
+import { groupsReducer } from "./groups.reducer";
 import { Post } from "../model/Post";
 import { RegisterReducer } from "./register.reducer";
+import { CityTag } from "../model/CityTag";
 
-export interface IHome {
+export interface IGroups {
+  citySearch: string;
   msgBoard: Post[];
+  displayTags: CityTag[];
 }
 
 export interface IRegister {
@@ -21,13 +24,13 @@ export interface ISignIn {
 }
 
 export interface IState {
-  home: IHome,
+  groups: IGroups,
   register: IRegister,
   signIn: ISignIn
 };
 
 export const state = combineReducers<IState>({
-  home: homeReducer,
+  groups: groupsReducer,
   register: RegisterReducer,
   signIn: signInReducer
 });

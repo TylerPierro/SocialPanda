@@ -1,0 +1,5 @@
+export const groupsTypes = {
+    CREATE_POST: 'CREATE_POST',
+    UPDATE_CITY: 'UPDATE_CITY',
+    UPDATE_DISPLAY: 'UPDATE_DISPLAY'
+}
