@@ -65,6 +65,7 @@ export class GroupsComponent extends React.Component<IProps, any> {
     return (
       <div>
         <form onSubmit={this.submit}>
+        hello
           <div className="searchBar">
             <input className="searchBar"
               type="string"
