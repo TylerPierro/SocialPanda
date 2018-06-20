@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import PandaLogo from '../assets/SocialPanda-thumb.png';
+import PandaLogo from '../assets/SocialPanda1.png';
 
 export const NavComponent: React.StatelessComponent<{}> = () => {
   return (
