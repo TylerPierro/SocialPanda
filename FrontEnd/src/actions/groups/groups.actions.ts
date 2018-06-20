@@ -19,9 +19,7 @@ export const updateCity = (citySearch: string) => {
   }
 }
 
-export const updateDisplay = (displayTags: string) =>
-//  (dispatch: any) => 
- {
+export const updateDisplay = (displayTags: string) => (dispatch: any) => {
   fetch('https://dwbbn4f58g.execute-api.us-east-2.amazonaws.com/dev/messages/' + displayTags, {
     headers: {
       'content-type': 'application/json'
@@ -40,12 +38,12 @@ export const updateDisplay = (displayTags: string) =>
     })
     .then(data => {
       console.log(data);
-      // dispatch({
-      //   payload: {
-      //     data
-      //   },
-      //   type: groupsTypes.UPDATE_DISPLAY
-      // })
+      dispatch({
+        payload: {
+          displayTags: data.Items
+        },
+        type: groupsTypes.UPDATE_DISPLAY
+      })
     })
     .catch(err => {
       console.log('Unable to log in at this time, please try again later');

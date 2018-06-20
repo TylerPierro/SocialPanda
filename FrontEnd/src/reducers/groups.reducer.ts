@@ -3,8 +3,8 @@ import { groupsTypes } from "../actions/groups/groups.types";
 
 const initialState: IGroups = {
   citySearch: '',
-  msgBoard: [],
-  tags: ['']
+  displayTags: [],
+  msgBoard: []
 }
 
 export const groupsReducer = (state = initialState, action: any) => {
@@ -16,12 +16,13 @@ export const groupsReducer = (state = initialState, action: any) => {
       };
     case groupsTypes.UPDATE_CITY:
       return {
+        ...state,
         citySearch: action.payload.citySearch
       };
     case groupsTypes.UPDATE_DISPLAY:
       return {
         ...state,
-        tags: action.payload.tags
+        displayTags: action.payload.displayTags
       };
   }
 

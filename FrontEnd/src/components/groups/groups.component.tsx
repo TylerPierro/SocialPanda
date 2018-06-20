@@ -1,4 +1,3 @@
-
 import * as React from 'react';
 import './groupsSearch.css';
 import { IGroups } from '../../reducers';
@@ -25,7 +24,7 @@ export class GroupsComponent extends React.Component<IProps, any> {
     this.props.updateError(password);
   }
 
-  public submit = (e: any) => (dispatch: any) => {
+  public submit = (e: any) => {
     e.preventDefault();
     const location = this.props.citySearch;
     console.log(location);
@@ -76,7 +75,10 @@ export class GroupsComponent extends React.Component<IProps, any> {
           </div>
         </form>
         <div>
-          <h3 id="Tags">{this.props.tags}</h3>
+          
+              {this.props.displayTags.map(disp =>
+                <h3 key={disp.Tag}>{disp.Tag}</h3>
+              )}
         </div>
       </div>
         );

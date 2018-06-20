@@ -3,11 +3,12 @@ import { signInReducer } from "./sign-in.reducer";
 import { groupsReducer } from "./groups.reducer";
 import { Post } from "../model/Post";
 import { RegisterReducer } from "./register.reducer";
+import { CityTag } from "../model/CityTag";
 
 export interface IGroups {
   citySearch: string;
   msgBoard: Post[];
-  tags: string[];
+  displayTags: CityTag[];
 }
 
 export interface IRegister {
