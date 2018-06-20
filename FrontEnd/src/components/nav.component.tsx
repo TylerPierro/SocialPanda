@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import RevLogo from '../assets/rev-logo.png';
+import PandaLogo from '../assets/SocialPanda1.png';
 
 export const NavComponent: React.StatelessComponent<{}> = () => {
   return (
     <div>
       <nav className="navbar navbar-toggleable-md navbar-expand-lg navbar-light bg-light display-front nav-pad">
         <div className="navbar-header c-pointer shift-left">
-          <Link to="/groups" className="unset-anchor">
-            <img className="img-adjust-position rev-logo" src={RevLogo} alt="revature" />
+          <Link to="/home" className="unset-anchor">
+            <img className="img-adjust-position rev-logo" src={PandaLogo} alt="revature" />
           </Link>
         </div>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
