@@ -7,7 +7,7 @@ export const NavComponent: React.StatelessComponent<{}> = () => {
     <div>
       <nav className="navbar navbar-toggleable-md navbar-expand-lg navbar-light bg-light display-front nav-pad">
         <div className="navbar-header c-pointer shift-left">
-          <Link to="/home" className="unset-anchor">
+          <Link to="/groups" className="unset-anchor">
             <img className="img-adjust-position rev-logo" src={RevLogo} alt="revature" />
           </Link>
         </div>
