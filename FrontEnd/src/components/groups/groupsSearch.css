@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -26,23 +26,49 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
-
+ */
 
 .searchBar {
-  margin-left: auto;
-  margin-right: auto;
-	padding: 10px;
-  width: 75%;
+  /* margin-left: relative;
+  margin-right: auto; */
+  padding: 10px;
+  display: inline-block;
+  width: 50%;
   border-radius: 30px;
 
 } 
 
-/* body{
-background-image: url(https://dtkp6g0samjql.cloudfront.net/uploads/photo/file/7834336/il_fullxfull.252642439.jpg);
+.search-submit{
+  margin-left: 400px;
+  /* margin-right: auto; */
+display: inline-block;
+}
+
+.searchBar2 {
+  /* margin-left: relative;
+  margin-right: auto; */
+  padding: 10px;
+  display: inline-block;
+  width: 50%;
+  border-radius: 30px;
+
+} 
+
+h3{
+  color: white;
+  cursor: pointer;
+
+}
+
+body{
+  /* position: absolute; */
+/* background-image: url(https://dtkp6g0samjql.cloudfront.net/uploads/photo/file/7834336/il_fullxfull.252642439.jpg); */
+background-image: url(http://www.desktopwallpaperhd.net/wallpapers/5/e/skyline-desktop-wallpaper-night-photo-chicago-59774.jpg);
 background-repeat: no-repeat;
-background-size: 100%; 
-background-position-y: -100%;
-} */
+background-size: cover;
+/* padding-top: 400px; */
+/* background-position: auto; */
+}
 
 .search-submit {
   margin-left: 3%;
@@ -56,92 +82,3 @@ background-position-y: -100%;
   cursor: not-allowed;
 }
 
-
-/*****************************
-  NAV
-*****************************/
-.rev-logo {
-  width: auto;
-  height: 2em;
-  margin-right: 2em;
-}
-
-.margin-nav {
-  margin-right: 2em
-}
-
-
-.navbar-light .navbar-nav .nav-link:focus, .navbar-light .navbar-nav .nav-link:hover {
-  color: rgba(0,0,0,.7);
-}
-
-.navbar-expand-md .navbar-nav .nav-link {
-  padding-right: .75rem !important;
-  padding-left: .75rem !important;
-}
-
-.bg-light {
-  background-color: #ffffff !important;
-}
-
-nav {
-  border-bottom: 1px solid #ffffff !important;
-  margin-bottom: 20px;
-  -webkit-box-shadow: 1px -12px 28px -1px rgba(0, 0, 0, 0.87);
-  -moz-box-shadow: 1px -12px 28px -1px rgba(0, 0, 0, 0.87);
-  box-shadow: 1px -12px 28px -1px rgba(0, 0, 0, 0.87);
-}
-
-
-/*****************************
-  TIC TAC TOE
-*****************************/
-.tic-tac-col {
-  border: 1px solid black;
-  font-size: 4em;
-  text-align: center;
-  min-height: 1em ;
-}
-#tic-tac-board {
-  width: 75%;
-}
-
-
-
-/*****************************
-  SIGN IN
-*****************************/
-.form-signin {
-  width: 100%;
-  max-width: 330px;
-  padding: 15px;
-  margin: auto;
-}
-.form-signin .checkbox {
-  font-weight: 400;
-}
-.form-signin .form-control {
-  position: relative;
-  box-sizing: border-box;
-  height: auto;
-  padding: 10px;
-  font-size: 16px;
-}
-.form-signin .form-control:focus {
-  z-index: 2;
-}
-.form-signin input[type="email"] {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-}
-.form-signin input[type="password"] {
-  margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
-
-
-#error-message {
-  color: red;
-}

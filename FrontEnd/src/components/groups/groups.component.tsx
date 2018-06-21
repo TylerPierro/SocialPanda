@@ -8,8 +8,10 @@ import { IGroups } from '../../reducers';
 
 interface IProps extends IGroups {
   updateCity: (city: string) => void
-  updateDisplay: (displayTags: string) => void
+  updateDisplay1: (displayGroups: string) => void
+  updateDisplay2: (displayGroups: string, displayTags: string) => void
   updateError: (error: string) => void
+  updateTag: (tag: string) => void
 }
 
 export class GroupsComponent extends React.Component<IProps, any> {
@@ -24,48 +26,50 @@ export class GroupsComponent extends React.Component<IProps, any> {
     this.props.updateError(password);
   }
 
-  public submit = (e: any) => {
+  public displayMessageGroup(e: any) {
     e.preventDefault();
-    const location = this.props.citySearch;
-    console.log(location);
-    this.props.updateDisplay(location);
+
+    // MAYBE IN HERE ON CLICKING A GROUP WE WOULD RENDER A NEW COMPNENT CALLED MESSAGE OR SOMETHING
+    // THAT SHOWS JUST A LIST OF ALL MESSAGES FOR NOW AND AFTER WE CAN CHECK IF USER IS IN GROUP OR NOT.
+    // IF USER IS NOT, THEN ASK IF THEY WOULD LIKE TO JOIN, OTHERWISE LET THEM SEE ALL THE MESSAGES.
+
+
+
+    // (let i =0; i < this.props.displayGroups[0].messages.values.length; i++){
+    //   console.log(this.props.displayGroups[0].messages.values.length)
+    // }
+    console.log(this.props.displayGroups[0].messages.values.length)
+    // let location = this.props.citySearch;
+    // location = location.replace(' ', '+')
+    // let tag = this.props.tagSearch;
+    // tag = tag.replace(' ', '+')
+    // if (tag === '' || tag === null) {
+    //   this.props.updateDisplay1(location);
+    // }
+    // else {
+    //   this.props.updateDisplay2(location, tag);
+    // }
+
   }
 
-  //   fetch('https://dwbbn4f58g.execute-api.us-east-2.amazonaws.com/dev/messages/' + location, {
-  //     headers: {
-  //       'content-type': 'application/json'
-  //     }
-  //   })
-  //     .then(resp => {
-  //       console.log(resp.status)
-  //       if (resp.status === 401) {
-  //         this.props.updateError('Nothing in your area.')
-  //         return;
-  //       }
-  //       if (resp.status === 200) {
-  //         return resp.json();
-  //       }
-  //       return;
-  //     })
-  //     .then(data => {
-  //       console.log(data);
-  //       dispatch({
-  //         payload: {
-  //           data
-  //         },
-  //         type: groupsTypes.UPDATE_DISPLAY
-  //       })
-  //     })
-  //     .catch(err => {
-  //       this.props.updateError('Unable to log in at this time, please try again later');
-  //     })
-  // }
+  public submit = (e: any) => {
+    e.preventDefault();
+    let location = this.props.citySearch;
+    location = location.replace(' ', '+')
+    let tag = this.props.tagSearch;
+    tag = tag.replace(' ', '+')
+    if (tag === '' || tag === null) {
+      this.props.updateDisplay1(location);
+    }
+    else {
+      this.props.updateDisplay2(location, tag);
+    }
+  }
 
   public render() {
     return (
       <div>
         <form onSubmit={this.submit}>
-        hello
           <div className="searchBar">
             <input className="searchBar"
               type="string"
@@ -74,14 +78,26 @@ export class GroupsComponent extends React.Component<IProps, any> {
               placeholder="Search by Location" />
             <input type="submit" className="btn search-submit" value="Search" />
           </div>
+          {/* </form>
+          <form onSubmit={this.submit2}> */}
+          <div className="searchBar">
+            <input className="searchBar"
+              type="string"
+              value={this.props.tagSearch}
+              onChange={(e: any) => this.props.updateTag(e.target.value)}
+              placeholder="Search a Tag" />
+            {/* <input type="submit" className="btn search-submit" value="Search" /> */}
+          </div>
         </form>
+        <br />
         <div>
-          
-              {this.props.displayTags.map(disp =>
-                <h3 key={disp.Tag}>{disp.Tag}</h3>
-              )}
+          {this.props.displayGroups.map(disp =>
+            <h3 key={disp.Tag} onClick={this.displayMessageGroup.bind(this)}>-{disp.Tag}</h3>
+            // <h3>-{disp.}</h3>
+            // <img src={disp.groupPic}/>
+          )}
         </div>
       </div>
-        );
-      }
+    );
+  }
 }
