@@ -47,7 +47,7 @@ export const updateDisplay1 = (displayGroups: string) => (dispatch: any) => {
       return;
     })
     .then(data => {
-      console.log(data);
+      console.log(data.Items[0].messages.values[0]);
       dispatch({
         payload: {
           displayGroups: data.Items
