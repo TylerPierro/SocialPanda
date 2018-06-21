@@ -1,10 +1,6 @@
 import * as React from 'react';
 import './groupsSearch.css';
 import { IGroups } from '../../reducers';
-// import { groupsTypes } from '../../actions/groups/groups.types';
-// import { updateDisplay } from '../../actions/groups/groups.actions';
-// import { updateError } from '../../actions/sign-in/sign-in.actions';
-// import SkyLine from 'src/assets/SkyLine.jpg';
 
 interface IProps extends IGroups {
   updateCity: (city: string) => void
@@ -32,24 +28,10 @@ export class GroupsComponent extends React.Component<IProps, any> {
     // MAYBE IN HERE ON CLICKING A GROUP WE WOULD RENDER A NEW COMPNENT CALLED MESSAGE OR SOMETHING
     // THAT SHOWS JUST A LIST OF ALL MESSAGES FOR NOW AND AFTER WE CAN CHECK IF USER IS IN GROUP OR NOT.
     // IF USER IS NOT, THEN ASK IF THEY WOULD LIKE TO JOIN, OTHERWISE LET THEM SEE ALL THE MESSAGES.
-
-
-
-    // (let i =0; i < this.props.displayGroups[0].messages.values.length; i++){
-    //   console.log(this.props.displayGroups[0].messages.values.length)
-    // }
-    console.log(this.props.displayGroups[0].messages.values.length)
-    // let location = this.props.citySearch;
-    // location = location.replace(' ', '+')
-    // let tag = this.props.tagSearch;
-    // tag = tag.replace(' ', '+')
-    // if (tag === '' || tag === null) {
-    //   this.props.updateDisplay1(location);
-    // }
-    // else {
-    //   this.props.updateDisplay2(location, tag);
-    // }
-
+    // console.log(JSON.stringify(this.props.displayGroups[0].messages.values[0]));
+    // this.props.msgBoard = this.props.displayGroups[0].messages;
+    // console.log(JSON.stringify(this.props.msgBoard));
+    // return(<MessagesComponent />)
   }
 
   public submit = (e: any) => {
@@ -97,6 +79,15 @@ export class GroupsComponent extends React.Component<IProps, any> {
             // <img src={disp.groupPic}/>
           )}
         </div>
+        {/* <div className="messageBoard">
+          {this.props.msgBoard.map(disp => 
+            <div key={disp.time} className="postBox">
+              <h4> {disp.user} </h4>
+              <p> {disp.box} </p>
+              <h5> {disp.time} </h5>
+            </div>
+          )}
+        </div> */}
       </div>
     );
   }

@@ -47,10 +47,11 @@ export const updateDisplay1 = (displayGroups: string) => (dispatch: any) => {
       return;
     })
     .then(data => {
-      console.log(data.Items[0].messages.values[0]);
+      // console.log(data.Items[0].messages.values[0]);
       dispatch({
         payload: {
           displayGroups: data.Items
+          // msgBoard: data.Items.messages.values
         },
         type: groupsTypes.UPDATE_DISPLAY
       })
@@ -83,7 +84,8 @@ export const updateDisplay2 = (displayGroups: string, displayTags: string) => (d
       console.log("searching: " + displayGroups + '\t' + displayTags);
       dispatch({
         payload: {
-          displayGroups: [data.Item]
+          displayGroups: [data.Item],
+          // msgBoard: [data.Item.messages]  // This causes the app to not fetch
         },
         type: groupsTypes.UPDATE_DISPLAY
       })

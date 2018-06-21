@@ -20,6 +20,7 @@ class App extends React.Component<any, any> {
           <div>
             <NavComponent />
             <Switch>
+              {/* <Route component={GroupsContainer} /> */}
               <Route path="/groups" component={GroupsContainer} />
               <Route path="/sign-in" component={SignInContainer} />
               <Route path="/register" componenter={RegisterContainer} />
