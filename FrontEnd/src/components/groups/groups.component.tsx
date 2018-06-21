@@ -8,8 +8,10 @@ import { IGroups } from '../../reducers';
 
 interface IProps extends IGroups {
   updateCity: (city: string) => void
-  updateDisplay: (displayTags: string) => void
+  updateDisplay1: (displayGroups: string) => void
+  updateDisplay2: (displayGroups: string, displayTags: string) => void
   updateError: (error: string) => void
+  updateTag: (tag: string) => void
 }
 
 export class GroupsComponent extends React.Component<IProps, any> {
@@ -26,46 +28,23 @@ export class GroupsComponent extends React.Component<IProps, any> {
 
   public submit = (e: any) => {
     e.preventDefault();
-    const location = this.props.citySearch;
-    console.log(location);
-    this.props.updateDisplay(location);
+    let location = this.props.citySearch;
+    location = location.replace(' ','+')
+    let tag = this.props.tagSearch;
+    tag = tag.replace(' ','+')
+    console.log("searching: " + location + '\t' + tag);
+    if (tag === '' || tag === null) {
+      this.props.updateDisplay1(location);
+    }
+    else {
+      this.props.updateDisplay2(location, tag);
+    }
   }
-
-  //   fetch('https://dwbbn4f58g.execute-api.us-east-2.amazonaws.com/dev/messages/' + location, {
-  //     headers: {
-  //       'content-type': 'application/json'
-  //     }
-  //   })
-  //     .then(resp => {
-  //       console.log(resp.status)
-  //       if (resp.status === 401) {
-  //         this.props.updateError('Nothing in your area.')
-  //         return;
-  //       }
-  //       if (resp.status === 200) {
-  //         return resp.json();
-  //       }
-  //       return;
-  //     })
-  //     .then(data => {
-  //       console.log(data);
-  //       dispatch({
-  //         payload: {
-  //           data
-  //         },
-  //         type: groupsTypes.UPDATE_DISPLAY
-  //       })
-  //     })
-  //     .catch(err => {
-  //       this.props.updateError('Unable to log in at this time, please try again later');
-  //     })
-  // }
 
   public render() {
     return (
       <div>
         <form onSubmit={this.submit}>
-        hello
           <div className="searchBar">
             <input className="searchBar"
               type="string"
@@ -74,14 +53,24 @@ export class GroupsComponent extends React.Component<IProps, any> {
               placeholder="Search by Location" />
             <input type="submit" className="btn search-submit" value="Search" />
           </div>
+          {/* </form>
+          <form onSubmit={this.submit2}> */}
+          <div className="searchBar">
+            <input className="searchBar"
+              type="string"
+              value={this.props.tagSearch}
+              onChange={(e: any) => this.props.updateTag(e.target.value)}
+              placeholder="Search a Tag" />
+            {/* <input type="submit" className="btn search-submit" value="Search" /> */}
+          </div>
         </form>
         <div>
-          
-              {this.props.displayTags.map(disp =>
-                <h3 key={disp.Tag}>{disp.Tag}</h3>
-              )}
+          {
+            this.props.displayGroups.map(disp =>
+              <h3 key={disp.Tag}>{disp.Tag}</h3>
+            )}
         </div>
       </div>
-        );
-      }
+    );
+  }
 }

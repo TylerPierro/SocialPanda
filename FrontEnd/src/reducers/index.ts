@@ -8,7 +8,10 @@ import { CityTag } from "../model/CityTag";
 export interface IGroups {
   citySearch: string;
   msgBoard: Post[];
-  displayTags: CityTag[];
+  displayGroups: CityTag[];
+  // displayTags: CityTag;
+  tagSearch: string;
+  
 }
 
 export interface IRegister {
