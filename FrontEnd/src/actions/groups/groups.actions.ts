@@ -28,6 +28,7 @@ export const updateTag = (tagSearch: string) => {
   }
 }
 
+// SEARCHES BY JUST LOCATION
 export const updateDisplay1 = (displayGroups: string) => (dispatch: any) => {
   fetch('https://dwbbn4f58g.execute-api.us-east-2.amazonaws.com/dev/messages/' + displayGroups, {
     headers: {
@@ -59,7 +60,9 @@ export const updateDisplay1 = (displayGroups: string) => (dispatch: any) => {
     })
 }
 
+// SEARCHES BY LOCATION AND TAG
 export const updateDisplay2 = (displayGroups: string, displayTags: string) => (dispatch: any) => {
+  console.log('Location: ' + displayGroups + ' Tag: ' + displayTags);
   fetch('https://dwbbn4f58g.execute-api.us-east-2.amazonaws.com/dev/messages/' + displayGroups +'/' + displayTags, {
     headers: {
       'content-type': 'application/json'

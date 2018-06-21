@@ -29,10 +29,9 @@ export class GroupsComponent extends React.Component<IProps, any> {
   public submit = (e: any) => {
     e.preventDefault();
     let location = this.props.citySearch;
-    location = location.replace(' ','+')
+    location = location.replace(' ', '+')
     let tag = this.props.tagSearch;
-    tag = tag.replace(' ','+')
-    console.log("searching: " + location + '\t' + tag);
+    tag = tag.replace(' ', '+')
     if (tag === '' || tag === null) {
       this.props.updateDisplay1(location);
     }
@@ -65,10 +64,9 @@ export class GroupsComponent extends React.Component<IProps, any> {
           </div>
         </form>
         <div>
-          {
-            this.props.displayGroups.map(disp =>
-              <h3 key={disp.Tag}>{disp.Tag}</h3>
-            )}
+          {this.props.displayGroups.map(disp =>
+            <h3 key={disp.Tag}>{disp.Tag}</h3>
+          )}
         </div>
       </div>
     );
