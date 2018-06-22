@@ -117,7 +117,7 @@ export class SignInComponent extends React.Component<any, any> {
     };
     const userPool = new awsCognito.CognitoUserPool(poolData);
 
-    const attributeList = []; 
+    const attributeList: awsCognito.CognitoUserAttribute[] = []; 
 
     const dataEmail = {
       Name: 'email',
