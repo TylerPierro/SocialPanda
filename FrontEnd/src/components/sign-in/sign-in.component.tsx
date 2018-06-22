@@ -59,7 +59,7 @@ export class SignInComponent extends React.Component<any, any> {
     };
     const authenticationDetails = new awsCognito.AuthenticationDetails(authenticationData);
     const poolData = {
-      ClientId: '6e82ktg9jof9io6uqrvmgsjljb', // Your client id here
+      ClientId: '2mrd11cqf2anle4nsid84uv5hj', // Your client id here
       UserPoolId: 'us-east-2_tQAMzx7rx', // Your user pool id here
     };
     const userPool = new awsCognito.CognitoUserPool(poolData);
@@ -95,7 +95,7 @@ export class SignInComponent extends React.Component<any, any> {
 
   public submitNewPassword = (e: any) => {
     e.preventDefault();
-    const {password, passwordConfirmation} = this.props.firstSignIn;
+    const { password, passwordConfirmation } = this.props.firstSignIn;
     if (password !== passwordConfirmation) {
       alert('passwords do not match');
       return;
@@ -108,6 +108,43 @@ export class SignInComponent extends React.Component<any, any> {
       })
     })
 
+  }
+
+  public registerUser = (e: any) => {
+    const poolData = {
+      ClientId: '2mrd11cqf2anle4nsid84uv5hj',
+      UserPoolId: 'us-east-2_vCSElhZSd',
+    };
+    const userPool = new awsCognito.CognitoUserPool(poolData);
+
+    const attributeList = []; 
+
+    const dataEmail = {
+      Name: 'email',
+      Value: 'email@mydomain.com'
+    };
+    const dataPhoneNumber = {
+      Name: 'phone_number',
+      Value: '+15555555555'
+    };
+
+    const attributeEmail = new awsCognito.CognitoUserAttribute(dataEmail);
+    const attributePhoneNumber = new awsCognito.CognitoUserAttribute(dataPhoneNumber);
+
+
+    attributeList.push(attributePhoneNumber);
+    attributeList.push(attributeEmail);
+
+    let CognitoUser;
+
+    userPool.signUp('simply', '1234567', attributeList, [], (err: any, result: any) => {
+      if (err) {
+        alert(err);
+        return;
+      }
+      CognitoUser = result.user;
+      console.log('user name is ' + CognitoUser.getUsername());
+    });
   }
 
   public render() {
@@ -167,7 +204,9 @@ export class SignInComponent extends React.Component<any, any> {
             <button className="btn btn-lg btn-primary btn-block" type="submit">Update</button>
           </form>
         }
-
+        <h1>
+          <button className="btn btn-lg btn-primary btn-block" onClick={this.registerUser}>Register New User</button>
+        </h1>
       </div>
     );
   }
