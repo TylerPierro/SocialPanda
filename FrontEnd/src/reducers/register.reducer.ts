@@ -1,33 +1,62 @@
-import { IRegister } from ".";
-import { registerTypes } from "../actions/register/register.types";
+import { ISignIn } from '.';
+import { signInTypes } from '../actions/sign-in/sign-in.types';
 
-const initialState: IRegister = {
-    errorMessage: '',
+const initialState: ISignIn = {
+  errorMessage: '',
+  firstSignIn: {
+    isFirstSignIn: false,
     password: '',
-    username: '',
-  }
-  
-  export const RegisterReducer = (state = initialState, action: any) => {
-    switch (action.type) {
-      case registerTypes.UPDATE_ERROR:
-        return {
-          ...state,
-          errorMessage: action.payload.errorMessage,
-          password: '',
-          username: '',
-        };
-      case registerTypes.UPDATE_PASSWORD:
-        return {
-          ...state,
+    passwordConfirmation: ''
+  },
+  password: '',
+  username: '',
+}
+
+export const signInReducer = (state = initialState, action: any) => {
+  switch (action.type) {
+    case signInTypes.UPDATE_ERROR:
+      return {
+        ...state,
+        errorMessage: action.payload.errorMessage,
+        password: '',
+        username: '',
+      };
+    case signInTypes.UPDATE_PASSWORD:
+      return {
+        ...state,
+        password: action.payload.password
+      };
+    case signInTypes.UPDATE_NEW_PASSWORD:
+      return {
+        ...state,
+        firstSignIn: {
+          ...state.firstSignIn,
           password: action.payload.password
-        };
-      case registerTypes.UPDATE_USERNAME:
-        return {
-          ...state,
-          username: action.payload.username
         }
-    }
-  
-    return state;
-  };
-  
+      };
+    case signInTypes.UPDATE_CONFIRMATION_PASSWORD:
+      return {
+        ...state,
+        firstSignIn: {
+          ...state.firstSignIn,
+          passwordConfirmation: action.payload.password
+        }
+      };
+    case signInTypes.UPDATE_USERNAME:
+      return {
+        ...state,
+        username: action.payload.username
+      }
+    case signInTypes.SET_FIRST_SIGNIN:
+      return {
+        ...state,
+        firstSignIn: {
+          isFirstSignIn: action.payload.isFirstSignIn,
+          password: '',
+          passwordConfirmation: ''
+        }
+      }
+  }
+
+  return state;
+};

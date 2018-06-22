@@ -26,3 +26,30 @@ export const updateUsername = (username: string) => {
     type: signInTypes.UPDATE_USERNAME,
   }
 }
+
+export const updateNewPassword = (password: string) => {
+  return {
+    payload: {
+      password
+    },
+    type: signInTypes.UPDATE_NEW_PASSWORD,
+  }
+}
+
+export const updateConfirmationPassword = (password: string) => {
+  return {
+    payload: {
+      password
+    },
+    type: signInTypes.UPDATE_CONFIRMATION_PASSWORD,
+  }
+}
+
+export const setFirstSignin = (isFirstSignIn: boolean) => {
+  return {
+    payload: {
+      isFirstSignIn
+    },
+    type: signInTypes.SET_FIRST_SIGNIN
+  }
+}
