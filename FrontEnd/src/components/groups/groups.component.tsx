@@ -13,13 +13,14 @@ interface IProps extends IGroups {
   
 }
 
-// ADDED BACKGROUND TO EACH MESSAGE SO THEY ARE SEPERATED NOW!
+// ADDED BACKGROUND COLOR AND STYLE TO EACH MESSAGE SO THEY ARE SEPERATED NOW!
 const messageStyle = {
   background: "#86b2d8",
   margin: "20px",
   padding: "20px"
 };
 
+// ADDED BACKGROUND COLOR AND STYLE TO EACH GROUP SO THEY ARE SEPERATED NOW!
 const groupsStyle = {
   background: "#c9ff9e",
   margin: "20px",
