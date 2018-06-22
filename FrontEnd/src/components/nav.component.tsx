@@ -25,6 +25,9 @@ export const NavComponent: React.StatelessComponent<{}> = () => {
             <li className="nav-item active">
               <Link to="/sign-in" className="unset-anchor nav-link">Sign In</Link>
             </li>
+            <li className="nav-item active">
+              <Link to="/register" className="unset-anchor nav-link">Register</Link>
+            </li>
             {/* <li className="nav-item active">
               <Link to="/second" className="unset-anchor nav-link">Second</Link>
             </li>
