@@ -14,8 +14,9 @@ export interface ICognitoUser {
 export interface IGroups {
   citySearch: string;
   msgBoard: Post[];
+  newPost: string;
   displayGroups: CityTag[];
-  // displayPosts: string;
+  groupStatus: string;
   tagSearch: string;
 }
 
