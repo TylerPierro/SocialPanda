@@ -16,6 +16,7 @@ interface IProps extends IGroups {
 // ADDED BACKGROUND COLOR AND STYLE TO EACH MESSAGE SO THEY ARE SEPERATED NOW!
 const messageStyle = {
   background: "#86b2d8",
+  borderRadius: 20,
   margin: "20px",
   padding: "20px"
 };
@@ -23,6 +24,7 @@ const messageStyle = {
 // ADDED BACKGROUND COLOR AND STYLE TO EACH GROUP SO THEY ARE SEPERATED NOW!
 const groupsStyle = {
   background: "#c9ff9e",
+  borderRadius: 30,
   margin: "20px",
   padding: "20px"
 };
@@ -93,18 +95,21 @@ export class GroupsComponent extends React.Component<IProps, any> {
         
           {
             
-         
             (JSON.parse(JSON.stringify(this.props.msgBoard))).map(disp => 
-              
-
-              // JSON.parse(disp).user
-            <div style={messageStyle} key={JSON.parse(disp).time} className="postBox">
-              <h4> {JSON.parse(disp).user} </h4>
-              <p> {JSON.parse(disp).box} </p>
-              <h5> {JSON.parse(disp).time} </h5>
-            </div>
-          )
+              <div style={messageStyle} key={JSON.parse(disp).time} className="postBox">
+                <h4> {JSON.parse(disp).user} </h4>
+                <p> {JSON.parse(disp).box} </p>
+                <h5> {JSON.parse(disp).time} </h5>
+              </div>
+            )
           } 
+          <input className="messageBox"
+            type="string"
+            // value={this.props.citySearch}
+            // onChange={(e: any) => this.props.updateCity(e.target.value)}
+            placeholder="Be a social panda" />
+          <input type="submit" id= "sendButton" className="btn search-submit" value="Send" />
+
         </div>
       </div>
     );
