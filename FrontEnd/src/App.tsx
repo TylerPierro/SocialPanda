@@ -23,7 +23,7 @@ class App extends React.Component<any, any> {
               {/* <Route component={GroupsContainer} /> */}
               <Route path="/groups" component={GroupsContainer} />
               <Route path="/sign-in" component={SignInContainer} />
-              <Route path="/register" componenter={RegisterPageComponent} />
+              <Route path="/register" component={RegisterPageComponent} />
             </Switch>
           </div>
         </HashRouter>

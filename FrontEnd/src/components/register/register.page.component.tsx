@@ -1,9 +1,10 @@
 import * as React from 'react';
 import './style.css'
+import * as awsCognito from 'amazon-cognito-identity-js';
 
 export class RegisterPageComponent extends React.Component<any, any> {
 
-  public submitForm = (event: any) => {
+  public registerUser = (event: any) => {
     event.preventDefault()
     const form = event.target;
 
@@ -15,11 +16,46 @@ export class RegisterPageComponent extends React.Component<any, any> {
     }
     console.log(formObj)
 
+
+    const poolData = {
+      ClientId: '2mrd11cqf2anle4nsid84uv5hj',
+      UserPoolId: 'us-east-2_vCSElhZSd',
+    };
+    const userPool = new awsCognito.CognitoUserPool(poolData);
+
+    const attributeList: awsCognito.CognitoUserAttribute[] = []; 
+
+    const dataEmail = {
+      Name: 'email',
+      Value: formObj.email
+    };
+    const dataPhoneNumber = {
+      Name: 'phone_number',
+      Value: '+15555555555'
+    };
+
+    const attributeEmail = new awsCognito.CognitoUserAttribute(dataEmail);
+    const attributePhoneNumber = new awsCognito.CognitoUserAttribute(dataPhoneNumber);
+
+
+    attributeList.push(attributePhoneNumber);
+    attributeList.push(attributeEmail);
+
+    let CognitoUser;
+
+    userPool.signUp(formObj.username, formObj.password, attributeList, [], (err: any, result: any) => {
+      if (err) {
+        alert(err);
+        return;
+      }
+      CognitoUser = result.user;
+      console.log('user name is ' + CognitoUser.getUsername());
+    });
   }
 
   public render() {
         return (
-          <form onSubmit={this.submitForm} action="action_page.php" style={{border: '1px solid #ccc'}}>
+          <form onSubmit={this.registerUser} action="action_page.php" style={{border: '1px solid #ccc'}}>
             <div className="container">
               <h1>Sign Up</h1>
               <p>Please fill in this form to create an account.</p>
