@@ -60,7 +60,7 @@ export class SignInComponent extends React.Component<any, any> {
     const authenticationDetails = new awsCognito.AuthenticationDetails(authenticationData);
     const poolData = {
       ClientId: '2mrd11cqf2anle4nsid84uv5hj', // Your client id here
-      UserPoolId: 'us-east-2_tQAMzx7rx', // Your user pool id here
+      UserPoolId: 'us-east-2_vCSElhZSd', // Your user pool id here
     };
     const userPool = new awsCognito.CognitoUserPool(poolData);
     const userData = {
