@@ -15,9 +15,8 @@ export interface IGroups {
   citySearch: string;
   msgBoard: Post[];
   displayGroups: CityTag[];
-  // displayTags: CityTag;
+  // displayPosts: string;
   tagSearch: string;
-  
 }
 
 export interface IRegister {

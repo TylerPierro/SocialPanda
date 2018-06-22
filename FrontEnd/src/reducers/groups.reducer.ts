@@ -25,7 +25,12 @@ export const groupsReducer = (state = initialState, action: any) => {
         ...state,
         displayGroups: action.payload.displayGroups
       };
-      case groupsTypes.UPDATE_TAG:
+    case groupsTypes.UPDATE_MSG_BOARD:
+      return {
+        ...state,
+        msgBoard: action.payload.msgBoard
+      };
+    case groupsTypes.UPDATE_TAG:
       return {
         ...state,
         tagSearch: action.payload.tagSearch
