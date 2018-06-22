@@ -82,7 +82,7 @@ export class GroupsComponent extends React.Component<IProps, any> {
         <br />
         <div className="tagList">
           {this.props.displayGroups.map(disp =>
-            <h3  style={groupsStyle} key={disp.Tag} onClick={this.displayMessageGroup.bind(this, disp.messages.values)}>-{disp.Tag}</h3>
+            <h3  style={groupsStyle} key={disp.Tag} onClick={this.displayMessageGroup.bind(this, disp.messages.values)}>{disp.Tag}</h3>
             // <h3>-{disp.}</h3>
             // <img src={disp.groupPic}/>
           )}
