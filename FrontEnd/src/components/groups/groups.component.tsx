@@ -1,14 +1,30 @@
 import * as React from 'react';
 import './groupsSearch.css';
 import { IGroups } from '../../reducers';
+import { CityTag } from '../../model/CityTag';
 
 interface IProps extends IGroups {
   updateCity: (city: string) => void
   updateDisplay1: (displayGroups: string) => void
   updateDisplay2: (displayGroups: string, displayTags: string) => void
   updateError: (error: string) => void
+  updateMsgBoard: (msgBoard: object) => void
   updateTag: (tag: string) => void
+  
 }
+
+// ADDED BACKGROUND TO EACH MESSAGE SO THEY ARE SEPERATED NOW!
+const messageStyle = {
+  background: "#86b2d8",
+  margin: "20px",
+  padding: "20px"
+};
+
+const groupsStyle = {
+  background: "#c9ff9e",
+  margin: "20px",
+  padding: "20px"
+};
 
 export class GroupsComponent extends React.Component<IProps, any> {
 
@@ -22,19 +38,14 @@ export class GroupsComponent extends React.Component<IProps, any> {
     this.props.updateError(password);
   }
 
-  public displayMessageGroup(e: any) {
+  public displayMessageGroup(msgBoard: CityTag, e: any) {
     e.preventDefault();
-
-    // MAYBE IN HERE ON CLICKING A GROUP WE WOULD RENDER A NEW COMPNENT CALLED MESSAGE OR SOMETHING
-    // THAT SHOWS JUST A LIST OF ALL MESSAGES FOR NOW AND AFTER WE CAN CHECK IF USER IS IN GROUP OR NOT.
-    // IF USER IS NOT, THEN ASK IF THEY WOULD LIKE TO JOIN, OTHERWISE LET THEM SEE ALL THE MESSAGES.
-    // console.log(JSON.stringify(this.props.displayGroups[0].messages.values[0]));
-    // this.props.msgBoard = this.props.displayGroups[0].messages;
-    // console.log(JSON.stringify(this.props.msgBoard));
-    // return(<MessagesComponent />)
+    console.log(msgBoard);
+    this.props.updateMsgBoard(msgBoard);
   }
 
   public submit = (e: any) => {
+    console.log(this.props)
     e.preventDefault();
     let location = this.props.citySearch;
     location = location.replace(' ', '+')
@@ -52,42 +63,48 @@ export class GroupsComponent extends React.Component<IProps, any> {
     return (
       <div>
         <form onSubmit={this.submit}>
-          <div className="searchBar">
+          <div className="allSearch">
             <input className="searchBar"
               type="string"
               value={this.props.citySearch}
               onChange={(e: any) => this.props.updateCity(e.target.value)}
               placeholder="Search by Location" />
-            <input type="submit" className="btn search-submit" value="Search" />
-          </div>
-          {/* </form>
-          <form onSubmit={this.submit2}> */}
-          <div className="searchBar">
-            <input className="searchBar"
+
+            <input type="submit" id= "searchButton" className="btn search-submit" value="Search" />
+       
+            <input className="searchBar2"
               type="string"
               value={this.props.tagSearch}
               onChange={(e: any) => this.props.updateTag(e.target.value)}
               placeholder="Search a Tag" />
-            {/* <input type="submit" className="btn search-submit" value="Search" /> */}
           </div>
         </form>
         <br />
-        <div>
+        <div className="tagList">
           {this.props.displayGroups.map(disp =>
-            <h3 key={disp.Tag} onClick={this.displayMessageGroup.bind(this)}>-{disp.Tag}</h3>
+            <h3  style={groupsStyle} key={disp.Tag} onClick={this.displayMessageGroup.bind(this, disp.messages.values)}>-{disp.Tag}</h3>
             // <h3>-{disp.}</h3>
             // <img src={disp.groupPic}/>
           )}
         </div>
-        {/* <div className="messageBoard">
-          {this.props.msgBoard.map(disp => 
-            <div key={disp.time} className="postBox">
-              <h4> {disp.user} </h4>
-              <p> {disp.box} </p>
-              <h5> {disp.time} </h5>
+        <div className="messageBoard">
+        {/* {JSON.parse(JSON.stringify(this.props.msgBoard)) } */}
+        
+          {
+            
+         
+            (JSON.parse(JSON.stringify(this.props.msgBoard))).map(disp => 
+              
+
+              // JSON.parse(disp).user
+            <div style={messageStyle} key={JSON.parse(disp).time} className="postBox">
+              <h4> {JSON.parse(disp).user} </h4>
+              <p> {JSON.parse(disp).box} </p>
+              <h5> {JSON.parse(disp).time} </h5>
             </div>
-          )}
-        </div> */}
+          )
+          } 
+        </div>
       </div>
     );
   }

@@ -28,6 +28,15 @@ export const updateTag = (tagSearch: string) => {
   }
 }
 
+export const updateMsgBoard = (msgBoard: object) => {
+  return {
+    payload: {
+      msgBoard
+    },
+    type: groupsTypes.UPDATE_MSG_BOARD
+  }
+}
+
 // SEARCHES BY JUST LOCATION
 export const updateDisplay1 = (displayGroups: string) => (dispatch: any) => {
   fetch('https://dwbbn4f58g.execute-api.us-east-2.amazonaws.com/dev/messages/' + displayGroups, {
@@ -51,7 +60,6 @@ export const updateDisplay1 = (displayGroups: string) => (dispatch: any) => {
       dispatch({
         payload: {
           displayGroups: data.Items
-          // msgBoard: data.Items.messages.values
         },
         type: groupsTypes.UPDATE_DISPLAY
       })
@@ -84,8 +92,8 @@ export const updateDisplay2 = (displayGroups: string, displayTags: string) => (d
       console.log("searching: " + displayGroups + '\t' + displayTags);
       dispatch({
         payload: {
-          displayGroups: [data.Item],
-          // msgBoard: [data.Item.messages]  // This causes the app to not fetch
+          displayGroups: [data.Item]
+          // msgBoard: data.Items.messages.values
         },
         type: groupsTypes.UPDATE_DISPLAY
       })
