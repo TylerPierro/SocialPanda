@@ -1,6 +1,8 @@
 
 import * as React from 'react';
 import * as awsCognito from 'amazon-cognito-identity-js';
+import './signin-style.css'
+import { Link } from 'react-router-dom';
 
 export class SignInComponent extends React.Component<any, any> {
 
@@ -110,80 +112,81 @@ export class SignInComponent extends React.Component<any, any> {
 
   }
 
-  public registerUser = (e: any) => {
-    const poolData = {
-      ClientId: '2mrd11cqf2anle4nsid84uv5hj',
-      UserPoolId: 'us-east-2_vCSElhZSd',
-    };
-    const userPool = new awsCognito.CognitoUserPool(poolData);
+  // public registerUser = (e: any) => {
+  //   const poolData = {
+  //     ClientId: '2mrd11cqf2anle4nsid84uv5hj',
+  //     UserPoolId: 'us-east-2_vCSElhZSd',
+  //   };
+  //   const userPool = new awsCognito.CognitoUserPool(poolData);
 
-    const attributeList: awsCognito.CognitoUserAttribute[] = []; 
+  //   const attributeList: awsCognito.CognitoUserAttribute[] = []; 
 
-    const dataEmail = {
-      Name: 'email',
-      Value: 'email@mydomain.com'
-    };
-    const dataPhoneNumber = {
-      Name: 'phone_number',
-      Value: '+15555555555'
-    };
+  //   const dataEmail = {
+  //     Name: 'email',
+  //     Value: 'email@mydomain.com'
+  //   };
+  //   const dataPhoneNumber = {
+  //     Name: 'phone_number',
+  //     Value: '+15555555555'
+  //   };
 
-    const attributeEmail = new awsCognito.CognitoUserAttribute(dataEmail);
-    const attributePhoneNumber = new awsCognito.CognitoUserAttribute(dataPhoneNumber);
+  //   const attributeEmail = new awsCognito.CognitoUserAttribute(dataEmail);
+  //   const attributePhoneNumber = new awsCognito.CognitoUserAttribute(dataPhoneNumber);
 
 
-    attributeList.push(attributePhoneNumber);
-    attributeList.push(attributeEmail);
+  //   attributeList.push(attributePhoneNumber);
+  //   attributeList.push(attributeEmail);
 
-    let CognitoUser;
+  //   let CognitoUser;
 
-    userPool.signUp('simply', '1234567', attributeList, [], (err: any, result: any) => {
-      if (err) {
-        alert(err);
-        return;
-      }
-      CognitoUser = result.user;
-      console.log('user name is ' + CognitoUser.getUsername());
-    });
-  }
+  //   userPool.signUp('simply', '1234567', attributeList, [], (err: any, result: any) => {
+  //     if (err) {
+  //       alert(err);
+  //       return;
+  //     }
+  //     CognitoUser = result.user;
+  //     console.log('user name is ' + CognitoUser.getUsername());
+  //   });
+  // }
 
   public render() {
     return (
-      <div>
-        {!this.props.firstSignIn.isFirstSignIn &&
-          <form className="form-signin" onSubmit={this.submit}>
-            <img className="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72" />
-            <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
-            <label htmlFor="inputUsername" className="sr-only">Username</label>
-            <input value={this.props.username}
-              onChange={this.updateUsername}
-              type="text" id="inputUsername"
-              className="form-control"
-              placeholder="Username"
-              required />
-            <label htmlFor="inputPassword" className="sr-only">Password</label>
-            <input value={this.props.password}
-              onChange={this.updatePassword}
-              type="password"
-              id="inputPassword"
-              className="form-control"
-              placeholder="Password"
-              required />
-            {this.props.errorMessage !== '' &&
-              <div id="error-message">
-                {this.props.errorMessage}
-              </div>
-            }
-            <div className="checkbox mb-3">
-              <label>
-                <input type="checkbox" value="remember-me" /> Remember me
+      <div id="signin-div" >
+      <form className="signin-form" /* onSubmit={this.registerUser} */ action="action_page.php" style={{ border: '1px solid #ccc' }}>
+          {!this.props.firstSignIn.isFirstSignIn &&
+            <form className="form-signin" id="container" onSubmit={this.submit}>
+              {/* <img className="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72" /> */}
+              <br />
+              <h1 id="signinText" className="h3 mb-3 font-weight-normal">Sign in</h1>
+              <label htmlFor="inputUsername" className="sr-only">Username</label>
+              <input value={this.props.username}
+                onChange={this.updateUsername}
+                type="text" id="inputUsername"
+                className="form-control"
+                placeholder="Username"
+                required />
+              <label htmlFor="inputPassword" className="sr-only">Password</label>
+              <input value={this.props.password}
+                onChange={this.updatePassword}
+                type="password"
+                id="inputPassword"
+                className="form-control"
+                placeholder="Password"
+                required />
+              {this.props.errorMessage !== '' &&
+                <div id="error-message">
+                  {this.props.errorMessage}
+                </div>
+              }
+              <div className="checkbox mb-3">
+                <label id="signinText">
+                  <input id="signinText" type="checkbox" value="remember-me" /> Remember me
           </label>
-            </div>
-            <button className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-            <p className="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
-          </form>
-        }
-        {this.props.firstSignIn.isFirstSignIn &&
+              </div>
+              <button className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            </form>
+          }
+          {/* {this.props.firstSignIn.isFirstSignIn &&
           <form className="form-signin" onSubmit={this.submitNewPassword}>
             <h1 className="h3 mb-3 font-weight-normal">Choose a new password.</h1>
             <label htmlFor="inputNewPassword" className="sr-only">New Password</label>
@@ -203,10 +206,16 @@ export class SignInComponent extends React.Component<any, any> {
               required />
             <button className="btn btn-lg btn-primary btn-block" type="submit">Update</button>
           </form>
-        }
-        <h1>
-          <button className="btn btn-lg btn-primary btn-block" onClick={this.registerUser}>Register New User</button>
-        </h1>
+        } */}
+
+          <br />
+          <h5 id="signinText">Don't have an account?
+          <button id="signInRegisterButton">
+              <Link to="/register" className="unset-anchor nav-link">Sign up here!</Link>
+            </button>
+          </h5>
+          {/* <Link to="/register" className="unset-anchor nav-link">Sign up here!</Link> */}
+      </form>
       </div>
     );
   }

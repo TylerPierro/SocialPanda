@@ -2,11 +2,7 @@ import { INewGroup } from '.';
 import { newGroupTypes } from '../actions/newGroup/newGroup.types';
 
 const initialState: INewGroup = {
-  description: '',
-  errorMessage: '',
-  location: '',
-  status: '',
-  tag: ''
+  newGroupObject: {}
 }
 
 

@@ -28,11 +28,7 @@ export interface IRegister {
 }
 
 export interface INewGroup {
-  location: string,
-  tag: string, 
-  status: string,
-  description: string,
-  errorMessage: string
+  newGroupObject: object
 }
 
 export interface ISignIn {

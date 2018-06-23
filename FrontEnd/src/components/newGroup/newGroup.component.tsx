@@ -1,7 +1,12 @@
 
 import * as React from 'react';
 import './newGroupStyle.css';
+import { INewGroup } from '../../reducers';
 
+
+interface IProps extends INewGroup {
+  addNewGroup: (formObj: object) => void
+}
 
 const h1style = {
   // background: "#c9ff9e",
@@ -10,88 +15,107 @@ const h1style = {
   padding: "120px"
 };
 
-export class NewGroupComponent extends React.Component<any, any> {
+export class NewGroupComponent extends React.Component<IProps, any> {
 
   constructor(props: any) {
     super(props);
     console.log(props);
   }
 
-  public updateUsername = (e: any) => {
-    const username = e.target.value;
-    this.props.updateUsername(username);
+  public createNewGroup = (event: any) => {
+    event.preventDefault()
+    const form = event.target;
+    const locationTag = form.newGroupLocation.value + "-" + form.newGroupName.value;
+
+    const newGroupObject = {
+      Admin: "true",
+      Description: form.newGroupDescription.value,
+      LocationTag: locationTag,
+      Privacy: form.newGroupPrivacy.value,
+      Users: "Fernando"
+    }
+    console.log(newGroupObject)
+
+    this.props.addNewGroup(newGroupObject);
   }
 
-  public updatePassword = (e: any) => {
-    const password = e.target.value;
-    this.props.updatePassword(password);
-  }
-
-  public submit = (e: any) => {
-    e.preventDefault();
-    const { username, password } = this.props; // destructuring
-    fetch('http://localhost:3001/users/login', {
-      body: JSON.stringify({ username, password }),
-      credentials: 'include',
-      headers: {
-        'content-type': 'application/json'
-      },
-      method: 'POST'
-    })
-      .then(resp => {
-        console.log(resp.status)
-        if (resp.status === 401) {
-          this.props.updateError('Invalid Credentials, try again.')
-          return;
-        }
-        if (resp.status === 200) {
-          return resp.json();
-        }
-        return;
-      })
-      .then(data => {
-        console.log(data);
-        this.props.history.push('/clicker');
-      })
-      .catch(err => {
-        this.props.updateError('Unable to log in at this time, please try again later');
-      })
-  }
+  // public submit = (e: any) => {
+  //   e.preventDefault();
+  //   const { username, password } = this.props; // destructuring
+  //   fetch('http://localhost:3001/users/login', {
+  //     body: JSON.stringify({ username, password }),
+  //     credentials: 'include',
+  //     headers: {
+  //       'content-type': 'application/json'
+  //     },
+  //     method: 'POST'
+  //   })
+  //     .then(resp => {
+  //       console.log(resp.status)
+  //       if (resp.status === 401) {
+  //         this.props.updateError('Invalid Credentials, try again.')
+  //         return;
+  //       }
+  //       if (resp.status === 200) {
+  //         return resp.json();
+  //       }
+  //       return;
+  //     })
+  //     .then(data => {
+  //       console.log(data);
+  //       this.props.history.push('/clicker');
+  //     })
+  //     .catch(err => {
+  //       this.props.updateError('Unable to log in at this time, please try again later');
+  //     })
+  // }
 
   public render() {
     return (
-      <form id="social"
-        // onSubmit={this.registerUser} 
-        action="action_page.php" style={{ border: '1px solid #ccc' }}>
-        <div id="socialDiv" className="stripe stripe--inverted stripe--photoHero inverted start-photo-banner">
+      <form id="social-form"  onSubmit={this.createNewGroup}   action="action_page.php" style={{ border: '1px solid #ccc' }}>
+        <div id="social-div" className="stripe stripe--inverted stripe--photoHero inverted start-photo-banner">
           <div id="title">
-          <h1 style = {h1style}>Be a Social Panda and start your own group!</h1>
+            <h1 style={h1style}>Be a Social Panda and start your own group!</h1>
           </div>
         </div>
         <div className="container">
-          <p>Please fill in this form to create an account.</p>
           <hr />
+          <label htmlFor="newGroupLocation" id="newGroupLocationTitle"><b>What city is your new group in?</b></label>
+          <input id="newGroupLocation" type="text" placeholder="Ex. Tammpa, Orlando, etc..." name="newGroupLocation" required />
+
+          <label htmlFor="newGroupName"><b>What will your group be named?</b></label>
+          <input id="newGroupName" type="text" placeholder="Ex. Night life, Food, etc..." name="newGroupName" required />
+
+          <br />
+          <label htmlFor="newGroupDescription"><b>Give a description about your new group</b></label>
+          <input id="newGroupDescription" type="text" placeholder="Ex. Tampa's group for all things about food" name="psw-repeat" required />
 
 
-          <label htmlFor="username"><b>Username</b></label>
-          <input id="username1" type="text" placeholder="Enter Username" name="eml" required />
+          <label htmlFor="newGroupName"><b>Privacy Setting</b></label>
+          <br />
 
-          <label htmlFor="email"><b>Email</b></label>
-          <input id="email1" type="text" placeholder="Enter Email" name="email" required />
+          <div>
 
-          <label htmlFor="psw"><b>Password</b></label>
-          <input id="password1" type="password" placeholder="Enter Password" name="psw" required />
+            <input type="radio" name="newGroupPrivacy" id="newGroupPublic" value="public" required />
+            <label htmlFor="newGroupPublic">Public</label>
+            <div className="reveal-if-active">
+              <label htmlFor="If public is selected">New users must request to join the group</label>
+            </div>
+          </div>
 
-          <label htmlFor="psw-repeat"><b>Repeat Password</b></label>
-          <input id="password2" type="password" placeholder="Repeat Password" name="psw-repeat" required />
+          <div>
+            <input type="radio" name="newGroupPrivacy" id="newGroupPrivate" value="private" />
+            <label htmlFor="newGroupPublic" >Private</label>
 
-          <label>
-            <input type="checkbox" name="remember" style={{ marginBottom: 15 }} /> Remember me
-              </label>
-          <p>By creating an account you agree to our <a href="#" style={{ color: 'dodgerblue' }}>Terms &amp; Privacy</a>.</p>
+            <div className="reveal-if-active">
+              <label htmlFor="If private is selected">New users must request to join the group</label>
+            </div>
+          </div>
+          <br />
+
+          {/* <p>By creating a group you agree to our <a href="#" style={{ color: 'dodgerblue' }}>Terms &amp; Privacy</a>.</p> */}
           <div className="clearfix">
-            <button type="button" className="cancelbtn">Cancel</button>
-            <button type="submit" className="signupbtn">Sign Up</button>
+            <button type="submit" className="newGroupButton">Create new group!</button>
           </div>
         </div>
       </form>
