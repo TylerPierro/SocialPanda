@@ -4,16 +4,18 @@ import { groupsTypes } from "../actions/groups/groups.types";
 const initialState: IGroups = {
   citySearch: '',
   displayGroups: [],
+  groupStatus: '',
   msgBoard: [],
+  newPost: '',
   tagSearch: ''
 }
 
 export const groupsReducer = (state = initialState, action: any) => {
   switch (action.type) {
-    case groupsTypes.CREATE_POST:
+    case groupsTypes.UPDATE_NEW_POST:
       return {
         ...state,
-        msgBoard: action.payload.msgBoard
+        newPost: action.payload.newPost
       };
     case groupsTypes.UPDATE_CITY:
       return {

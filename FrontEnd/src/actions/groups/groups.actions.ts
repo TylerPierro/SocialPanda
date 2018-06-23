@@ -1,13 +1,53 @@
-import { Post } from "../../model/Post";
 import { groupsTypes } from "./groups.types";
+import * as awsCognito from 'amazon-cognito-identity-js';
 
-export const createPost = (msg: Post) => {
-  return {
-    payload: {
-      msg
+const cognitoData = {
+  ClientId: '12345du353sm7khjj1q',
+  UserPoolId: 'us-east-1_Iqc12345'
+};
+const userPool = new awsCognito.CognitoUserPool(cognitoData);
+const cognitoUser = userPool.getCurrentUser();
+let username = '';
+if (cognitoUser !== null) {
+  username = cognitoUser.getUsername();
+}
+
+export const submitNewPost = (newPost: string) => (dispatch: any) => {
+  console.log(newPost);
+  fetch("https://dwbbn4f58g.execute-api.us-east-2.amazonaws.com/dev/messages", {
+    body: JSON.stringify({
+      "Location": "Tampa",
+      "Tag": "LARP",
+      "messages": {
+        "box": newPost,
+        "time": Date.now().toLocaleString('en-US'),
+        "user": username
+      }
+    }),
+    headers: {
+      'content-type': 'application/json'
     },
-    type: groupsTypes.CREATE_POST
-  }
+    method: 'PUT'
+  })
+    .then(resp => {
+      console.log(resp.status);
+      if (resp.status === 401) {
+        console.log('Nothing in your area.')
+        return;
+      }
+      if (resp.status === 200) {
+        return resp.json();
+      }
+      return;
+    })
+    .then(data => {
+      dispatch({
+        payload: {
+          newPost: data.Items.messages.values
+        },
+        type: groupsTypes.SUBMIT_NEW_POST
+      });
+  })
 }
 
 export const updateCity = (citySearch: string) => {
@@ -19,21 +59,21 @@ export const updateCity = (citySearch: string) => {
   }
 }
 
-export const updateTag = (tagSearch: string) => {
-  return {
-    payload: {
-      tagSearch
-    },
-    type: groupsTypes.UPDATE_TAG
-  }
-}
-
 export const updateMsgBoard = (msgBoard: object) => {
   return {
     payload: {
       msgBoard
     },
     type: groupsTypes.UPDATE_MSG_BOARD
+  }
+}
+
+export const updateNewPost = (newPost: string) => {
+  return {
+    payload: {
+      newPost
+    },
+    type: groupsTypes.UPDATE_NEW_POST
   }
 }
 
@@ -72,7 +112,7 @@ export const updateDisplay1 = (displayGroups: string) => (dispatch: any) => {
 // SEARCHES BY LOCATION AND TAG
 export const updateDisplay2 = (displayGroups: string, displayTags: string) => (dispatch: any) => {
   console.log('Location: ' + displayGroups + ' Tag: ' + displayTags);
-  fetch('https://dwbbn4f58g.execute-api.us-east-2.amazonaws.com/dev/messages/' + displayGroups +'/' + displayTags, {
+  fetch('https://dwbbn4f58g.execute-api.us-east-2.amazonaws.com/dev/messages/' + displayGroups + '/' + displayTags, {
     headers: {
       'content-type': 'application/json'
     }
@@ -92,8 +132,8 @@ export const updateDisplay2 = (displayGroups: string, displayTags: string) => (d
       console.log("searching: " + displayGroups + '\t' + displayTags);
       dispatch({
         payload: {
-          displayGroups: [data.Item]
-          // msgBoard: data.Items.messages.values
+          displayGroups: [data.Item],
+          groupStatus: data.Item.status
         },
         type: groupsTypes.UPDATE_DISPLAY
       })
@@ -101,4 +141,13 @@ export const updateDisplay2 = (displayGroups: string, displayTags: string) => (d
     .catch(err => {
       console.log('Unable to log in at this time, please try again later');
     })
+}
+
+export const updateTag = (tagSearch: string) => {
+  return {
+    payload: {
+      tagSearch
+    },
+    type: groupsTypes.UPDATE_TAG
+  }
 }

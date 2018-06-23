@@ -2,15 +2,34 @@ import * as React from 'react';
 import './groupsSearch.css';
 import { IGroups } from '../../reducers';
 import { CityTag } from '../../model/CityTag';
+import * as awsCognito from 'amazon-cognito-identity-js';
 
 interface IProps extends IGroups {
+  submitNewPost: (newPost: string) => void
   updateCity: (city: string) => void
   updateDisplay1: (displayGroups: string) => void
   updateDisplay2: (displayGroups: string, displayTags: string) => void
   updateError: (error: string) => void
   updateMsgBoard: (msgBoard: object) => void
+  updateNewPost: (box: string) => void
   updateTag: (tag: string) => void
-  
+}
+
+const data = {
+  ClientId: '12345du353sm7khjj1q',
+  UserPoolId: 'us-east-1_Iqc12345'
+};
+const userPool = new awsCognito.CognitoUserPool(data);
+const cognitoUser = userPool.getCurrentUser();
+
+if (cognitoUser != null) {
+  cognitoUser.getSession((err, session) => {
+    if (err) {
+      alert(err);
+      return;
+    }
+    console.log('session validity: ' + session.isValid());
+  });
 }
 
 // ADDED BACKGROUND COLOR AND STYLE TO EACH MESSAGE SO THEY ARE SEPERATED NOW!
@@ -29,6 +48,7 @@ const groupsStyle = {
   padding: "20px"
 };
 
+
 export class GroupsComponent extends React.Component<IProps, any> {
 
   constructor(props: any) {
@@ -44,7 +64,17 @@ export class GroupsComponent extends React.Component<IProps, any> {
   public displayMessageGroup(msgBoard: CityTag, e: any) {
     e.preventDefault();
     console.log(msgBoard);
+    console.log(this.props.groupStatus);
     this.props.updateMsgBoard(msgBoard);
+  }
+
+  public createPost = (e: any) => {
+    e.preventDefault();
+    // if (cognitoUser !== null) {
+      const box = this.props.newPost;
+      this.props.submitNewPost(box);
+      // this.setState(this.props.updateDisplay2(this.props.citySearch, tagT));
+    // }
   }
 
   public submit = (e: any) => {
@@ -73,8 +103,8 @@ export class GroupsComponent extends React.Component<IProps, any> {
               onChange={(e: any) => this.props.updateCity(e.target.value)}
               placeholder="Search by Location" />
 
-            <input type="submit" id= "searchButton" className="btn search-submit" value="Search" />
-       
+            <input type="submit" id="searchButton" className="btn search-submit" value="Search" />
+
             <input className="searchBar2"
               type="string"
               value={this.props.tagSearch}
@@ -85,31 +115,32 @@ export class GroupsComponent extends React.Component<IProps, any> {
         <br />
         <div className="tagList">
           {this.props.displayGroups.map(disp =>
-            <h3  style={groupsStyle} key={disp.Tag} onClick={this.displayMessageGroup.bind(this, disp.messages.values)}>{disp.Tag}</h3>
+            <h3 style={groupsStyle} key={disp.Tag} onClick={this.displayMessageGroup.bind(this, disp.messages.values)}>{disp.Tag}</h3>
             // <h3>-{disp.}</h3>
             // <img src={disp.groupPic}/>
           )}
         </div>
         <div className="messageBoard">
-        {/* {JSON.parse(JSON.stringify(this.props.msgBoard)) } */}
-        
+          {/* {JSON.parse(JSON.stringify(this.props.msgBoard)) } */}
+
           {
             
-            (JSON.parse(JSON.stringify(this.props.msgBoard))).map(disp => 
+            (JSON.parse(JSON.stringify(this.props.msgBoard))).map(disp =>
               <div style={messageStyle} key={JSON.parse(disp).time} className="postBox">
                 <h4> {JSON.parse(disp).user} </h4>
                 <p> {JSON.parse(disp).box} </p>
                 <h5> {JSON.parse(disp).time} </h5>
               </div>
             )
-          } 
-          <input className="messageBox"
-            type="string"
-            // value={this.props.citySearch}
-            // onChange={(e: any) => this.props.updateCity(e.target.value)}
-            placeholder="Be a social panda" />
-          <input type="submit" id= "sendButton" className="btn search-submit" value="Send" />
-
+          }
+          {/* <form onSubmit={this.createPost}> */}
+            <input className="messageBox"
+              type="string"
+              value={this.props.newPost}
+              onChange={(e: any) => this.props.updateNewPost(e.target.value)}
+              placeholder="Be a social panda" />
+            <input onClick={this.createPost.bind(this)} type="submit" id="sendButton" className="btn search-submit" value="Send" />
+          {/* </form> */}
         </div>
       </div>
     );
