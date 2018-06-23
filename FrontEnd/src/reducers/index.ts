@@ -6,6 +6,7 @@ import { Post } from "../model/Post";
 import { CityTag } from "../model/CityTag";
 import { CognitoUser } from "amazon-cognito-identity-js";
 import { cognitoUserReducer } from "./cognito-user-reducer";
+import { newGroupReducer } from "./newGroup.reducer";
 
 export interface ICognitoUser { 
   user: CognitoUser | null
@@ -25,6 +26,14 @@ export interface IRegister {
   errorMessage: string
 }
 
+export interface INewGroup {
+  location: string,
+  tag: string, 
+  status: string,
+  description: string,
+  errorMessage: string
+}
+
 export interface ISignIn {
   firstSignIn: {
     isFirstSignIn: boolean,
@@ -39,6 +48,7 @@ export interface ISignIn {
 export interface IState {
   cognitoUser: ICognitoUser,
   groups: IGroups,
+  newGroup: INewGroup,
   register: IRegister,
   signIn: ISignIn
 };
@@ -46,5 +56,6 @@ export interface IState {
 export const state = combineReducers<IState>({
   cognitoUser: cognitoUserReducer,
   groups: groupsReducer,
+  newGroup: newGroupReducer,
   signIn: signInReducer
 });
