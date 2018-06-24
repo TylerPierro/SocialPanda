@@ -1,4 +1,3 @@
-
 import * as React from 'react';
 import './newGroupStyle.css';
 import * as awsCognito from 'amazon-cognito-identity-js';
@@ -40,23 +39,23 @@ export class NewGroupComponent extends React.Component<any, any> {
     const locationTag = form.newGroupLocation.value + "-" + form.newGroupName.value;
 
     const newGroupObject = {
-      Admin: "true",
       Description: form.newGroupDescription.value,
       LocationTag: locationTag,
       Privacy: form.newGroupPrivacy.value,
-      Users: "Fernando"
     }
     console.log(newGroupObject)
 
-    if (cognitoUser !== null) {
+    // if (cognitoUser !== null) {
 
-      fetch('https://dwbbn4f58g.execute-api.us-east-2.amazonaws.com/dev/messages/', {
+      fetch('https://dwbbn4f58g.execute-api.us-east-2.amazonaws.com/dev/groups', {
         body: JSON.stringify({
           "Admin": "true",
           "Description": newGroupObject.Description,
           "Location_Tag": newGroupObject.LocationTag,
           "Privacy": newGroupObject.Privacy,
-          "Users": cognitoUser.getUsername()
+          "Users": "Fernando"
+
+          // "Users": cognitoUser.getUsername()
         }),
         headers: {
           'content-type': 'application/json'
@@ -80,42 +79,11 @@ export class NewGroupComponent extends React.Component<any, any> {
         .catch(err => {
           console.log('Unable to log in at this time, please try again later');
         })
-    }
-    else{
-      alert("Not Logged In");
-    }
+    // }
+    // else{
+    //   alert("Not Logged In");
+    // }
   }
-
-  // public submit = (e: any) => {
-  //   e.preventDefault();
-  //   const { username, password } = this.props; // destructuring
-  //   fetch('http://localhost:3001/users/login', {
-  //     body: JSON.stringify({ username, password }),
-  //     credentials: 'include',
-  //     headers: {
-  //       'content-type': 'application/json'
-  //     },
-  //     method: 'POST'
-  //   })
-  //     .then(resp => {
-  //       console.log(resp.status)
-  //       if (resp.status === 401) {
-  //         this.props.updateError('Invalid Credentials, try again.')
-  //         return;
-  //       }
-  //       if (resp.status === 200) {
-  //         return resp.json();
-  //       }
-  //       return;
-  //     })
-  //     .then(data => {
-  //       console.log(data);
-  //       this.props.history.push('/clicker');
-  //     })
-  //     .catch(err => {
-  //       this.props.updateError('Unable to log in at this time, please try again later');
-  //     })
-  // }
 
   public render() {
   return (

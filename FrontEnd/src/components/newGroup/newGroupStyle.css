@@ -2,7 +2,7 @@
 
 /* Full-width input fields */
   input[type=text], input[type=password] {
-  width: 50%;
+  width: 100%;
   padding: 15px;
   margin: 5px 0 22px 0;
   display: inline-block;
@@ -70,12 +70,6 @@ button {
 button:hover {
   opacity:1;
 }
-
-/* Extra styles for the cancel button */
-/* .cancelbtn {
-  padding: 14px 20px;
-  background-color: #f44336;
-} */
 
 /* Float cancel and signup buttons and add an equal width */
 .newGroupButton {
