@@ -20,11 +20,11 @@ export class NewGroupComponent extends React.Component<any, any> {
   public createNewGroup = (event: any) => {
     event.preventDefault()
 
-    const data = {
+    const cognitoData = {
       ClientId: '2mrd11cqf2anle4nsid84uv5hj',
       UserPoolId: 'us-east-2_vCSElhZSd'
     };
-    const userPool = new awsCognito.CognitoUserPool(data);
+    const userPool = new awsCognito.CognitoUserPool(cognitoData);
     const cognitoUser = userPool.getCurrentUser();
     console.log(cognitoUser);
 
@@ -40,12 +40,12 @@ export class NewGroupComponent extends React.Component<any, any> {
     }
 
     const form = event.target;
-    const locationTag = form.newGroupLocation.value + "-" + form.newGroupName.value;
 
     const newGroupObject = {
       Description: form.newGroupDescription.value,
-      LocationTag: locationTag,
+      Location: form.newGroupLocation.value,
       Privacy: form.newGroupPrivacy.value,
+      Tag: form.newGroupName.value
     }
     console.log(newGroupObject)
 
@@ -53,32 +53,52 @@ export class NewGroupComponent extends React.Component<any, any> {
 
     if (cognitoUser != null) {
 
+      // fetch('https://dwbbn4f58g.execute-api.us-east-2.amazonaws.com/dev/messages', {
+      //   body: JSON.stringify({
+      //     "Location": newGroupObject.Location,
+      //     "Status": newGroupObject.Privacy,
+      //     "Tag": newGroupObject.Tag,
+      //     // "Users": cognitoUser.getUsername()
+      //   }),
+      //   method: 'PUT'
+      // })
+      //   .then(resp => {
+      //     console.log(resp.status)
+      //     return resp.json();
+      //   })
+      //   .then(data => {
+      //     console.log(data.Items);
+      //     // this.props.history.push('/groups');
+      //   })
+      //   .catch(err => {
+      //     alert("Check in catch in newGroup.components. Switching componenets in catch.");
+      //     // this.props.history.push('/groups');
+      //     console.log('Unable to log in at this time, please try again later');
+      //   })
+
       fetch('https://dwbbn4f58g.execute-api.us-east-2.amazonaws.com/dev/groups', {
         body: JSON.stringify({
           "Admin": "true",
           "Description": newGroupObject.Description,
-          "Location_Tag": newGroupObject.LocationTag,
+          "Location": newGroupObject.Location,
+          // "Location_Tag": newGroupObject.Location + "-" + newGroupObject.Tag,
           "Privacy": newGroupObject.Privacy,
-          // "Users": "Fernando",
+          "Tag": newGroupObject.Tag,
           "Users": cognitoUser.getUsername()
         }),
         method: 'POST'
       })
         .then(resp => {
           console.log(resp.status)
-          if (resp.status === 401) {
-            console.log('Nothing in your area.')
-            return;
-          }
-          if (resp.status === 200) {
-            return resp.json();
-          }
-          return;
+          return resp.json();
         })
-        .then(fetchData => {
-          console.log(fetchData.Items);
+        .then(data => {
+          console.log(data.Items);
+          // this.props.history.push('/groups');
         })
         .catch(err => {
+          alert("Check in catch in newGroup.components. Switching componenets in catch.");
+          this.props.history.push('/groups');
           console.log('Unable to log in at this time, please try again later');
         })
     }
