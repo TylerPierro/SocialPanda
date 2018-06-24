@@ -2,23 +2,6 @@ import * as React from 'react';
 import './newGroupStyle.css';
 import * as awsCognito from 'amazon-cognito-identity-js';
 
-const data = {
-  ClientId: '12345du353sm7khjj1q',
-  UserPoolId: 'us-east-1_Iqc12345'
-};
-const userPool = new awsCognito.CognitoUserPool(data);
-const cognitoUser = userPool.getCurrentUser();
-
-if (cognitoUser != null) {
-  cognitoUser.getSession((err, session) => {
-    if (err) {
-      alert(err);
-      return;
-    }
-    console.log('session validity: ' + session.isValid());
-  });
-}
-
 const h1style = {
   // background: "#c9ff9e",
   // borderRadius: 30,
@@ -33,8 +16,29 @@ export class NewGroupComponent extends React.Component<any, any> {
     console.log(props);
   }
 
+
   public createNewGroup = (event: any) => {
     event.preventDefault()
+
+    const data = {
+      ClientId: '2mrd11cqf2anle4nsid84uv5hj',
+      UserPoolId: 'us-east-2_vCSElhZSd'
+    };
+    const userPool = new awsCognito.CognitoUserPool(data);
+    const cognitoUser = userPool.getCurrentUser();
+    console.log(cognitoUser);
+
+    
+    if (cognitoUser != null) {
+      cognitoUser.getSession((err, session) => {
+        if (err) {
+          alert(err);
+          return;
+        }
+        console.log('session validity: ' + session.isValid());
+      });
+    }
+
     const form = event.target;
     const locationTag = form.newGroupLocation.value + "-" + form.newGroupName.value;
 
@@ -45,7 +49,9 @@ export class NewGroupComponent extends React.Component<any, any> {
     }
     console.log(newGroupObject)
 
-    if (cognitoUser !== null) {
+
+
+    if (cognitoUser != null) {
 
       fetch('https://dwbbn4f58g.execute-api.us-east-2.amazonaws.com/dev/groups', {
         body: JSON.stringify({
