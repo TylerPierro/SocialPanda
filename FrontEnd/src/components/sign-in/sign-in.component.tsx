@@ -36,7 +36,8 @@ export class SignInComponent extends React.Component<any, any> {
     // console.log(idtok.payload['cognito:groups']) //payload has the user info on it
 
     // navigate pages now that we have successfully logged in
-    this.props.history.push('/movies');
+    alert("SUCCESSO")
+    this.props.history.push('/profile');
   }
 
   public onFailure = (err: any) => {

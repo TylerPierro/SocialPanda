@@ -34,10 +34,16 @@ export class RegisterPageComponent extends React.Component<any, any> {
       Value: '+15555555555'
     };
 
+    const dataNami ={
+      Name: 'nami',
+      Value: 'Im a value of a custom attribute!'
+    }
+
+    const attributeNami = new awsCognito.CognitoUserAttribute(dataNami);
     const attributeEmail = new awsCognito.CognitoUserAttribute(dataEmail);
     const attributePhoneNumber = new awsCognito.CognitoUserAttribute(dataPhoneNumber);
 
-
+    attributeList.push(attributeNami);
     attributeList.push(attributePhoneNumber);
     attributeList.push(attributeEmail);
 
@@ -50,6 +56,28 @@ export class RegisterPageComponent extends React.Component<any, any> {
       }
       CognitoUser = result.user;
       console.log('user name is ' + CognitoUser.getUsername());
+
+
+      // CognitoUser.authenticateUser(authenticationDetails, {
+      //   onSuccess: function (result) {
+      //       var accessToken = result.getAccessToken().getJwtToken();
+            
+      //       /* Use the idToken for Logins Map when Federating User Pools with identity pools or when passing through an Authorization Header to an API Gateway Authorizer*/
+      //       var idToken = result.idToken.jwtToken;
+      //   },
+
+      //   onFailure: function(err) {
+      //       alert(err);
+      //   },
+      // }
+
+
+
+
+
+
+
+
     });
   }
 
