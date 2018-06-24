@@ -45,7 +45,7 @@ export class NewGroupComponent extends React.Component<any, any> {
     }
     console.log(newGroupObject)
 
-    // if (cognitoUser !== null) {
+    if (cognitoUser !== null) {
 
       fetch('https://dwbbn4f58g.execute-api.us-east-2.amazonaws.com/dev/groups', {
         body: JSON.stringify({
@@ -53,13 +53,9 @@ export class NewGroupComponent extends React.Component<any, any> {
           "Description": newGroupObject.Description,
           "Location_Tag": newGroupObject.LocationTag,
           "Privacy": newGroupObject.Privacy,
-          "Users": "Fernando"
-
-          // "Users": cognitoUser.getUsername()
+          // "Users": "Fernando",
+          "Users": cognitoUser.getUsername()
         }),
-        headers: {
-          'content-type': 'application/json'
-        },
         method: 'POST'
       })
         .then(resp => {
@@ -79,10 +75,10 @@ export class NewGroupComponent extends React.Component<any, any> {
         .catch(err => {
           console.log('Unable to log in at this time, please try again later');
         })
-    // }
-    // else{
-    //   alert("Not Logged In");
-    // }
+    }
+    else{
+      alert("Not Logged In");
+    }
   }
 
   public render() {
