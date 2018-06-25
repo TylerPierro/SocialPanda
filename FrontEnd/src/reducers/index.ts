@@ -2,10 +2,10 @@ import { combineReducers } from "redux";
 import { signInReducer } from "./sign-in.reducer";
 import { groupsReducer } from "./groups.reducer";
 import { Post } from "../model/Post";
-// import { RegisterReducer } from "./register.reducer";
 import { CityTag } from "../model/CityTag";
 import { CognitoUser } from "amazon-cognito-identity-js";
 import { cognitoUserReducer } from "./cognito-user-reducer";
+import { messagesReducer } from "./messages.reducer";
 
 export interface ICognitoUser { 
   user: CognitoUser | null
@@ -18,6 +18,13 @@ export interface IGroups {
   displayGroups: CityTag[];
   groupStatus: string;
   tagSearch: string;
+}
+
+export interface IMessages {
+  msgBoard: Post[];
+  newPost: string;
+  displayGroups: CityTag[];
+  groupStatus: string;
 }
 
 export interface IRegister {
@@ -41,6 +48,7 @@ export interface ISignIn {
 export interface IState {
   cognitoUser: ICognitoUser,
   groups: IGroups,
+  messages: IMessages,
   register: IRegister,
   signIn: ISignIn
 };
@@ -48,5 +56,6 @@ export interface IState {
 export const state = combineReducers<IState>({
   cognitoUser: cognitoUserReducer,
   groups: groupsReducer,
+  messages: messagesReducer,
   signIn: signInReducer
 });
