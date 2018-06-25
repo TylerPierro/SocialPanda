@@ -3,6 +3,7 @@ import './groupsSearch.css';
 import { IGroups } from '../../reducers';
 import { CityTag } from '../../model/CityTag';
 import * as awsCognito from 'amazon-cognito-identity-js';
+import { MessagesComponent } from '../messages/messages.component';
 
 interface IProps extends IGroups {
   submitNewPost: (newPost: string, city: string) => void
@@ -85,7 +86,8 @@ export class GroupsComponent extends React.Component<IProps, any> {
       })
       .then(data => {
         console.log(data);
-        // Switch to messages component (path props eventually)
+        // loadMessagesComponent(msgBoard.Location.replace(' ','+'), msgBoard.Tag.replace(' ','+'));
+        return MessagesComponent;
       })
       .catch(err => {
         console.log(err);
@@ -119,8 +121,8 @@ export class GroupsComponent extends React.Component<IProps, any> {
   }
 
   public submit = (e: any) => {
-    console.log(this.props.citySearch);
-    console.log(this.props.tagSearch);
+    // console.log(this.props.citySearch);
+    // console.log(this.props.tagSearch);
     e.preventDefault();
     let location = this.props.citySearch;
     location = location.replace(' ', '+')
