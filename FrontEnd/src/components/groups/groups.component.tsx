@@ -118,9 +118,6 @@ export class GroupsComponent extends React.Component<IProps, any> {
        // if (group.privacy === 'private') {
          // Send request to admins
          // Display request sent to admin
-       // } else {
-         // If public, then switch to messages component
-         // Pass paramaters msgBoard.location, msgBoard.tag
        // }
     }
   }
