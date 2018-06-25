@@ -15,11 +15,11 @@ interface IProps extends IGroups {
   updateTag: (tag: string) => void
 }
 
-const data = {
-  ClientId: '12345du353sm7khjj1q',
-  UserPoolId: 'us-east-1_Iqc12345'
+const cognitoData = {
+  ClientId: '2mrd11cqf2anle4nsid84uv5hj',
+  UserPoolId: 'us-east-2_vCSElhZSd'
 };
-const userPool = new awsCognito.CognitoUserPool(data);
+const userPool = new awsCognito.CognitoUserPool(cognitoData);
 const cognitoUser = userPool.getCurrentUser();
 
 if (cognitoUser != null) {
@@ -63,15 +63,48 @@ export class GroupsComponent extends React.Component<IProps, any> {
 
   public displayMessageGroup(msgBoard: CityTag, e: any) {
     e.preventDefault();
-    console.log(this.props.updateTag)
-    if(msgBoard !== undefined) {
-      this.props.updateMsgBoard(JSON.parse(JSON.stringify(msgBoard)).values);
-      // this.props.updateMsgBoard(msgBoard.messages);
+    let test: boolean = true;
+    const group = `${msgBoard.Location.replace(' ','+')}-${msgBoard.Tag.replace(' ','+')}`;
+    console.log(group);
+    const username = cognitoUser&&cognitoUser.getUsername();
+    console.log(username);
+    fetch (`https://dwbbn4f58g.execute-api.us-east-2.amazonaws.com/dev/groups/${group}/user/${username}`, {
+      headers: {
+        'content-type': 'application/json'
+      }
+    })
+      .then(resp => {
+        console.log(resp.status)
+        if (resp.status === 200) {
+          return resp.json();
+        } else {
+          console.log('Either no matching group or user');
+          return resp.status;
+        }
+        return;
+      })
+      .then(data => {
+        console.log(data);
+        // Switch to messages component (path props eventually)
+      })
+      .catch(err => {
+        console.log(err);
+        console.log('User is not in group');
+        test = false;
+      })
+    if(test === true) {
+      // Then switch to messages component
+      // Pass paramaters msgBoard.location, msgBoard.tag
+    } else {
+      // Display "join group button"
+       // if (group.privacy === 'private') {
+         // Send request to admins
+         // Display request sent to admin
+       // } else {
+         // If public, then switch to messages component
+         // Pass paramaters msgBoard.location, msgBoard.tag
+       // }
     }
-    else{
-      alert("No messages here.")
-    }
-  
   }
 
   public createPost = (e: any) => {
@@ -125,7 +158,7 @@ export class GroupsComponent extends React.Component<IProps, any> {
         <div className="tagList">
           {this.props.displayGroups.map(disp =>
             <h3 style={groupsStyle} key={disp.Tag} 
-            onClick={this.displayMessageGroup.bind(this, disp.messages)}
+            onClick={this.displayMessageGroup.bind(this, disp)}
             >{disp.Tag}</h3>
             // <h3>-{disp.}</h3>
             // <img src={disp.groupPic}/>

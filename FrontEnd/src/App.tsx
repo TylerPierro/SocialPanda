@@ -27,6 +27,7 @@ class App extends React.Component<any, any> {
               <Route path="/sign-in" component={SignInContainer} />
               <Route path="/profile" component={ProfileComponent} />
               <Route path="/register" component={RegisterPageComponent} />
+              {/* <Route path="/messages/{location-tag}/{users}" component={MessagesComponent} /> */}
               <Route path="/messages" component={MessagesComponent} />
             </Switch>
           </div>
