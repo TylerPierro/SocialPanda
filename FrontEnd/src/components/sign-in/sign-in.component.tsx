@@ -3,7 +3,7 @@ import * as React from 'react';
 import * as awsCognito from 'amazon-cognito-identity-js';
 import './signin-style.css'
 import { Link } from 'react-router-dom';
-import { demoApiAxios } from '../../interceptors/demo-api-axios';
+import { demoApiAxios } from '../../interceptors/api-axios';
 import { environment } from '../environment';
 // import { s3ListSkylines, s3Print } from '../image-uploader/s3iterator';
 
