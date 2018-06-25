@@ -3,7 +3,7 @@ import './groupsSearch.css';
 import { IGroups } from '../../reducers';
 import { CityTag } from '../../model/CityTag';
 import * as awsCognito from 'amazon-cognito-identity-js';
-import { MessagesComponent } from '../messages/messages.component';
+import { Redirect } from 'react-router';
 
 interface IProps extends IGroups {
   submitNewPost: (newPost: string, city: string) => void
@@ -16,11 +16,11 @@ interface IProps extends IGroups {
   updateTag: (tag: string) => void
 }
 
-const data = {
-  ClientId: '12345du353sm7khjj1q',
-  UserPoolId: 'us-east-1_Iqc12345'
+const cognitoData = {
+  ClientId: '2mrd11cqf2anle4nsid84uv5hj',
+  UserPoolId: 'us-east-2_vCSElhZSd'
 };
-const userPool = new awsCognito.CognitoUserPool(data);
+const userPool = new awsCognito.CognitoUserPool(cognitoData);
 const cognitoUser = userPool.getCurrentUser();
 
 if (cognitoUser != null) {
@@ -51,6 +51,11 @@ const groupsStyle = {
 
 
 export class GroupsComponent extends React.Component<IProps, any> {
+  public state = {
+    location: this.props.updateCity,
+    tag: this.props.updateTag,
+    toMessages: false
+  }
 
   constructor(props: any) {
     super(props);
@@ -64,31 +69,52 @@ export class GroupsComponent extends React.Component<IProps, any> {
 
   public displayMessageGroup = (props: any, msgBoard: CityTag, e: any) => {
     e.preventDefault();
-    // console.log(msgBoard);
-    // console.log(msgBoard.Location);
-    // console.log(msgBoard.Tag);
-    const test = true;
-
+    let test: boolean = true;
+    const group = `${msgBoard.Location.replace(' ','+')}-${msgBoard.Tag.replace(' ','+')}`;
+    console.log(group);
+    const username = cognitoUser&&cognitoUser.getUsername();
+    console.log(username);
+    fetch (`https://dwbbn4f58g.execute-api.us-east-2.amazonaws.com/dev/groups/${group}/user/${username}`, {
+      headers: {
+        'content-type': 'application/json'
+      }
+    })
+      .then(resp => {
+        console.log(resp.status)
+        if (resp.status === 200) {
+          return resp.json();
+        } else {
+          console.log('Either no matching group or user');
+          return resp.status;
+        }
+      })
+      .then(data => {
+        console.log(data);
+        // loadMessagesComponent(msgBoard.Location.replace(' ','+'), msgBoard.Tag.replace(' ','+'));
+        this.setState(() => ({
+          location: msgBoard.Location.replace(' ','+'),
+          tag: msgBoard.Tag.replace(' ','+'),
+          toMessages: true
+        }))
+      })
+      .catch(err => {
+        console.log(err);
+        console.log('User is not in group');
+        test = false;
+      })
     if(test === true) {
-      // this.props.history.push('/messages');
-
-      return MessagesComponent;
-
+      // Then switch to messages component
+      // Pass paramaters msgBoard.location, msgBoard.tag
+    } else {
+      // Display "join group button"
+       // if (group.privacy === 'private') {
+         // Send request to admins
+         // Display request sent to admin
+       // } else {
+         // If public, then switch to messages component
+         // Pass paramaters msgBoard.location, msgBoard.tag
+       // }
     }
-    else{
-      return console.log('some stuff');
-    }
-    
-    
-    
-    // if(msgBoard !== undefined) {
-    //   this.props.updateMsgBoard(JSON.parse(JSON.stringify(msgBoard)).values);
-    //   // this.props.updateMsgBoard(msgBoard.messages);
-    // }
-    // else{
-    //   alert("No messages here.")
-    // }
-  
   }
 
 // THIS IS THE FUNCTION THAT HAPPEND WHEN A USER CLICKS ON A GROUP TO DISPLAY ALL OF THE MESSAGES
@@ -120,8 +146,8 @@ export class GroupsComponent extends React.Component<IProps, any> {
   // }
 
   public submit = (e: any) => {
-    console.log(this.props.citySearch);
-    console.log(this.props.tagSearch);
+    // console.log(this.props.citySearch);
+    // console.log(this.props.tagSearch);
     e.preventDefault();
     let location = this.props.citySearch;
     location = location.replace(' ', '+')
@@ -136,6 +162,9 @@ export class GroupsComponent extends React.Component<IProps, any> {
   }
 
   public render() {
+    if (this.state.toMessages === true) {
+      return <Redirect to={`/messages/${this.state.location}/${this.state.tag}`} />
+    }
     return (
       <div>
         <form onSubmit={this.submit}>
