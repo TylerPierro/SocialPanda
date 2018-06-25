@@ -12,11 +12,11 @@ if (cognitoUser !== null) {
   username = cognitoUser.getUsername();
 }
 
-export const submitNewPost = (newPost: string) => (dispatch: any) => {
+export const submitNewPost = (newPost: string, city: string) => (dispatch: any) => {
   console.log(newPost);
   fetch("https://dwbbn4f58g.execute-api.us-east-2.amazonaws.com/dev/messages", {
     body: JSON.stringify({
-      "Location": "Tampa",
+      "Location": city,
       "Tag": "LARP",
       "messages": {
         "box": newPost,
@@ -48,6 +48,9 @@ export const submitNewPost = (newPost: string) => (dispatch: any) => {
         type: groupsTypes.SUBMIT_NEW_POST
       });
   })
+  .catch(err => {
+    console.log('Unable to log in at this time, please try again later');
+  })
 }
 
 export const updateCity = (citySearch: string) => {
@@ -60,6 +63,7 @@ export const updateCity = (citySearch: string) => {
 }
 
 export const updateMsgBoard = (msgBoard: object) => {
+  console.log(msgBoard)
   return {
     payload: {
       msgBoard
@@ -96,7 +100,8 @@ export const updateDisplay1 = (displayGroups: string) => (dispatch: any) => {
       return;
     })
     .then(data => {
-      // console.log(data.Items[0].messages.values[0]);
+      // console.log(data.Items);
+      // console.log("searching: " + displayGroups);
       dispatch({
         payload: {
           displayGroups: data.Items
