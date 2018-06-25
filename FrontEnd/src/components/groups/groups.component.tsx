@@ -77,7 +77,7 @@ export class GroupsComponent extends React.Component<IProps, any> {
     fetch (`https://dwbbn4f58g.execute-api.us-east-2.amazonaws.com/dev/groups/${group}/user/${username}`, {
       headers: {
         'content-type': 'application/json'
-      }
+      } 
     })
       .then(resp => {
         console.log(resp.status)
