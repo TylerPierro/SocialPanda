@@ -41,6 +41,15 @@ margin-left: 10%;
   border-Color: '#d6d7da';
 }
 
+.join {
+  float: unset;
+  margin-left: 50%;
+  /* border: '30px solid green'; */
+  border-radius: 4;
+  border-Width: 0.5;
+  border-Color: '#d6d7da';
+}
+
 .messageBox{
   margin-left: 2%;
   padding: 10px;

@@ -4,6 +4,9 @@ import { IGroups } from '../../reducers';
 import { CityTag } from '../../model/CityTag';
 import * as awsCognito from 'amazon-cognito-identity-js';
 import { Redirect } from 'react-router';
+import { ApiAxios } from '../../interceptors/api-axios';
+import { environment } from '../environment';
+
 
 interface IProps extends IGroups {
   submitNewPost: (newPost: string, city: string) => void
@@ -77,7 +80,7 @@ export class GroupsComponent extends React.Component<IProps, any> {
     fetch (`https://dwbbn4f58g.execute-api.us-east-2.amazonaws.com/dev/groups/${group}/user/${username}`, {
       headers: {
         'content-type': 'application/json'
-      }
+      } 
     })
       .then(resp => {
         console.log(resp.status)
@@ -100,6 +103,14 @@ export class GroupsComponent extends React.Component<IProps, any> {
       .catch(err => {
         console.log(err);
         console.log('User is not in group');
+<<<<<<< HEAD
+=======
+        this.setState(() => ({
+          location: msgBoard.Location.replace(' ','+'),
+          tag: msgBoard.Tag.replace(' ','+'),
+          toMessages: 0
+        }))
+>>>>>>> 8ff337e399700c9679d9d8154002f4139e5cc81e
         test = false;
       })
     if(test === true) {
@@ -110,40 +121,44 @@ export class GroupsComponent extends React.Component<IProps, any> {
        // if (group.privacy === 'private') {
          // Send request to admins
          // Display request sent to admin
-       // } else {
-         // If public, then switch to messages component
-         // Pass paramaters msgBoard.location, msgBoard.tag
        // }
     }
   }
 
-// THIS IS THE FUNCTION THAT HAPPEND WHEN A USER CLICKS ON A GROUP TO DISPLAY ALL OF THE MESSAGES
 
-  // public displayMessageGroup(msgBoard: CityTag, e: any) {
-  //   e.preventDefault();
-  //   console.log(this.props.updateTag)
-  //   if(msgBoard !== undefined) {
-  //     this.props.updateMsgBoard(JSON.parse(JSON.stringify(msgBoard)).values);
-  //     // this.props.updateMsgBoard(msgBoard.messages);
-  //   }
-  //   else{
-  //     alert("No messages here.")
-  //   }
-  
-  // }
+  public joinGroup = (locationTag: string, e: any) => {
+    console.log(locationTag);
+    console.log(cognitoUser&&cognitoUser.getUsername());
+    ApiAxios.patch(environment.gateway + 'groups', {
+      "Admin": "false",
+      "Location_Tag": locationTag,
+      "Users": cognitoUser&&cognitoUser.getUsername()
+    })
+      .then(resp => {
+        return resp.status;
+      })
+      .then(data => {
+        console.log(data);
+        this.setState(() => ({
+          toMessages: 1
+        }))
+      })
+      .catch(err => {
+        console.log("Failed to add user to group");
+        console.log(err);
+      })
+  }
 
-  // THIS IS THE FUNCTION CALLED WHEN A USER SENDS A NEW MESSAGE
-
-  // public createPost = (e: any) => {
-  //   e.preventDefault();
-  //   // if (cognitoUser !== null) {
-  //     const city = this.props.citySearch;
-  //     const box = this.props.newPost;
-  //     console.log(box);
-  //     this.props.submitNewPost(box, city);
-  //     // this.setState(this.props.updateDisplay2(this.props.citySearch, tagT));
-  //   // }
-  // }
+  public createPost = (e: any) => {
+    e.preventDefault();
+    // if (cognitoUser !== null) {
+      const city = this.props.citySearch;
+      const box = this.props.newPost;
+      console.log(box);
+      this.props.submitNewPost(box, city);
+      // this.setState(this.props.updateDisplay2(this.props.citySearch, tagT));
+    // }
+  }
 
   public submit = (e: any) => {
     // console.log(this.props.citySearch);
@@ -194,6 +209,7 @@ export class GroupsComponent extends React.Component<IProps, any> {
             // <img src={disp.groupPic}/>
           )}
         </div>
+<<<<<<< HEAD
 
 {/* THIS DISPLAYS ALL OF THE MESSAGES */}
         <div className="messageBoard">
@@ -217,6 +233,10 @@ export class GroupsComponent extends React.Component<IProps, any> {
               placeholder="Be a social panda" />
             <input onClick={this.createPost.bind(this)} type="submit" id="sendButton" className="btn search-submit" value="Send" /> */}
           {/* </form> */}
+=======
+        <div className="join">
+          { this.state.toMessages ? null : <button type="button" id="joinButton" onClick={this.joinGroup.bind(this, `${this.state.location}-${this.state.tag}`)}>Join Group</button> }
+>>>>>>> 8ff337e399700c9679d9d8154002f4139e5cc81e
         </div>
       </div>
     );

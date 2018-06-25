@@ -3,6 +3,9 @@ import './messages.css';
 import { IMessages } from '../../reducers';
 import { CityTag } from '../../model/CityTag';
 import * as awsCognito from 'amazon-cognito-identity-js';
+import { ApiAxios } from '../../interceptors/api-axios';
+import { environment } from '../environment';
+import { URL } from 'url';
 
 interface IProps extends IMessages {
   submitNewPost: (newPost: string) => void
@@ -46,6 +49,23 @@ export class MessagesComponent extends React.Component<IProps, any> {
     console.log(props);
   }
 
+  public componentDidMount() {
+    const urlString = window.location.href;
+    const url = new URL(urlString);
+    const params = url.searchParams.getAll('params');
+    console.log(params);
+    ApiAxios.get(environment.gateway + `messages/${params[0]}/${params[1]}`)
+        .then(resp => {
+          this.setState({
+            url: resp.data
+          })
+        })
+        .catch(err => {
+          console.log(environment.gateway + 'files/skylines/bagus-ghufron-42002-unsplash.jpg');
+            console.log(err);
+        })
+  }
+
   public updateError = (e: any) => {
     const password = e.target.value;
     this.props.updateError(password);
@@ -80,35 +100,12 @@ export class MessagesComponent extends React.Component<IProps, any> {
   //   location = location.replace(' ', '+')
   //   let tag = this.props.tagSearch;
   //   tag = tag.replace(' ', '+')
-  //   if (tag === '' || tag === null) {
-  //     this.props.updateDisplay1(location);
-  //   }
-  //   else {
-  //     this.props.updateDisplay2(location, tag);
-  //   }
+  //   this.props.updateDisplay2(location, tag);
   // }
 
   public render() {
     return (
       <div>
-        {/* <form onSubmit={this.submit}>
-          <div className="allSearch">
-            <input className="searchBar"
-              type="string"
-              value={this.props.citySearch}
-              onChange={(e: any) => this.props.updateCity(e.target.value)}
-              placeholder="Search by Location" />
-
-            <input type="submit" id="searchButton" className="btn search-submit" value="Search" />
-
-            <input className="searchBar2"
-              type="string"
-              value={this.props.tagSearch}
-              onChange={(e: any) => this.props.updateTag(e.target.value)}
-              placeholder="Search a Tag" />
-          </div>
-        </form> */}
-        <br />
         {/* <div className="tagList">
           {this.props.displayGroups.map(disp =>
             <h3 style={groupsStyle} key={disp.Tag} 
