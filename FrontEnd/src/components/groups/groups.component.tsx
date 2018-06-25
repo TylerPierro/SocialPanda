@@ -34,12 +34,12 @@ if (cognitoUser != null) {
 }
 
 // ADDED BACKGROUND COLOR AND STYLE TO EACH MESSAGE SO THEY ARE SEPERATED NOW!
-const messageStyle = {
-  background: "#86b2d8",
-  borderRadius: 20,
-  margin: "20px",
-  padding: "20px"
-};
+// const messageStyle = {
+//   background: "#86b2d8",
+//   borderRadius: 20,
+//   margin: "20px",
+//   padding: "20px"
+// };
 
 // ADDED BACKGROUND COLOR AND STYLE TO EACH GROUP SO THEY ARE SEPERATED NOW!
 const groupsStyle = {
@@ -54,7 +54,7 @@ export class GroupsComponent extends React.Component<IProps, any> {
   public state = {
     location: this.props.updateCity,
     tag: this.props.updateTag,
-    toMessages: false
+    toMessages: -1
   }
 
   constructor(props: any) {
@@ -94,12 +94,15 @@ export class GroupsComponent extends React.Component<IProps, any> {
         this.setState(() => ({
           location: msgBoard.Location.replace(' ','+'),
           tag: msgBoard.Tag.replace(' ','+'),
-          toMessages: true
+          toMessages: 1
         }))
       })
       .catch(err => {
         console.log(err);
         console.log('User is not in group');
+        this.setState(() => ({
+          toMessages: 0
+        }))
         test = false;
       })
     if(test === true) {
@@ -145,7 +148,7 @@ export class GroupsComponent extends React.Component<IProps, any> {
   }
 
   public render() {
-    if (this.state.toMessages === true) {
+    if (this.state.toMessages === 1) {
       return <Redirect to={`/messages/${this.state.location}/${this.state.tag}`} />
     }
     return (
@@ -177,32 +180,8 @@ export class GroupsComponent extends React.Component<IProps, any> {
             // <img src={disp.groupPic}/>
           )}
         </div>
-        <div className="messageBoard">
-          {
-              (JSON.parse(JSON.stringify(this.props.msgBoard))).map(disp =>
-                <div style={messageStyle} key={JSON.parse(disp).time} className="postBox">
-                  <h4> {JSON.parse(disp).user} </h4>
-                  <p> {JSON.parse(disp).box} </p>
-                  <h5> {JSON.parse(disp).time} </h5>
-                </div>
-              )
-            
-            // (JSON.parse(JSON.stringify(this.props.msgBoard))).map(disp =>
-            //   <div style={messageStyle} key={JSON.parse(disp).time} className="postBox">
-            //     <h4> {JSON.parse(disp).user} </h4>
-            //     <p> {JSON.parse(disp).box} </p>
-            //     <h5> {JSON.parse(disp).time} </h5>
-            //   </div>
-            // )
-          }
-          {/* <form onSubmit={this.createPost}> */}
-            <input className="messageBox"
-              type="string"
-              value={this.props.newPost}
-              onChange={(e: any) => this.props.updateNewPost(e.target.value)}
-              placeholder="Be a social panda" />
-            <input onClick={this.createPost.bind(this)} type="submit" id="sendButton" className="btn search-submit" value="Send" />
-          {/* </form> */}
+        <div className="join">
+          { this.state.toMessages ? null : <button type="submit" id="joinButton" /> }
         </div>
       </div>
     );
