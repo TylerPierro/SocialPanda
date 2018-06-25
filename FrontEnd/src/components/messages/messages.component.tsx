@@ -14,8 +14,8 @@ interface IProps extends IMessages {
 }
 
 const data = {
-  ClientId: '12345du353sm7khjj1q',
-  UserPoolId: 'us-east-1_Iqc12345'
+  ClientId: '2mrd11cqf2anle4nsid84uv5hj',
+  UserPoolId: 'us-east-2_vCSElhZSd'
 };
 const userPool = new awsCognito.CognitoUserPool(data);
 const cognitoUser = userPool.getCurrentUser();
