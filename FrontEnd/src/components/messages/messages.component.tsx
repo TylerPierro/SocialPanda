@@ -5,7 +5,6 @@ import { CityTag } from '../../model/CityTag';
 import * as awsCognito from 'amazon-cognito-identity-js';
 import { ApiAxios } from '../../interceptors/api-axios';
 import { environment } from '../environment';
-import { URL } from 'url';
 
 interface IProps extends IMessages {
   submitNewPost: (newPost: string) => void
@@ -16,11 +15,11 @@ interface IProps extends IMessages {
   updateNewPost: (box: string) => void
 }
 
-const data = {
+const cognitoData = {
   ClientId: '12345du353sm7khjj1q',
   UserPoolId: 'us-east-1_Iqc12345'
 };
-const userPool = new awsCognito.CognitoUserPool(data);
+const userPool = new awsCognito.CognitoUserPool(cognitoData);
 const cognitoUser = userPool.getCurrentUser();
 
 if (cognitoUser != null) {
@@ -47,20 +46,31 @@ export class MessagesComponent extends React.Component<IProps, any> {
     console.log(props);
   }
 
-  public componentDidMount() {
+  public componentWillMount() {
     this.setState({
       user: cognitoUser&&cognitoUser.getUsername()
     })
-    console.log('here in messages');
-    const urlString = window.location.href;
-    const url = new URL(urlString);
-    const params = url.searchParams.getAll('params');
+    const params = window.location.href.split('/');
     console.log(params);
-    ApiAxios.get(environment.gateway + `messages/${params[0]}/${params[1]}`)
+    const location = params[5];
+    const tag = params[6];
+    ApiAxios.get(environment.gateway + `messages/${location}/${tag}`)
       .then(resp => {
-        this.setState({
-          url: resp.data
-        })
+        console.log(resp.status)
+        if (resp.status === 200) {
+          console.log(resp.data);
+          return resp.data;
+        } else if (resp.status === 403) {
+          console.log("User does not belong to this group");
+          return resp.status;
+        } else {
+          console.log('Either no matching group or user');
+          return resp.status;
+        }
+      })
+      .then(data => {
+        console.log(data.Item.messages.values);
+        this.props.updateMsgBoard(data.Item.messages.values);
       })
       .catch(err => {
         console.log('Error building the message board');
@@ -82,7 +92,6 @@ export class MessagesComponent extends React.Component<IProps, any> {
     else{
       alert("No messages here.")
     }
-  
   }
 
   public createPost = (e: any) => {
@@ -121,30 +130,22 @@ export class MessagesComponent extends React.Component<IProps, any> {
         </div>
         <div className="messageBoard">
           {
-              (JSON.parse(JSON.stringify(this.props.msgBoard))).map(disp =>
-                <div style={messageStyle} key={JSON.parse(disp).time} className="postBox">
-                  <h4> {JSON.parse(disp).user} </h4>
-                  <p> {JSON.parse(disp).box} </p>
-                  <h5> {JSON.parse(disp).time} </h5>
-                </div>
-              )
-            
-            // (JSON.parse(JSON.stringify(this.props.msgBoard))).map(disp =>
-            //   <div style={messageStyle} key={JSON.parse(disp).time} className="postBox">
-            //     <h4> {JSON.parse(disp).user} </h4>
-            //     <p> {JSON.parse(disp).box} </p>
-            //     <h5> {JSON.parse(disp).time} </h5>
-            //   </div>
-            // )
+            JSON.parse(JSON.stringify(this.props.msgBoard)).map(disp =>
+              <div style={messageStyle} key={JSON.parse(disp).time} className="postBox">
+                <h4> {JSON.parse(disp).user} </h4>
+                <p> {JSON.parse(disp).box} </p>
+                <h5> {JSON.parse(disp).time} </h5>
+              </div>
+            )
           }
-          {/* <form onSubmit={this.createPost}> */}
+          <form onSubmit={this.createPost.bind(this)}>
             <input className="messageBox"
               type="string"
               value={this.props.newPost}
               onChange={(e: any) => this.props.updateNewPost(e.target.value)}
               placeholder="Be a social panda" />
             <input onClick={this.createPost.bind(this)} type="submit" id="sendButton" className="btn search-submit" value="Send" />
-          {/* </form> */}
+          </form>
         </div>
       </div>
     );
