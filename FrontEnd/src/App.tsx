@@ -28,7 +28,6 @@ class App extends React.Component<any, any> {
               <Route path="/profile" component={ProfileComponent} />
               <Route path="/register" component={RegisterPageComponent} />
               <Route path="/messages/{location}/{tag}" component={MessagesComponent} />
-              {/* <Route path="/messages" component={MessagesComponent} /> */}
             </Switch>
           </div>
         </HashRouter>
