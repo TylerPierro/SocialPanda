@@ -1,0 +1,85 @@
+
+ .allSearch{
+margin-left: 10%;
+}
+
+ .searchBar {
+  padding: 10px;
+  display: inline-block;
+  width: 40%;
+  border-radius: 30px;
+} 
+
+.search-submit{
+  margin-left: 20px;
+  margin-right: 20px;
+  display: inline-block;
+}
+
+/* form { 
+  position: fixed;
+} */
+
+.searchBar2 {
+  padding: 10px;
+  display: inline-block;
+  width: 40%;
+  border-radius: 30px;
+} 
+
+.tagList {
+  float: left;
+  position: fixed;
+}
+
+.messageBoard {
+  float: unset;
+  margin-left: 30%;
+  border: '30px solid green';
+  border-radius: 4;
+  border-Width: 0.5;
+  border-Color: '#d6d7da';
+}
+
+.messageBox{
+  margin-left: 2%;
+  padding: 10px;
+  display: inline-block;
+  width: 87%;
+  border-radius: 30px;
+  /* width: 50%; */
+}
+
+
+.postBox {
+  border-color: black;
+  border: 5px;
+  border-radius: 3px;
+}
+
+h3{
+  color: black;
+  cursor: pointer;
+}
+
+h4{
+  color: black;
+  /* cursor: pointer; */
+
+}
+
+body{
+  /* background-image: url(https://dtkp6g0samjql.cloudfront.net/uploads/photo/file/7834336/il_fullxfull.252642439.jpg);  */
+  background-image: url(http://www.desktopwallpaperhd.net/wallpapers/5/e/skyline-desktop-wallpaper-night-photo-chicago-59774.jpg);
+  background-repeat: no-repeat;
+  background-size: cover; 
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.not-allowed-cursor {
+  cursor: not-allowed;
+}
+

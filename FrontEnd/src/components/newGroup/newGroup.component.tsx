@@ -89,16 +89,18 @@ export class NewGroupComponent extends React.Component<any, any> {
         method: 'POST'
       })
         .then(resp => {
-          console.log(resp.status)
-          return resp.json();
+          console.log(resp)
+          // return resp.json();
+          return resp.status;
+
         })
         .then(data => {
-          console.log(data.Items);
-          // this.props.history.push('/groups');
+          console.log(data);
+          this.props.history.push('/groups');
         })
         .catch(err => {
           alert("Check in catch in newGroup.components. Switching componenets in catch.");
-          this.props.history.push('/groups');
+          // this.props.history.push('/groups');
           console.log('Unable to log in at this time, please try again later');
         })
     }

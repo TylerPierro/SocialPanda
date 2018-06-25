@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 import { NavComponent } from './components/nav.component';
 import './include/bootstrap';
 import './App.css';
@@ -8,10 +7,9 @@ import { Provider } from 'react-redux';
 import { store } from './Store';
 import { SignInContainer } from './components/sign-in/sign-in.container';
 import { GroupsContainer } from './components/groups/groups.container';
-// import { NewGroupContainer } from './components/newGroup/newGroup.container';
 import { RegisterPageComponent } from './components/register/register.page.component';
 import { NewGroupComponent } from './components/newGroup/newGroup.component';
-
+import { MessagesComponent } from './components/messages/messages.component';
 
 class App extends React.Component<any, any> {
 
@@ -27,6 +25,7 @@ class App extends React.Component<any, any> {
               <Route path="/newGroup" component={NewGroupComponent} />
               <Route path="/sign-in" component={SignInContainer} />
               <Route path="/register" component={RegisterPageComponent} />
+              <Route path="/messages" component={MessagesComponent} />
             </Switch>
           </div>
         </HashRouter>
