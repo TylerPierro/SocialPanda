@@ -41,29 +41,31 @@ const messageStyle = {
   padding: "20px"
 };
 
-
 export class MessagesComponent extends React.Component<IProps, any> {
-
   constructor(props: any) {
     super(props);
     console.log(props);
   }
 
   public componentDidMount() {
+    this.setState({
+      user: cognitoUser&&cognitoUser.getUsername()
+    })
+    console.log('here in messages');
     const urlString = window.location.href;
     const url = new URL(urlString);
     const params = url.searchParams.getAll('params');
     console.log(params);
     ApiAxios.get(environment.gateway + `messages/${params[0]}/${params[1]}`)
-        .then(resp => {
-          this.setState({
-            url: resp.data
-          })
+      .then(resp => {
+        this.setState({
+          url: resp.data
         })
-        .catch(err => {
-          console.log(environment.gateway + 'files/skylines/bagus-ghufron-42002-unsplash.jpg');
-            console.log(err);
-        })
+      })
+      .catch(err => {
+        console.log('Error building the message board');
+        console.log(err);
+      })
   }
 
   public updateError = (e: any) => {
@@ -106,15 +108,17 @@ export class MessagesComponent extends React.Component<IProps, any> {
   public render() {
     return (
       <div>
-        {/* <div className="tagList">
+        <div className="tagList">
           {this.props.displayGroups.map(disp =>
-            <h3 style={groupsStyle} key={disp.Tag} 
+            <h3 
+            // style={groupsStyle} 
+            key={disp.Tag} 
             onClick={this.displayMessageGroup.bind(this, disp.messages)}
             >{disp.Tag}</h3>
             // <h3>-{disp.}</h3>
             // <img src={disp.groupPic}/>
           )}
-        </div> */}
+        </div>
         <div className="messageBoard">
           {
               (JSON.parse(JSON.stringify(this.props.msgBoard))).map(disp =>

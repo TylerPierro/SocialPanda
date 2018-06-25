@@ -30,7 +30,7 @@ export class SignInComponent extends React.Component<any, any> {
     }
   }
 
-  public componentDidMount() {
+  public componentWillMount() {
     ApiAxios.get(environment.context + 'files/bagus-ghufron-42002-unsplash.jpg')
         .then(resp => {
           this.setState({
