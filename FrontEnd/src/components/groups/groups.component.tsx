@@ -5,6 +5,7 @@ import { CityTag } from '../../model/CityTag';
 import * as awsCognito from 'amazon-cognito-identity-js';
 import { Redirect } from 'react-router';
 
+
 interface IProps extends IGroups {
   submitNewPost: (newPost: string, city: string) => void
   updateCity: (city: string) => void
