@@ -1,5 +1,4 @@
 export const groupsTypes = {
-    MSG_SWITCH: 'MSG_SWITCH',
     SUBMIT_NEW_POST: 'SUBMIT_NEW_POST',
     UPDATE_CITY: 'UPDATE_CITY',
     UPDATE_DISPLAY: 'UPDATE_DISPLAY',
