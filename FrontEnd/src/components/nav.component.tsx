@@ -20,7 +20,7 @@ export const NavComponent: React.StatelessComponent<{}> = () => {
               <Link to="/groups" className="unset-anchor nav-link">Explore Groups</Link>
             </li>
             <li className="nav-item active">
-              <Link to="/groups" className="unset-anchor nav-link">New Groups</Link>
+              <Link to="/newGroup" className="unset-anchor nav-link">Create Group</Link>
             </li>
             <li className="nav-item active">
               <Link to="/sign-in" className="unset-anchor nav-link">Sign In</Link>

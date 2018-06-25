@@ -26,6 +26,7 @@ export interface IRegister {
   errorMessage: string
 }
 
+
 export interface ISignIn {
   firstSignIn: {
     isFirstSignIn: boolean,
