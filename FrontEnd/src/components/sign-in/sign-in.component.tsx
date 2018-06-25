@@ -31,14 +31,14 @@ export class SignInComponent extends React.Component<any, any> {
   }
 
   public componentDidMount() {
-    ApiAxios.get(environment.context + '/files/bagus-ghufron-42002-unsplash.jpg')
+    ApiAxios.get(environment.context + 'files/bagus-ghufron-42002-unsplash.jpg')
         .then(resp => {
           this.setState({
             url: resp.data
           })
         })
         .catch(err => {
-          console.log(environment.context + '/files/skylines/bagus-ghufron-42002-unsplash.jpg');
+          console.log(environment.context + 'files/skylines/bagus-ghufron-42002-unsplash.jpg');
             console.log(err);
         })
   }
