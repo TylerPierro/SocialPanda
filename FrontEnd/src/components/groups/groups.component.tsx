@@ -4,6 +4,9 @@ import { IGroups } from '../../reducers';
 import { CityTag } from '../../model/CityTag';
 import * as awsCognito from 'amazon-cognito-identity-js';
 import { Redirect } from 'react-router';
+import { ApiAxios } from '../../interceptors/api-axios';
+import { environment } from '../environment';
+
 
 interface IProps extends IGroups {
   submitNewPost: (newPost: string, city: string) => void
@@ -77,7 +80,7 @@ export class GroupsComponent extends React.Component<IProps, any> {
     fetch (`https://dwbbn4f58g.execute-api.us-east-2.amazonaws.com/dev/groups/${group}/user/${username}`, {
       headers: {
         'content-type': 'application/json'
-      }
+      } 
     })
       .then(resp => {
         console.log(resp.status)
@@ -101,6 +104,8 @@ export class GroupsComponent extends React.Component<IProps, any> {
         console.log(err);
         console.log('User is not in group');
         this.setState(() => ({
+          location: msgBoard.Location.replace(' ','+'),
+          tag: msgBoard.Tag.replace(' ','+'),
           toMessages: 0
         }))
         test = false;
@@ -118,6 +123,29 @@ export class GroupsComponent extends React.Component<IProps, any> {
          // Pass paramaters msgBoard.location, msgBoard.tag
        // }
     }
+  }
+
+  public joinGroup = (locationTag: string, e: any) => {
+    console.log(locationTag);
+    console.log(cognitoUser&&cognitoUser.getUsername());
+    ApiAxios.patch(environment.gateway + 'groups', {
+      "Admin": "false",
+      "Location_Tag": locationTag,
+      "Users": cognitoUser&&cognitoUser.getUsername()
+    })
+      .then(resp => {
+        return resp.status;
+      })
+      .then(data => {
+        console.log(data);
+        this.setState(() => ({
+          toMessages: 1
+        }))
+      })
+      .catch(err => {
+        console.log("Failed to add user to group");
+        console.log(err);
+      })
   }
 
   public createPost = (e: any) => {
@@ -181,7 +209,7 @@ export class GroupsComponent extends React.Component<IProps, any> {
           )}
         </div>
         <div className="join">
-          { this.state.toMessages ? null : <button type="submit" id="joinButton" /> }
+          { this.state.toMessages ? null : <button type="button" id="joinButton" onClick={this.joinGroup.bind(this, `${this.state.location}-${this.state.tag}`)}>Join Group</button> }
         </div>
       </div>
     );
