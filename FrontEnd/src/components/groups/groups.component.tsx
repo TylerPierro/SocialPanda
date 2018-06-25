@@ -121,6 +121,10 @@ export class GroupsComponent extends React.Component<IProps, any> {
     }
   }
 
+  public joinGroup = (e: any, location: string, tag: string, username: string) => {
+    console.log('continue here')
+  }
+
   public createPost = (e: any) => {
     e.preventDefault();
     // if (cognitoUser !== null) {
@@ -182,7 +186,7 @@ export class GroupsComponent extends React.Component<IProps, any> {
           )}
         </div>
         <div className="join">
-          { this.state.toMessages ? null : <button type="submit" id="joinButton" /> }
+          { this.state.toMessages ? null : <button type="button" id="joinButton" onClick={this.joinGroup.bind(this, this.state.location, this.state.tag, cognitoUser&&cognitoUser.getUsername())} /> }
         </div>
       </div>
     );
