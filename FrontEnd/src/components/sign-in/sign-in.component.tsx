@@ -3,7 +3,7 @@ import * as React from 'react';
 import * as awsCognito from 'amazon-cognito-identity-js';
 import './signin-style.css'
 import { Link } from 'react-router-dom';
-import { demoApiAxios } from '../../interceptors/api-axios';
+import { ApiAxios } from '../../interceptors/api-axios';
 import { environment } from '../environment';
 // import { s3ListSkylines, s3Print } from '../image-uploader/s3iterator';
 
@@ -31,7 +31,7 @@ export class SignInComponent extends React.Component<any, any> {
   }
 
   public componentDidMount() {
-    demoApiAxios.get(environment.context + '/files/bagus-ghufron-42002-unsplash.jpg')
+    ApiAxios.get(environment.context + '/files/bagus-ghufron-42002-unsplash.jpg')
         .then(resp => {
           this.setState({
             url: resp.data

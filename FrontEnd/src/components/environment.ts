@@ -1,5 +1,6 @@
 const dev = {
-  context: 'https://50re9cfzo7.execute-api.us-east-2.amazonaws.com/dev'
+  context: 'https://50re9cfzo7.execute-api.us-east-2.amazonaws.com/dev',
+  gateway: 'https://dwbbn4f58g.execute-api.us-east-2.amazonaws.com/dev'
 }
 
 const prod = {
