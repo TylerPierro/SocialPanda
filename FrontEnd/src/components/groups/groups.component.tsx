@@ -5,7 +5,7 @@ import { CityTag } from '../../model/CityTag';
 import * as awsCognito from 'amazon-cognito-identity-js';
 
 interface IProps extends IGroups {
-  submitNewPost: (newPost: string) => void
+  submitNewPost: (newPost: string, city: string) => void
   updateCity: (city: string) => void
   updateDisplay1: (displayGroups: string) => void
   updateDisplay2: (displayGroups: string, displayTags: string) => void
@@ -63,22 +63,31 @@ export class GroupsComponent extends React.Component<IProps, any> {
 
   public displayMessageGroup(msgBoard: CityTag, e: any) {
     e.preventDefault();
-    console.log(msgBoard);
-    console.log(this.props.groupStatus);
-    this.props.updateMsgBoard(msgBoard);
+    console.log(this.props.updateTag)
+    if(msgBoard !== undefined) {
+      this.props.updateMsgBoard(JSON.parse(JSON.stringify(msgBoard)).values);
+      // this.props.updateMsgBoard(msgBoard.messages);
+    }
+    else{
+      alert("No messages here.")
+    }
+  
   }
 
   public createPost = (e: any) => {
     e.preventDefault();
     // if (cognitoUser !== null) {
+      const city = this.props.citySearch;
       const box = this.props.newPost;
-      this.props.submitNewPost(box);
+      console.log(box);
+      this.props.submitNewPost(box, city);
       // this.setState(this.props.updateDisplay2(this.props.citySearch, tagT));
     // }
   }
 
   public submit = (e: any) => {
-    console.log(this.props)
+    console.log(this.props.citySearch);
+    console.log(this.props.tagSearch);
     e.preventDefault();
     let location = this.props.citySearch;
     location = location.replace(' ', '+')
@@ -115,23 +124,30 @@ export class GroupsComponent extends React.Component<IProps, any> {
         <br />
         <div className="tagList">
           {this.props.displayGroups.map(disp =>
-            <h3 style={groupsStyle} key={disp.Tag} onClick={this.displayMessageGroup.bind(this, disp.messages.values)}>{disp.Tag}</h3>
+            <h3 style={groupsStyle} key={disp.Tag} 
+            onClick={this.displayMessageGroup.bind(this, disp.messages)}
+            >{disp.Tag}</h3>
             // <h3>-{disp.}</h3>
             // <img src={disp.groupPic}/>
           )}
         </div>
         <div className="messageBoard">
-          {/* {JSON.parse(JSON.stringify(this.props.msgBoard)) } */}
-
           {
+              (JSON.parse(JSON.stringify(this.props.msgBoard))).map(disp =>
+                <div style={messageStyle} key={JSON.parse(disp).time} className="postBox">
+                  <h4> {JSON.parse(disp).user} </h4>
+                  <p> {JSON.parse(disp).box} </p>
+                  <h5> {JSON.parse(disp).time} </h5>
+                </div>
+              )
             
-            (JSON.parse(JSON.stringify(this.props.msgBoard))).map(disp =>
-              <div style={messageStyle} key={JSON.parse(disp).time} className="postBox">
-                <h4> {JSON.parse(disp).user} </h4>
-                <p> {JSON.parse(disp).box} </p>
-                <h5> {JSON.parse(disp).time} </h5>
-              </div>
-            )
+            // (JSON.parse(JSON.stringify(this.props.msgBoard))).map(disp =>
+            //   <div style={messageStyle} key={JSON.parse(disp).time} className="postBox">
+            //     <h4> {JSON.parse(disp).user} </h4>
+            //     <p> {JSON.parse(disp).box} </p>
+            //     <h5> {JSON.parse(disp).time} </h5>
+            //   </div>
+            // )
           }
           {/* <form onSubmit={this.createPost}> */}
             <input className="messageBox"

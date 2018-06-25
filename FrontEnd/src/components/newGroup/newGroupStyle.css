@@ -1,0 +1,125 @@
+* {box-sizing: border-box}
+
+/* Full-width input fields */
+  input[type=text], input[type=password] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+#title{
+margin: auto;
+}
+
+#social-form{
+    /* margin: 0 auto; 
+    width:250px; */
+  /* text-align: center; */
+  margin-top: -2%;
+  margin-left: -1%;
+  background: white;
+} 
+
+#social-div{
+  height: 300px;
+  margin: auto;
+  background-position-y: 30%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url(http://www.sftravel.com/sites/sftraveldev.prod.acquia-sites.com/files/landmark-images/golden-gate_web.jpg); 
+  /* background-image: url(https://www.collegeatlas.org/wp-content/uploads/2014/06/Top-Party-Schools-main-image.jpg); */
+}
+
+#title{
+  color:white;
+  text-align: center;
+  /* margin-top: 64px; */
+}
+
+input[type=text]:focus, input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+/* 
+label{
+text-align: left;
+margin-right: 75%;
+} */
+
+/* Set a style for all buttons */
+button {
+  border-radius: 10px;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 20%;
+  opacity: 0.9;
+}
+
+button:hover {
+  opacity:1;
+}
+
+/* Float cancel and signup buttons and add an equal width */
+.newGroupButton {
+  float: left;
+  width: 20%;
+  border-radius: 10px;
+}
+
+/* Add padding to container elements */
+.container {
+  padding: 16px;
+}
+
+/* Clear floats */
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* Change styles for cancel button and signup button on extra small screens */
+@media screen and (max-width: 300px) {
+  .cancelbtn, .signupbtn {
+    width: 100%;
+  }
+}
+
+.reveal-if-active {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  font-size: 16px;
+  -webkit-transform: scale(0.8);
+          transform: scale(0.8);
+  transition: 0.5s;
+}
+.reveal-if-active label {
+  display: block;
+  margin: 0 0 3px 0;
+}
+.reveal-if-active input[type="text"] {
+  width: 50%;
+}
+input[type="radio"]:checked ~ .reveal-if-active, input[type="checkbox"]:checked ~ .reveal-if-active {
+  opacity: 1;
+  max-height: 100px;
+  padding: 10px 20px;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+  overflow: visible;
+}
+
+  
