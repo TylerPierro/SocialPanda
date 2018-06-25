@@ -3,7 +3,7 @@ import './groupsSearch.css';
 import { IGroups } from '../../reducers';
 import { CityTag } from '../../model/CityTag';
 import * as awsCognito from 'amazon-cognito-identity-js';
-import { MessagesComponent } from '../messages/messages.component';
+import { Redirect } from 'react-router';
 
 interface IProps extends IGroups {
   submitNewPost: (newPost: string, city: string) => void
@@ -51,6 +51,11 @@ const groupsStyle = {
 
 
 export class GroupsComponent extends React.Component<IProps, any> {
+  public state = {
+    location: this.props.updateCity,
+    tag: this.props.updateTag,
+    toMessages: false
+  }
 
   constructor(props: any) {
     super(props);
@@ -82,12 +87,15 @@ export class GroupsComponent extends React.Component<IProps, any> {
           console.log('Either no matching group or user');
           return resp.status;
         }
-        return;
       })
       .then(data => {
         console.log(data);
         // loadMessagesComponent(msgBoard.Location.replace(' ','+'), msgBoard.Tag.replace(' ','+'));
-        return MessagesComponent;
+        this.setState(() => ({
+          location: msgBoard.Location.replace(' ','+'),
+          tag: msgBoard.Tag.replace(' ','+'),
+          toMessages: true
+        }))
       })
       .catch(err => {
         console.log(err);
@@ -137,6 +145,9 @@ export class GroupsComponent extends React.Component<IProps, any> {
   }
 
   public render() {
+    if (this.state.toMessages === true) {
+      return <Redirect to={`/messages/${this.state.location}/${this.state.tag}`} />
+    }
     return (
       <div>
         <form onSubmit={this.submit}>
