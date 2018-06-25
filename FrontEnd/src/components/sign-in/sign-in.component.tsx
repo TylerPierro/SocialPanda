@@ -3,12 +3,44 @@ import * as React from 'react';
 import * as awsCognito from 'amazon-cognito-identity-js';
 import './signin-style.css'
 import { Link } from 'react-router-dom';
+import { demoApiAxios } from '../../interceptors/demo-api-axios';
+import { environment } from '../environment';
+// import { s3ListSkylines, s3Print } from '../image-uploader/s3iterator';
+
+// const socialpandaParams = {
+//   Bucket: 'image-uploads-socialpanda  ',
+//   EncodingType: 'url',
+//   MaxKeys: 30
+//   // Prefix: '/skylines/'
+// }
+
+// try {
+//   s3ListSkylines(socialpandaParams, s3Print);
+// } catch(e) {
+//   console.log(e + "\n" + e.stack);
+// }
 
 export class SignInComponent extends React.Component<any, any> {
 
   constructor(props: any) {
     super(props);
     console.log(props);
+    this.state = {
+      url: ''
+    }
+  }
+
+  public componentDidMount() {
+    demoApiAxios.get(environment.context + '/files/bagus-ghufron-42002-unsplash.jpg')
+        .then(resp => {
+          this.setState({
+            url: resp.data
+          })
+        })
+        .catch(err => {
+          console.log(environment.context + '/files/skylines/bagus-ghufron-42002-unsplash.jpg');
+            console.log(err);
+        })
   }
 
   public updateUsername = (e: any) => {
@@ -113,8 +145,12 @@ export class SignInComponent extends React.Component<any, any> {
   }
 
   public render() {
+    const signinDivStyle = {
+      // backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url('https://codetheweb.blog/assets/img/posts/full-image-hero/image.jpg')`
+      backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url(${this.state.url})`
+    }
     return (
-      <div id="signin-div" >
+      <div id="signin-div" style={signinDivStyle} >
       <form className="signin-form" /* onSubmit={this.registerUser} */ action="action_page.php" style={{ border: '1px solid #ccc' }}>
           {!this.props.firstSignIn.isFirstSignIn &&
             <form className="form-signin" id="container" onSubmit={this.submit}>
@@ -179,6 +215,7 @@ export class SignInComponent extends React.Component<any, any> {
           </h5>
           {/* <Link to="/register" className="unset-anchor nav-link">Sign up here!</Link> */}
       </form>
+      {/* <img src="https://s3.us-east-2.amazonaws.com/image-uploads-socialpanda/skylines/carl-solder-532353-unsplash.jpg" /> */}
       </div>
     );
   }
