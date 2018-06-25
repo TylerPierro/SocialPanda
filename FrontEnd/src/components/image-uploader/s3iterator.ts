@@ -10,7 +10,6 @@ export const s3 = new AWS.S3({
 })
 let s3DataContents: any;
 
-
 const socialpandaParams = {
   Bucket: 'image-uploads-socialpanda',
   EncodingType: 'url',

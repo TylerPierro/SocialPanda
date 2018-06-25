@@ -21,13 +21,12 @@ class App extends React.Component<any, any> {
           <div>
             <NavComponent />
             <Switch>
-              {/* <Route component={GroupsContainer} /> */}
               <Route path="/groups" component={GroupsContainer} />
               <Route path="/newGroup" component={NewGroupComponent} />
               <Route path="/sign-in" component={SignInContainer} />
               <Route path="/profile" component={ProfileComponent} />
               <Route path="/register" component={RegisterPageComponent} />
-              <Route path="/messages" component={MessagesComponent} />
+              <Route path="/messages/{location}/{tag}" component={MessagesComponent} />
             </Switch>
           </div>
         </HashRouter>
