@@ -10,10 +10,19 @@ export class ProfileComponent extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
 
+    // Default State
+    this.state={
+      email: '',
+      phoneNumber: '',
+      username: "TOM"
+    }
+
+
+
     const data = {
       ClientId: '2mrd11cqf2anle4nsid84uv5hj',
       UserPoolId: 'us-east-2_vCSElhZSd'
-      
+
     };
     const userPool = new awsCognito.CognitoUserPool(data);
     const cognitoUser = userPool.getCurrentUser();
@@ -21,73 +30,74 @@ export class ProfileComponent extends React.Component<any, any> {
 
 
 
-// Retreive token for reading attributes
-if (cognitoUser != null) {
-    cognitoUser.getSession((err, session) => {
-        if (err) {
-            alert(err);
-            return;
-        }
-        console.log('session validity: ' + session.isValid());
-    });
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-    if(cognitoUser!=null){
-    cognitoUser.getUserAttributes((err, result) => {
-      if (err) {
-          alert("WHOAH DUDE")
-          alert(err);
-          return;
-      }
-
-      
-
-      let i;
-      if(result!=null){
-      for (i = 0; i < result.length; i++) {
-          // alert("NOTIN MYHOUSE")
-          console.log('attribute ' + result[i].getName() + ' has value ' + result[i].getValue());
-      }
-    }
-  });
-    }
-
-    // Check if user is authenicated
+    // Retreive token for reading attributes
     if (cognitoUser != null) {
-      cognitoUser.getSession((err, session)=> {
+      cognitoUser.getSession((err, session) => {
         if (err) {
-          this.state={
-            email: '',
-            username: ''
-          }
           alert(err);
           return;
         }
-        console.log('username is: ' + cognitoUser.getUsername())
         console.log('session validity: ' + session.isValid());
+      });
+    }
 
-        this.state={
-          email: '',
-          username: cognitoUser.getUsername()
+    if (cognitoUser != null) {
+      cognitoUser.getUserAttributes((err, result) => {
+        if (err) {
+          alert(err);
+          return;
+        }
+
+        let i;
+        if (result != null) {
+          for (i = 0; i < result.length; i++) {
+            // alert("NOTIN MYHOUSE")
+            console.log('attribute ' + result[i].getName() + ' has value ' + result[i].getValue() + " with index " + i);
+
+            // Set Attributes 
+
+          }
+          alert("eafef")
+
+          this.setState((prevState) => {
+            return {
+              email: result[2].getValue(),
+              phoneNumber: result[1].getValue(),
+              username: "TOM"
+            };
+          });
+
+
+          // this.state={
+          //   email: result[2].getValue(),
+          //   phoneNumber: result[1].getValue(),
+          //   username: "TOM"
+          // }
+      
         }
       });
     }
-    else{
-      console.log("WHere dey at doe?")
-    }
+
+    // // Check if user is authenicated
+    // if (cognitoUser != null) {
+    //   cognitoUser.getSession((err, session)=> {
+    //     if (err) {
+
+    //       alert(err);
+    //       return;
+    //     }
+    //     console.log('username is: ' + cognitoUser.getUsername())
+    //     console.log('session validity: ' + session.isValid());
+
+    //     this.state={
+    //       email: '',
+    //       username: cognitoUser.getUsername()
+    //     }
+    //   });
+    // }
+    // else{
+    //   console.log("WHere dey at doe?")
+    // }
   }
 
   public submitForm = (event: any) => {
@@ -108,7 +118,7 @@ if (cognitoUser != null) {
   //   const data = {
   //     ClientId: '2mrd11cqf2anle4nsid84uv5hj',
   //     UserPoolId: 'us-east-2_vCSElhZSd'
-      
+
   //   };
   //   const userPool = new awsCognito.CognitoUserPool(data);
   //   const cognitoUser = userPool.getCurrentUser();
@@ -123,7 +133,7 @@ if (cognitoUser != null) {
   //     });
   //   }
   // }
-  public logout(){
+  public logout() {
     alert("asd")
     localStorage.clear()
     // this.props.history.push('/sign-in')
@@ -158,7 +168,7 @@ if (cognitoUser != null) {
                   <p><i className="fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-teal" />{this.state.username}</p>
                   <p><i className="fa fa-home fa-fw w3-margin-right w3-large w3-text-teal" />London, UK</p>
                   <p><i className="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-teal" />{this.state.email}</p>
-                  <p><i className="fa fa-phone fa-fw w3-margin-right w3-large w3-text-teal" />1224435534</p>
+                  <p><i className="fa fa-phone fa-fw w3-margin-right w3-large w3-text-teal" />{this.state.phoneNumber}</p>
                   <hr />
                   <p className="w3-large"><b><i className="fa fa-asterisk fa-fw w3-margin-right w3-text-teal" />Skills</b></p>
 
