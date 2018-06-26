@@ -42,7 +42,7 @@ export class ProfileComponent extends React.Component<any, any> {
     if (cognitoUser != null) {
       cognitoUser.getSession((err, session) => {
         if (err) {
-          alert(err);
+          console.log(err);
           return;
         }
         console.log('session validity: ' + session.isValid());
@@ -52,7 +52,7 @@ export class ProfileComponent extends React.Component<any, any> {
     if (cognitoUser != null) {
       cognitoUser.getUserAttributes((err, result) => {
         if (err) {
-          alert(err);
+          console.log(err);
           return;
         }
 
@@ -127,7 +127,7 @@ export class ProfileComponent extends React.Component<any, any> {
   }
 
   public logout() {
-    alert("asd")
+    console.log("asd")
     localStorage.clear()
     // this.props.history.push('/sign-in')
   }
@@ -156,7 +156,7 @@ export class ProfileComponent extends React.Component<any, any> {
     if (cognitoUser != null) {
       cognitoUser.getSession((err, session) => {
         if (err) {
-          alert(err);
+          console.log(err);
           return;
         }
         console.log('session validity: ' + session.isValid());
@@ -167,7 +167,7 @@ export class ProfileComponent extends React.Component<any, any> {
     if (cognitoUser != null) {
       cognitoUser.updateAttributes([formObj], (err, result) => {
         if (err) {
-          alert(err);
+          console.log(err);
           return;
         }
         console.log('success')
@@ -183,6 +183,9 @@ export class ProfileComponent extends React.Component<any, any> {
     },()=>{
       console.log('sdad')
     });
+
+    // Reload Page
+    window.location.reload();
 
   }
 
@@ -212,7 +215,7 @@ export class ProfileComponent extends React.Component<any, any> {
     if (cognitoUser != null) {
       cognitoUser.getSession((err, session) => {
         if (err) {
-          alert(err);
+          console.log(err);
           return;
         }
         console.log('session validity: ' + session.isValid());
@@ -223,7 +226,7 @@ export class ProfileComponent extends React.Component<any, any> {
     if (cognitoUser != null) {
       cognitoUser.updateAttributes([formObj], (err, result) => {
         if (err) {
-          alert(err);
+          console.log(err);
           return;
         }
         console.log('success')
@@ -239,6 +242,9 @@ export class ProfileComponent extends React.Component<any, any> {
     },()=>{
       console.log('sdad')
     });
+
+    // Reload Page
+    window.location.reload();
 
     
 
@@ -274,7 +280,7 @@ export class ProfileComponent extends React.Component<any, any> {
     if (cognitoUser != null) {
       cognitoUser.getSession((err, session) => {
         if (err) {
-          alert(err);
+          console.log(err);
           return;
         }
         console.log('session validity: ' + session.isValid());
@@ -285,7 +291,7 @@ export class ProfileComponent extends React.Component<any, any> {
     if (cognitoUser != null) {
       cognitoUser.updateAttributes([formObj], (err, result) => {
         if (err) {
-          alert(err);
+          console.log(err);
           return;
         }
         console.log('success')
@@ -302,14 +308,8 @@ export class ProfileComponent extends React.Component<any, any> {
       console.log('sdad')
     });
 
-    
-
-
-
-
-
-
-
+    // Reload Page
+    window.location.reload();
 
   }
 
