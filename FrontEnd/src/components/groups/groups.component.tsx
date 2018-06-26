@@ -95,14 +95,11 @@ export class GroupsComponent extends React.Component<IProps, any> {
       .catch(err => {
         console.log(err);
         console.log('User is not in group');
-<<<<<<< HEAD
-=======
         this.setState(() => ({
           location: msgBoard.Location.replace(' ','+'),
           tag: msgBoard.Tag.replace(' ','+'),
           toMessages: 0
         }))
->>>>>>> 8ff337e399700c9679d9d8154002f4139e5cc81e
         test = false;
       })
     if(test === true) {
@@ -201,34 +198,8 @@ export class GroupsComponent extends React.Component<IProps, any> {
             // <img src={disp.groupPic}/>
           )}
         </div>
-<<<<<<< HEAD
-
-{/* THIS DISPLAYS ALL OF THE MESSAGES */}
-        <div className="messageBoard">
-          {/* {
-              (JSON.parse(JSON.stringify(this.props.msgBoard))).map(disp =>
-                <div style={messageStyle} key={JSON.parse(disp).time} className="postBox">
-                  <h4> {JSON.parse(disp).user} </h4>
-                  <p> {JSON.parse(disp).box} </p>
-                  <h5> {JSON.parse(disp).time} </h5>
-                </div>
-              )
-          } */}
-
-{/* USE THIS TO DISPLAY A SEND MESSAGE BAR */}
-
-          {/* <form onSubmit={this.createPost}> */}
-            {/* <input className="messageBox"
-              type="string"
-              value={this.props.newPost}
-              onChange={(e: any) => this.props.updateNewPost(e.target.value)}
-              placeholder="Be a social panda" />
-            <input onClick={this.createPost.bind(this)} type="submit" id="sendButton" className="btn search-submit" value="Send" /> */}
-          {/* </form> */}
-=======
         <div className="join">
           { this.state.toMessages ? null : <button type="button" id="joinButton" onClick={this.joinGroup.bind(this, `${this.state.location}-${this.state.tag}`)}>Join Group</button> }
->>>>>>> 8ff337e399700c9679d9d8154002f4139e5cc81e
         </div>
       </div>
     );
