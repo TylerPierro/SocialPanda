@@ -2,7 +2,9 @@ import * as React from 'react';
 import { NavComponent } from './components/nav.component';
 import './include/bootstrap';
 import './App.css';
-import { HashRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { HashRouter, Switch, Route
+   // , Redirect 
+} from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './Store';
 import { SignInContainer } from './components/sign-in/sign-in.container';
@@ -29,7 +31,7 @@ class App extends React.Component<any, any> {
               <Route path="/register" component={RegisterPageComponent} />
               {/* <Route path="/messages" component={MessagesComponent} /> */}
               {/* THIS LINE INITIALIZES TO WHATEVER PATH WE WANT ON LOAD */}
-              <Redirect from="/" to="/groups"/>
+              {/* <Redirect from="/" to="/groups"/> */}
               <Route path="/messages/:location/:tag" component={MessagesContainer} />
             </Switch>
           </div>

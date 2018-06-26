@@ -49,7 +49,7 @@ export class GroupsComponent extends React.Component<IProps, any> {
   public state = {
     location: this.props.updateCity,
     tag: this.props.updateTag,
-    toMessages: false
+    toMessages: -1
   }
 
   constructor(props: any) {
@@ -62,7 +62,7 @@ export class GroupsComponent extends React.Component<IProps, any> {
     this.props.updateError(password);
   }
 
-  public displayMessageGroup = (props: any, msgBoard: CityTag, e: any) => {
+  public displayMessageGroup = (msgBoard: CityTag, e: any) => {
     e.preventDefault();
     let test: boolean = true;
     const group = `${msgBoard.Location.replace(' ','+')}-${msgBoard.Tag.replace(' ','+')}`;
@@ -89,7 +89,7 @@ export class GroupsComponent extends React.Component<IProps, any> {
         this.setState(() => ({
           location: msgBoard.Location.replace(' ','+'),
           tag: msgBoard.Tag.replace(' ','+'),
-          toMessages: true
+          toMessages: 1
         }))
       })
       .catch(err => {
@@ -138,16 +138,16 @@ export class GroupsComponent extends React.Component<IProps, any> {
       })
   }
 
-  public createPost = (e: any) => {
-    e.preventDefault();
-    // if (cognitoUser !== null) {
-      const city = this.props.citySearch;
-      const box = this.props.newPost;
-      console.log(box);
-      this.props.submitNewPost(box, city);
-      // this.setState(this.props.updateDisplay2(this.props.citySearch, tagT));
-    // }
-  }
+  // public createPost = (e: any) => {
+  //   e.preventDefault();
+  //   // if (cognitoUser !== null) {
+  //     const city = this.props.citySearch;
+  //     const box = this.props.newPost;
+  //     console.log(box);
+  //     this.props.submitNewPost(box, city);
+  //     // this.setState(this.props.updateDisplay2(this.props.citySearch, tagT));
+  //   // }
+  // }
 
   public submit = (e: any) => {
     // console.log(this.props.citySearch);
@@ -166,7 +166,9 @@ export class GroupsComponent extends React.Component<IProps, any> {
   }
 
   public render() {
-    if (this.state.toMessages === true) {
+    if (this.state.toMessages === 1) {
+      // console.log("message state is 1")
+      // console.log(`/messages/${this.state.location}/${this.state.tag}`)
       return <Redirect to={`/messages/${this.state.location}/${this.state.tag}`} />
     }
     return (
