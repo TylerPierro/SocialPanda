@@ -19,6 +19,7 @@ export class ProfileComponent extends React.Component<any, any> {
       name: '',
       phoneNumber: '',
       showEdit: '',
+      showEditAddress: '',
       showEditEmail: '',
       showEditPhone: '',
       username: "TOM"
@@ -314,6 +315,72 @@ export class ProfileComponent extends React.Component<any, any> {
   }
 
 
+  public updateAddress = (event: any) =>{
+   
+
+
+    event.preventDefault()
+
+    const data = {
+      ClientId: '368mt4qt7ghc8jp8fsvu308i98',
+      UserPoolId: 'us-east-2_eoUFN3DJn'
+
+    };
+    const userPool = new awsCognito.CognitoUserPool(data);
+    const cognitoUser = userPool.getCurrentUser();
+
+    // Grab from event
+    const formObj = {
+      Name: 'address',
+      Value: event.target.address1.value
+
+    }
+
+    console.log('STAGING CHANGES')
+    console.log(formObj)
+
+
+    // Authenticate User
+    if (cognitoUser != null) {
+      cognitoUser.getSession((err, session) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        console.log('session validity: ' + session.isValid());
+      });
+    }
+
+    // Update Cognito User Description
+    if (cognitoUser != null) {
+      cognitoUser.updateAttributes([formObj], (err, result) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        console.log('success')
+        console.log('call result: ' + result);
+      });
+    }
+
+    // Get rid of textbox and update state
+    this.setState((prevState) => {
+      return {
+        showEditAddress: '',
+      };
+    },()=>{
+      console.log('sdad')
+    });
+
+    // Reload Page
+    window.location.reload();
+
+  }
+
+
+
+
+
 
   public editDescription = (e: any) => {
     e.preventDefault()
@@ -338,6 +405,19 @@ export class ProfileComponent extends React.Component<any, any> {
       })} else{
         this.setState({
           showEditPhone: ''
+        })}
+  }
+
+  public editAddress = (e: any) => {
+    e.preventDefault()
+    console.log("editing description...")
+
+    if(this.state.showEditAddress === ''){
+      this.setState({
+        showEditAddress: 'true'
+      })} else{
+        this.setState({
+          showEditAddress: ''
         })}
   }
 
@@ -386,7 +466,18 @@ export class ProfileComponent extends React.Component<any, any> {
                 <div className="w3-container">
                   <br></br>
                   <p><i className="fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-teal" />{this.state.username}</p>
-                  <p><i className="fa fa-home fa-fw w3-margin-right w3-large w3-text-teal" />{this.state.address}</p>
+                  <p><i onClick={this.editAddress} className="fa fa-home fa-fw w3-margin-right w3-large w3-text-teal" />{this.state.address}</p>
+                  {this.state.showEditAddress ?
+                    <form onSubmit={this.updateAddress}>
+                      Edit: <input id="address1" type="text" name="address" size={512} /><br />
+                      <input type="submit" defaultValue="Submit" />
+                    </form>
+
+
+
+                    : null
+
+                  }
                   <p><i  onClick={this.editEmail} className="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-teal" />{this.state.email}</p>
                   {this.state.showEditEmail ?
                     <form onSubmit={this.updateEmail}>
