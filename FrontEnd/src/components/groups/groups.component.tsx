@@ -36,14 +36,6 @@ if (cognitoUser != null) {
   });
 }
 
-// ADDED BACKGROUND COLOR AND STYLE TO EACH MESSAGE SO THEY ARE SEPERATED NOW!
-// const messageStyle = {
-//   background: "#86b2d8",
-//   borderRadius: 20,
-//   margin: "20px",
-//   padding: "20px"
-// };
-
 // ADDED BACKGROUND COLOR AND STYLE TO EACH GROUP SO THEY ARE SEPERATED NOW!
 const groupsStyle = {
   background: "#c9ff9e",

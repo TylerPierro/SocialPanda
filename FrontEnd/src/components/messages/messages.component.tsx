@@ -32,6 +32,14 @@ if (cognitoUser != null) {
   });
 }
 
+// ADDED BACKGROUND COLOR AND STYLE TO EACH GROUP SO THEY ARE SEPERATED NOW!
+const groupsStyle = {
+  background: "#c9ff9e",
+  borderRadius: 30,
+  margin: "20px",
+  padding: "20px"
+};
+
 // ADDED BACKGROUND COLOR AND STYLE TO EACH MESSAGE SO THEY ARE SEPERATED NOW!
 const messageStyle = {
   background: "#86b2d8",
@@ -137,7 +145,7 @@ export class MessagesComponent extends React.Component<IProps, any> {
         <div className="tagList">
           {this.props.displayGroups.map(disp =>
             <h3 
-            // style={groupsStyle} 
+            style={groupsStyle} 
             key={disp.Tag} 
             onClick={this.displayMessageGroup.bind(this, disp)}
             >{disp.Location+'-'+disp.Tag}</h3>
