@@ -1,12 +1,11 @@
 import * as React from 'react';
 import './messages.css';
 import { IMessages } from '../../reducers';
-import { CityTag } from '../../model/CityTag';
 import * as awsCognito from 'amazon-cognito-identity-js';
 import { ApiAxios } from '../../interceptors/api-axios';
 import { environment } from '../environment';
 import { Redirect } from 'react-router';
-import { updateGroupsDisplay } from '../../actions/messages/messages.actions';
+import { updateGroups } from '../../actions/messages/messages.actions';
 
 interface IProps extends IMessages {
   submitNewPost: (newPost: string) => void
@@ -51,12 +50,12 @@ export class MessagesComponent extends React.Component<IProps, any> {
 
   constructor(props: any) {
     super(props);
-    console.log(props);
+    // console.log(props);
   }
 
   public componentWillMount() {
     const params = window.location.href.split('/');
-    console.log(params);
+    // console.log(params);
     const location = params[5];
     const tag = params[6];
     this.setState({
@@ -92,8 +91,8 @@ export class MessagesComponent extends React.Component<IProps, any> {
           tag: params[6].replace(' ','+'),
         })
       })
-    
-    updateGroupsDisplay(this.state.user);
+    console.log(this.state.user)
+    updateGroups(this.state.user);
   }
 
   public updateError = (e: any) => {
@@ -101,12 +100,15 @@ export class MessagesComponent extends React.Component<IProps, any> {
     this.props.updateError(password);
   }
 
-  public displayMessageGroup(msgBoard: CityTag, e: any) {
+  public displayMessageGroup(disp, e: any) {
     e.preventDefault();
+    console.log(disp);
     this.setState({
+      location: disp.Location.replace(' ','+'),
+      tag: disp.Tag.replace(' ','+'),
       toMessages: 1
     })
-    this.setState(this.props.updateGroupsDisplay(this.state.user));
+    // this.props.updateGroupsDisplay = (this.state.user);
   }
 
   public createPost = (e: any) => {
@@ -137,8 +139,8 @@ export class MessagesComponent extends React.Component<IProps, any> {
             <h3 
             // style={groupsStyle} 
             key={disp.Tag} 
-            onClick={this.displayMessageGroup.bind(this, disp.messages)}
-            >{disp.Tag}</h3>
+            onClick={this.displayMessageGroup.bind(this, disp)}
+            >{disp.Location+'-'+disp.Tag}</h3>
             // <h3>-{disp.}</h3>
             // <img src={disp.groupPic}/>
           )}

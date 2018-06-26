@@ -54,7 +54,7 @@ export const submitNewPost = (newPost: string) => (dispatch: any) => {
 }
 
 export const updateMsgBoard = (msgBoard: object) => {
-  console.log(msgBoard)
+  // console.log(msgBoard)
   return {
     payload: {
       msgBoard
@@ -73,7 +73,8 @@ export const updateNewPost = (newPost: string) => {
 }
 
 // SEARCHES BY USER
-export const updateGroupsDisplay = (user: string) => (dispatch: any) => {
+export const updateGroups = (user: string) => (dispatch: any) => {
+  console.log("here in updateGroupsDisplay action")
   fetch('https://dwbbn4f58g.execute-api.us-east-2.amazonaws.com/dev/messages/' + user, {
     headers: {
       'content-type': 'application/json'
