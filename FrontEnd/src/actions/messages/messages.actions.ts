@@ -72,35 +72,35 @@ export const updateNewPost = (newPost: string) => {
   }
 }
 
-// // SEARCHES BY JUST LOCATION
-// export const updateDisplay1 = (displayGroups: string) => (dispatch: any) => {
-//   fetch('https://dwbbn4f58g.execute-api.us-east-2.amazonaws.com/dev/messages/' + displayGroups, {
-//     headers: {
-//       'content-type': 'application/json'
-//     }
-//   })
-//     .then(resp => {
-//       console.log(resp.status)
-//       if (resp.status === 401) {
-//         console.log('Nothing in your area.')
-//         return;
-//       }
-//       if (resp.status === 200) {
-//         return resp.json();
-//       }
-//       return;
-//     })
-//     .then(data => {
-//       // console.log(data.Items);
-//       // console.log("searching: " + displayGroups);
-//       dispatch({
-//         payload: {
-//           displayGroups: data.Items
-//         },
-//         type: messagesTypes.UPDATE_DISPLAY
-//       })
-//     })
-//     .catch(err => {
-//       console.log('Unable to log in at this time, please try again later');
-//     })
-// }
+// SEARCHES BY USER
+export const updateGroupsDisplay = (user: string) => (dispatch: any) => {
+  fetch('https://dwbbn4f58g.execute-api.us-east-2.amazonaws.com/dev/messages/' + user, {
+    headers: {
+      'content-type': 'application/json'
+    }
+  })
+    .then(resp => {
+      console.log(resp.status)
+      if (resp.status === 401) {
+        console.log('Nothing in your area.')
+        return;
+      }
+      if (resp.status === 200) {
+        return resp.json();
+      }
+      return;
+    })
+    .then(data => {
+      console.log(data);
+      console.log("searching: " + user);
+      dispatch({
+        payload: {
+          displayGroups: data.Items
+        },
+        type: messagesTypes.UPDATE_DISPLAY
+      })
+    })
+    .catch(err => {
+      console.log('Unable to log in at this time, please try again later');
+    })
+}

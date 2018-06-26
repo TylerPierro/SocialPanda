@@ -5,11 +5,12 @@ import { CityTag } from '../../model/CityTag';
 import * as awsCognito from 'amazon-cognito-identity-js';
 import { ApiAxios } from '../../interceptors/api-axios';
 import { environment } from '../environment';
+import { Redirect } from 'react-router';
+import { updateGroupsDisplay } from '../../actions/messages/messages.actions';
 
 interface IProps extends IMessages {
   submitNewPost: (newPost: string) => void
-  updateDisplay1: (displayGroups: string) => void
-  updateDisplay2: (displayGroups: string, displayTags: string) => void
+  updateGroupsDisplay: (displayGroups: string) => void
   updateError: (error: string) => void
   updateMsgBoard: (msgBoard: object) => void
   updateNewPost: (box: string) => void
@@ -41,25 +42,36 @@ const messageStyle = {
 };
 
 export class MessagesComponent extends React.Component<IProps, any> {
+  public state = {
+    location: '',
+    tag: '',
+    toMessages: -1,
+    user: ''
+  }
+
   constructor(props: any) {
     super(props);
     console.log(props);
   }
 
   public componentWillMount() {
-    this.setState({
-      user: cognitoUser&&cognitoUser.getUsername()
-    })
     const params = window.location.href.split('/');
     console.log(params);
     const location = params[5];
     const tag = params[6];
+    this.setState({
+      user: cognitoUser&&cognitoUser.getUsername().replace(' ','+')
+    })
     ApiAxios.get(environment.gateway + `messages/${location}/${tag}`)
       .then(resp => {
         console.log(resp.status)
         if (resp.status === 200) {
           console.log(resp.data);
           return resp.data;
+          this.setState({
+            location: params[5].replace(' ','+'),
+            tag: params[6].replace(' ','+')
+          })
         } else if (resp.status === 403) {
           console.log("User does not belong to this group");
           return resp.status;
@@ -75,7 +87,13 @@ export class MessagesComponent extends React.Component<IProps, any> {
       .catch(err => {
         console.log('Error building the message board');
         console.log(err);
+        this.setState({
+          location: params[5].replace(' ','+'),
+          tag: params[6].replace(' ','+'),
+        })
       })
+    
+    updateGroupsDisplay(this.state.user);
   }
 
   public updateError = (e: any) => {
@@ -85,22 +103,16 @@ export class MessagesComponent extends React.Component<IProps, any> {
 
   public displayMessageGroup(msgBoard: CityTag, e: any) {
     e.preventDefault();
-    if(msgBoard !== undefined) {
-      this.props.updateMsgBoard(JSON.parse(JSON.stringify(msgBoard)).values);
-      // this.props.updateMsgBoard(msgBoard.messages);
-    }
-    else{
-      alert("No messages here.")
-    }
+    this.setState({
+      toMessages: 1
+    })
+    this.setState(this.props.updateGroupsDisplay(this.state.user));
   }
 
   public createPost = (e: any) => {
     e.preventDefault();
-    // if (cognitoUser !== null) {
-      const box = this.props.newPost;
-      this.props.submitNewPost(box);
-      // this.setState(this.props.updateDisplay2(this.props.citySearch, tagT));
-    // }
+    const box = this.props.newPost;
+    this.props.submitNewPost(box);
   }
 
   // public submit = (e: any) => {
@@ -115,6 +127,9 @@ export class MessagesComponent extends React.Component<IProps, any> {
   // }
 
   public render() {
+    if (this.state.toMessages === 1) {
+      return <Redirect to={`/messages/${this.state.location}/${this.state.tag}`} />
+    }
     return (
       <div>
         <div className="tagList">
