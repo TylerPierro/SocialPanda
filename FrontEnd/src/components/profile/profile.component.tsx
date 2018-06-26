@@ -4,6 +4,8 @@ import * as awsCognito from 'amazon-cognito-identity-js';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
+// import { demoApiAxios } from '../../interceptors/demo-api-axios';
+// import { environment } from '../environment';
 
 export class ProfileComponent extends React.Component<any, any> {
 
@@ -11,17 +13,23 @@ export class ProfileComponent extends React.Component<any, any> {
     super(props);
 
     // Default State
-    this.state={
+    this.state = {
+      description: '',
       email: '',
+      name: '',
       phoneNumber: '',
+      showEdit: '',
+      showEditEmail: '',
+      showEditPhone: '',
       username: "TOM"
+
     }
 
 
 
     const data = {
-      ClientId: '2mrd11cqf2anle4nsid84uv5hj',
-      UserPoolId: 'us-east-2_vCSElhZSd'
+      ClientId: '368mt4qt7ghc8jp8fsvu308i98',
+      UserPoolId: 'us-east-2_eoUFN3DJn'
 
     };
     const userPool = new awsCognito.CognitoUserPool(data);
@@ -34,7 +42,7 @@ export class ProfileComponent extends React.Component<any, any> {
     if (cognitoUser != null) {
       cognitoUser.getSession((err, session) => {
         if (err) {
-          alert(err);
+          console.log(err);
           return;
         }
         console.log('session validity: ' + session.isValid());
@@ -44,7 +52,7 @@ export class ProfileComponent extends React.Component<any, any> {
     if (cognitoUser != null) {
       cognitoUser.getUserAttributes((err, result) => {
         if (err) {
-          alert(err);
+          console.log(err);
           return;
         }
 
@@ -57,13 +65,17 @@ export class ProfileComponent extends React.Component<any, any> {
             // Set Attributes 
 
           }
-          alert("eafef")
+
 
           this.setState((prevState) => {
             return {
-              email: result[2].getValue(),
-              phoneNumber: result[1].getValue(),
-              username: "TOM"
+              address: result[1].getValue(),
+              description: result[6].getValue(),
+              email: result[7].getValue(),
+              name: result[3].getValue(),
+              phoneNumber: result[5].getValue(),
+              showEdit: '',
+              username: "BLANK"
             };
           });
 
@@ -73,7 +85,7 @@ export class ProfileComponent extends React.Component<any, any> {
           //   phoneNumber: result[1].getValue(),
           //   username: "TOM"
           // }
-      
+
         }
       });
     }
@@ -114,30 +126,238 @@ export class ProfileComponent extends React.Component<any, any> {
 
   }
 
-  // public getInfo = (event: any) => {
-  //   const data = {
-  //     ClientId: '2mrd11cqf2anle4nsid84uv5hj',
-  //     UserPoolId: 'us-east-2_vCSElhZSd'
-
-  //   };
-  //   const userPool = new awsCognito.CognitoUserPool(data);
-  //   const cognitoUser = userPool.getCurrentUser();
-
-  //   if (cognitoUser != null) {
-  //     cognitoUser.getSession((err, session)=> {
-  //       if (err) {
-  //         alert(err);
-  //         return;
-  //       }
-  //       console.log('session validity: ' + session.isValid());
-  //     });
-  //   }
-  // }
   public logout() {
-    alert("asd")
+    console.log("asd")
     localStorage.clear()
     // this.props.history.push('/sign-in')
   }
+  public updateDescription = (event: any) =>{
+    event.preventDefault()
+
+    const data = {
+      ClientId: '368mt4qt7ghc8jp8fsvu308i98',
+      UserPoolId: 'us-east-2_eoUFN3DJn'
+
+    };
+    const userPool = new awsCognito.CognitoUserPool(data);
+    const cognitoUser = userPool.getCurrentUser();
+
+    // Grab from event
+    const formObj = {
+      Name: 'custom:description',
+      Value: event.target.description1.value
+
+    }
+
+    console.log('STAGING CHANGES')
+    console.log(formObj)
+
+    // Authenticate User
+    if (cognitoUser != null) {
+      cognitoUser.getSession((err, session) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        console.log('session validity: ' + session.isValid());
+      });
+    }
+
+    // Update Cognito User Description
+    if (cognitoUser != null) {
+      cognitoUser.updateAttributes([formObj], (err, result) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        console.log('success')
+        console.log('call result: ' + result);
+      });
+    }
+
+    // Get rid of textbox and update state
+    this.setState((prevState) => {
+      return {
+        showEdit: '',
+      };
+    },()=>{
+      console.log('sdad')
+    });
+
+    // Reload Page
+    window.location.reload();
+
+  }
+
+  public updatePhone = (event: any) =>{
+    event.preventDefault()
+
+    const data = {
+      ClientId: '368mt4qt7ghc8jp8fsvu308i98',
+      UserPoolId: 'us-east-2_eoUFN3DJn'
+
+    };
+    const userPool = new awsCognito.CognitoUserPool(data);
+    const cognitoUser = userPool.getCurrentUser();
+
+    // Grab from event
+    const formObj = {
+      Name: 'phone_number',
+      Value: event.target.phone1.value
+
+    }
+
+    console.log('STAGING CHANGES')
+    console.log(formObj)
+
+
+    // Authenticate User
+    if (cognitoUser != null) {
+      cognitoUser.getSession((err, session) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        console.log('session validity: ' + session.isValid());
+      });
+    }
+
+    // Update Cognito User Description
+    if (cognitoUser != null) {
+      cognitoUser.updateAttributes([formObj], (err, result) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        console.log('success')
+        console.log('call result: ' + result);
+      });
+    }
+
+    // Get rid of textbox and update state
+    this.setState((prevState) => {
+      return {
+        showEditPhone: '',
+      };
+    },()=>{
+      console.log('sdad')
+    });
+
+    // Reload Page
+    window.location.reload();
+
+    
+
+  }
+
+
+  public updateEmail = (event: any) =>{
+   
+
+
+    event.preventDefault()
+
+    const data = {
+      ClientId: '368mt4qt7ghc8jp8fsvu308i98',
+      UserPoolId: 'us-east-2_eoUFN3DJn'
+
+    };
+    const userPool = new awsCognito.CognitoUserPool(data);
+    const cognitoUser = userPool.getCurrentUser();
+
+    // Grab from event
+    const formObj = {
+      Name: 'email',
+      Value: event.target.email1.value
+
+    }
+
+    console.log('STAGING CHANGES')
+    console.log(formObj)
+
+
+    // Authenticate User
+    if (cognitoUser != null) {
+      cognitoUser.getSession((err, session) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        console.log('session validity: ' + session.isValid());
+      });
+    }
+
+    // Update Cognito User Description
+    if (cognitoUser != null) {
+      cognitoUser.updateAttributes([formObj], (err, result) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        console.log('success')
+        console.log('call result: ' + result);
+      });
+    }
+
+    // Get rid of textbox and update state
+    this.setState((prevState) => {
+      return {
+        showEditEmail: '',
+      };
+    },()=>{
+      console.log('sdad')
+    });
+
+    // Reload Page
+    window.location.reload();
+
+  }
+
+
+
+  public editDescription = (e: any) => {
+    e.preventDefault()
+    console.log("editing description...")
+
+    if(this.state.showEdit === ''){
+      this.setState({
+        showEdit: 'true'
+      })} else{
+        this.setState({
+          showEdit: ''
+        })}
+  }
+
+  public editPhone = (e: any) => {
+    e.preventDefault()
+    console.log("editing description...")
+
+    if(this.state.showEditPhone === ''){
+      this.setState({
+        showEditPhone: 'true'
+      })} else{
+        this.setState({
+          showEditPhone: ''
+        })}
+  }
+
+  public editEmail = (e: any) => {
+    e.preventDefault()
+    console.log("editing email...")
+
+    console.log(this.state.showEditEmail)
+    if(this.state.showEditEmail === ''){
+    this.setState({
+      showEditEmail: 'true'
+    })} else{
+      this.setState({
+        showEditEmail: ''
+      })}
+    }
+
+
+
+  
 
   public render() {
     return (
@@ -159,16 +379,38 @@ export class ProfileComponent extends React.Component<any, any> {
                 <div className="w3-display-container">
                   <img src={require('./Pop.jpg')} style={{ width: '100%' }} alt="Avatar" />
                   <div className="w3-display-bottomleft w3-container w3-text-black">
-                    <h2 style={{ color: 'white' }}>Eric</h2>
+                    <h2 style={{ color: 'white' }}>{this.state.name}</h2>
 
                   </div>
                 </div>
                 <div className="w3-container">
                   <br></br>
                   <p><i className="fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-teal" />{this.state.username}</p>
-                  <p><i className="fa fa-home fa-fw w3-margin-right w3-large w3-text-teal" />London, UK</p>
-                  <p><i className="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-teal" />{this.state.email}</p>
-                  <p><i className="fa fa-phone fa-fw w3-margin-right w3-large w3-text-teal" />{this.state.phoneNumber}</p>
+                  <p><i className="fa fa-home fa-fw w3-margin-right w3-large w3-text-teal" />{this.state.address}</p>
+                  <p><i  onClick={this.editEmail} className="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-teal" />{this.state.email}</p>
+                  {this.state.showEditEmail ?
+                    <form onSubmit={this.updateEmail}>
+                      Edit: <input id="email1" type="text" name="email" size={512} /><br />
+                      <input type="submit" defaultValue="Submit" />
+                    </form>
+
+
+
+                    : null
+
+                  }
+                  <p><i onClick={this.editPhone} className="fa fa-phone fa-fw w3-margin-right w3-large w3-text-teal" />{this.state.phoneNumber}</p>
+                  {this.state.showEditPhone ?
+                    <form onSubmit={this.updatePhone}>
+                      Edit: <input id="phone1" type="text" name="email" size={512} /><br />
+                      <input type="submit" defaultValue="Submit" />
+                    </form>
+
+
+
+                    : null
+
+                  }
                   <hr />
                   <p className="w3-large"><b><i className="fa fa-asterisk fa-fw w3-margin-right w3-text-teal" />Skills</b></p>
 
@@ -187,7 +429,22 @@ export class ProfileComponent extends React.Component<any, any> {
                 <div className="w3-container">
 
 
-                  <p>Lorem ipsum dolor sit amet. Praesentium magnam consectetur vel in deserunt aspernatur est reprehenderit sunt hic. Nulla tempora soluta ea et odio, unde doloremque repellendus iure, iste.</p>
+                  <p>{this.state.description}</p>
+                  <button onClick={this.editDescription}>Edit description</button>
+
+
+                  {this.state.showEdit ?
+                    <form onSubmit={this.updateDescription}>
+                      Edit: <input id="description1" type="text" name="email" size={512} /><br />
+                      <input type="submit" defaultValue="Submit" />
+                    </form>
+
+
+
+                    : null
+
+                  }
+
                   <hr />
                 </div>
 

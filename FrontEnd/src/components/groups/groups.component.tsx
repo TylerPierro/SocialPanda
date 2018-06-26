@@ -172,7 +172,7 @@ export class GroupsComponent extends React.Component<IProps, any> {
       return <Redirect to={`/messages/${this.state.location}/${this.state.tag}`} />
     }
     return (
-      <div>
+      <div id="groupBody">
         <form onSubmit={this.submit}>
           <div className="allSearch">
             <input className="searchBar"
