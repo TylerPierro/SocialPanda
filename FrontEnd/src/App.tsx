@@ -10,7 +10,8 @@ import { GroupsContainer } from './components/groups/groups.container';
 import { RegisterPageComponent } from './components/register/register.page.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { NewGroupComponent } from './components/newGroup/newGroup.component';
-import { MessagesComponent } from './components/messages/messages.component';
+import { MessagesContainer } from './components/messages/messages.container';
+// import { MessagesComponent } from './components/messages/messages.component';
 
 class App extends React.Component<any, any> {
 
@@ -26,10 +27,10 @@ class App extends React.Component<any, any> {
               <Route path="/sign-in" component={SignInContainer} />
               <Route path="/profile" component={ProfileComponent} />
               <Route path="/register" component={RegisterPageComponent} />
-              <Route path="/messages" component={MessagesComponent} />
-              <Route path="/messages/{location}/{tag}" component={MessagesComponent} />
+              {/* <Route path="/messages" component={MessagesComponent} /> */}
               {/* THIS LINE INITIALIZES TO WHATEVER PATH WE WANT ON LOAD */}
               <Redirect from="/" to="/groups"/>
+              <Route path="/messages/:location/:tag" component={MessagesContainer} />
             </Switch>
           </div>
         </HashRouter>
