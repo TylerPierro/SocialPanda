@@ -30,17 +30,17 @@ export class SignInComponent extends React.Component<any, any> {
     }
   }
 
-  public componentDidMount() {
+  public componentWillMount() {
     ApiAxios.get(environment.context + 'files/bagus-ghufron-42002-unsplash.jpg')
-        .then(resp => {
-          this.setState({
-            url: resp.data
-          })
+      .then(resp => {
+        this.setState({
+          url: resp.data
         })
-        .catch(err => {
-          console.log(environment.context + 'files/skylines/bagus-ghufron-42002-unsplash.jpg');
-            console.log(err);
-        })
+      })
+      .catch(err => {
+        console.log(environment.context + 'files/skylines/bagus-ghufron-42002-unsplash.jpg');
+          console.log(err);
+      })
   }
 
   public updateUsername = (e: any) => {
