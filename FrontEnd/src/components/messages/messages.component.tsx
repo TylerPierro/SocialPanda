@@ -9,27 +9,10 @@ import { updateGroups } from '../../actions/messages/messages.actions';
 
 interface IProps extends IMessages {
   submitNewPost: (location: string, tag: string, user: string, newPost: string) => void
-  updateGroupsDisplay: (displayGroups: string) => void
+  updateGroupsDisplay: (displayGroups: object) => void
   updateError: (error: string) => void
   updateMsgBoard: (msgBoard: object) => void
   updateNewPost: (box: string) => void
-}
-
-const cognitoData = {
-  ClientId: '2mrd11cqf2anle4nsid84uv5hj',
-  UserPoolId: 'us-east-2_vCSElhZSd'
-};
-const userPool = new awsCognito.CognitoUserPool(cognitoData);
-const cognitoUser = userPool.getCurrentUser();
-
-if (cognitoUser != null) {
-  cognitoUser.getSession((err, session) => {
-    if (err) {
-      alert(err);
-      return;
-    }
-    console.log('session validity: ' + session.isValid());
-  });
 }
 
 // ADDED BACKGROUND COLOR AND STYLE TO EACH GROUP SO THEY ARE SEPERATED NOW!
@@ -49,38 +32,78 @@ const messageStyle = {
 };
 
 export class MessagesComponent extends React.Component<IProps, any> {
-  public state = {
-
-    hasMessages: true,
-
-    location: '',
-    tag: '',
-    toMessages: -1,
-    user: '',
-  }
 
   constructor(props: any) {
     super(props);
     // console.log(props);
+  
+
+    const cognitoData = {
+      ClientId: '368mt4qt7ghc8jp8fsvu308i98',
+      UserPoolId: 'us-east-2_eoUFN3DJn'
+    };
+    const userPool = new awsCognito.CognitoUserPool(cognitoData);
+    const cognitoUser = userPool.getCurrentUser();
+    
+    if (cognitoUser != null) {
+      cognitoUser.getSession((err, session) => {
+        if (err) {
+          alert(err);
+          return;
+        }
+        console.log('session validity: ' + session.isValid());
+      });
+    }
+
+
+  this.state = {
+    hasMessages: true,
+    location: '',
+    tag: '',
+    toMessages: -1,
+    user: cognitoUser&&cognitoUser.getUsername()
   }
+  console.log(this.state.user)
+  // updateGroups(this.state.user);
+  
+}
 
   public componentWillMount() {
+    const cognitoData = {
+      ClientId: '368mt4qt7ghc8jp8fsvu308i98',
+      UserPoolId: 'us-east-2_eoUFN3DJn'
+    };
+    const userPool = new awsCognito.CognitoUserPool(cognitoData);
+    const cognitoUser = userPool.getCurrentUser();
+    
+    if (cognitoUser != null) {
+      cognitoUser.getSession((err, session) => {
+        if (err) {
+          alert(err);
+          return;
+        }
+        console.log('session validity: ' + session.isValid());
+      });
+    }
+
     // SPLITS URL INTO PIECES TO ALLOW US TO GRAB THE LOCATION AND TAG FROM PARAMS
     const params = window.location.href.split('/');
     // console.log(params);
     const location = params[5];
     const tag = params[6];
     this.setState({
-      user: cognitoUser&&cognitoUser.getUsername().replace(' ','+')
+      user: cognitoUser&&cognitoUser.getUsername()
     })
+    console.log(this.state.user)
+
     ApiAxios.get(environment.gateway + `messages/${location}/${tag}`)
       .then(resp => {
         console.log(resp.status)
         if (resp.status === 200) {
-          console.log(resp.data);
+          // console.log(resp.data);
           this.setState({
-            location: params[5].replace(' ','+'),
-            tag: params[6].replace(' ','+')
+            location: params[5],
+            tag: params[6]
           })
           return resp.data;
 
@@ -94,11 +117,9 @@ export class MessagesComponent extends React.Component<IProps, any> {
       })
       .then(data => {
         console.log(data.Item.messages);
-        console.log(data)
-
         if(data.Item.messages !== undefined){
           this.props.updateMsgBoard(data.Item.messages.values);
-          // this.props.updateGroupsDisplay()
+
         }else{
           this.setState({hasMessages: false})
           // alert("There are no messages currently in this group!")
@@ -108,12 +129,18 @@ export class MessagesComponent extends React.Component<IProps, any> {
         console.log('Error building the message board');
         console.log(err);
         this.setState({
-          location: params[5].replace(' ','+'),
-          tag: params[6].replace(' ','+'),
+          location: params[5],
+          tag: params[6],
         })
       })
     console.log(this.state.user)
     updateGroups(this.state.user);
+  }
+
+  public componentWillUnmount() {
+    this.props.updateMsgBoard([]);
+    this.props.updateGroupsDisplay([]);
+    // updateGroups('');
   }
 
   public updateError = (e: any) => {
@@ -122,15 +149,67 @@ export class MessagesComponent extends React.Component<IProps, any> {
   }
 
   public displayMessageGroup(disp, e: any) {
-    e.preventDefault();
-    console.log(disp);
-    this.setState({
-      location: disp.Location.replace(' ','+'),
-      tag: disp.Tag.replace(' ','+'),
-      toMessages: 1
+    const cognitoData = {
+      ClientId: '368mt4qt7ghc8jp8fsvu308i98',
+      UserPoolId: 'us-east-2_eoUFN3DJn'
+    };
+    const userPool = new awsCognito.CognitoUserPool(cognitoData);
+    const cognitoUser = userPool.getCurrentUser();
+    
+    if (cognitoUser != null) {
+      cognitoUser.getSession((err, session) => {
+        if (err) {
+          alert(err);
+          return;
+        }
+        console.log('session validity: ' + session.isValid());
+      });
+    }
+
+    console.log(disp.username);
+    console.log(disp.Tag);
+    const username = cognitoUser&&cognitoUser.getUsername();
+    const group = `${disp.Location.replace(' ','+')}-${disp.Tag.replace(' ','+')}`;
+    ApiAxios.get(environment.gateway + `groups/${group}/user/${username}`)
+    .then(resp => {
+      console.log(resp.status)
+      if (resp.status === 200) {
+        return resp;
+      } else {
+        console.log('Either no matching group or user');
+        return resp.status;
+      }
     })
-    // this.props.updateGroupsDisplay = (this.state.user);
+    .then(data => {
+      console.log(data);
+      // loadMessagesComponent(msgBoard.Location.replace(' ','+'), msgBoard.Tag.replace(' ','+'));
+      this.setState(() => ({
+        location: disp.Location,
+        tag: disp.Tag,
+        toMessages: 1
+      }))
+    })
+    .catch(err => {
+      console.log(err);
+      console.log('User is not in group');
+      this.setState(() => ({
+        location: disp.Location,
+        tag: disp.Tag,
+        toMessages: 0
+      }))
+    })
   }
+
+  // public displayMessageGroup(disp, e: any) {
+  //   e.preventDefault();
+  //   console.log(disp);
+  //   this.setState({
+  //     location: disp.Location.replace(' ','+'),
+  //     tag: disp.Tag.replace(' ','+'),
+  //     toMessages: 1
+  //   })
+  //   this.props.updateGroupsDisplay = (this.state.user);
+  // }
 
   public createPost = (e: any) => {
     e.preventDefault();
@@ -174,7 +253,15 @@ export class MessagesComponent extends React.Component<IProps, any> {
         </div>
         <div className="messageBoard">
           {
-            JSON.parse(JSON.stringify(this.props.msgBoard)).map(disp =>
+            // JSON.parse(JSON.stringify(this.props.msgBoard)).map(disp =>
+            //   <div style={messageStyle} key={JSON.parse(disp).time} className="postBox">
+            //     <h4> {JSON.parse(disp).user} </h4>
+            //     <p> {JSON.parse(disp).box} </p>
+            //     <h5> {JSON.parse(disp).time} </h5>
+            //   </div>
+            // )
+            this.props.msgBoard.length > 0 &&
+            this.props.msgBoard.map((disp: any) =>
               <div style={messageStyle} key={JSON.parse(disp).time} className="postBox">
                 <h4> {JSON.parse(disp).user} </h4>
                 <p> {JSON.parse(disp).box} </p>

@@ -18,12 +18,14 @@ export const messagesReducer = (state = initialState, action: any) => {
     case messagesTypes.UPDATE_DISPLAY:
       return {
         ...state,
-        displayGroups: action.payload.displayGroups
+        displayGroups: action.payload.displayGroups,
+        // msgBoard: [...state.msgBoard, action.payload.newPost]
       };
     case messagesTypes.UPDATE_MSG_BOARD:
       return {
         ...state,
         msgBoard: action.payload.msgBoard
+        // msgBoard: [...state.msgBoard, action.payload.newPost]
       };
   }
 
