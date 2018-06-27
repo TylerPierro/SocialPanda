@@ -111,34 +111,12 @@ export class ProfileComponent extends React.Component<any, any> {
     //   console.log("WHere dey at doe?")
     // }
   }
-<<<<<<< HEAD
   
   public logout() {
     console.log("asd")
     localStorage.clear()
     // this.props.history.push('/sign-in')
   }
-=======
-
-  public submitForm = (event: any) => {
-    event.preventDefault()
-    const form = event.target;
-
-    const formObj = {
-      email: form.email1.value,
-      password: form.password1.value,
-      username: form.username1.value
-
-    }
-    console.log(formObj)
-
-  }
-
-  // public logout() {
-  //   localStorage.clear()
-  //   return <Redirect to={'/sign-in'} />
-  // }
->>>>>>> bbf45c4958dfdfbd4e00078abf7929306c0eed28
   public updateDescription = (event: any) =>{
     event.preventDefault()
 
