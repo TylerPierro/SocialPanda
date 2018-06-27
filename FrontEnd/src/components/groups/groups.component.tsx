@@ -65,7 +65,8 @@ export class GroupsComponent extends React.Component<IProps, any> {
   public displayMessageGroup = (msgBoard: CityTag, e: any) => {
     e.preventDefault();
     let test: boolean = true;
-    const group = `${msgBoard.Location.replace(' ','+')}-${msgBoard.Tag.replace(' ','+')}`;
+    console.log(msgBoard.Tag);
+    const group = `${msgBoard.Location.split(' ').join('+')}-${msgBoard.Tag.split(' ').join('+')}`;
     console.log(group);
     const username = cognitoUser&&cognitoUser.getUsername();
     console.log(username);
@@ -87,8 +88,12 @@ export class GroupsComponent extends React.Component<IProps, any> {
         console.log(data);
         // loadMessagesComponent(msgBoard.Location.replace(' ','+'), msgBoard.Tag.replace(' ','+'));
         this.setState(() => ({
-          location: msgBoard.Location.replace(' ','+'),
-          tag: msgBoard.Tag.replace(' ','+'),
+          location: msgBoard.Location
+          // .replace(' ','+')
+          ,
+          tag: msgBoard.Tag 
+          .replace(' ','+')
+          ,
           toMessages: 1
         }))
       })
@@ -96,8 +101,12 @@ export class GroupsComponent extends React.Component<IProps, any> {
         console.log(err);
         console.log('User is not in group');
         this.setState(() => ({
-          location: msgBoard.Location.replace(' ','+'),
-          tag: msgBoard.Tag.replace(' ','+'),
+          location: msgBoard.Location
+          // .replace(' ','+')
+          ,
+          tag: msgBoard.Tag
+          .replace(' ','+')
+          ,
           toMessages: 0
         }))
         test = false;
@@ -169,7 +178,7 @@ export class GroupsComponent extends React.Component<IProps, any> {
     if (this.state.toMessages === 1) {
       // console.log("message state is 1")
       // console.log(`/messages/${this.state.location}/${this.state.tag}`)
-      return <Redirect to={`/messages/${this.state.location}/${this.state.tag}`} />
+      return <Redirect to={`/messages/${String(this.state.location).split(' ').join('+')}/${String(this.state.tag).split(' ').join('+')}`} />
     }
     return (
       <div id="groupBody">

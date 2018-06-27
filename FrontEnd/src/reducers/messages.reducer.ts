@@ -36,6 +36,12 @@ export const messagesReducer = (state = initialState, action: any) => {
         msgBoard: action.payload.msgBoard
         // msgBoard: [...state.msgBoard, action.payload.newPost1]
       };
+      case messagesTypes.CLEAR_MESSAGE_BAR:
+      console.log("troll");
+      return {
+        ...state,
+        newPost: ''
+      };
   }
 
   return state;

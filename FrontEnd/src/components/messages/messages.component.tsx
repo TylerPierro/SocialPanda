@@ -8,6 +8,7 @@ import { Redirect } from 'react-router';
 import { updateGroups } from '../../actions/messages/messages.actions';
 
 interface IProps extends IMessages {
+  clearMessageBar: () => void
   submitNewPost: (location: string, tag: string, user: string, newPost: string) => void
   updateGroupsDisplay: (displayGroups: object) => void
   updateError: (error: string) => void
@@ -63,7 +64,7 @@ export class MessagesComponent extends React.Component<IProps, any> {
     toMessages: -1,
     user: cognitoUser&&cognitoUser.getUsername()
   }
-  console.log(this.state.user)
+  // console.log(this.state.user)
   // updateGroups(this.state.user);
   
 }
@@ -82,7 +83,7 @@ export class MessagesComponent extends React.Component<IProps, any> {
           alert(err);
           return;
         }
-        console.log('session validity: ' + session.isValid());
+        // console.log('session validity: ' + session.isValid());
       });
     }
 
@@ -94,11 +95,11 @@ export class MessagesComponent extends React.Component<IProps, any> {
     this.setState({
       user: cognitoUser&&cognitoUser.getUsername()
     })
-    console.log(this.state.user)
+    // console.log(this.state.user)
 
     ApiAxios.get(environment.gateway + `messages/${location}/${tag}`)
       .then(resp => {
-        console.log(resp.status)
+        // console.log(resp.status)
         if (resp.status === 200) {
           // console.log(resp.data);
           this.setState({
@@ -133,7 +134,7 @@ export class MessagesComponent extends React.Component<IProps, any> {
           tag: params[6],
         })
       })
-    console.log(this.state.user)
+    // console.log(this.state.user)
     updateGroups(this.state.user);
   }
 
@@ -169,7 +170,7 @@ export class MessagesComponent extends React.Component<IProps, any> {
     console.log(disp.username);
     console.log(disp.Tag);
     const username = cognitoUser&&cognitoUser.getUsername();
-    const group = `${disp.Location.replace(' ','+')}-${disp.Tag.replace(' ','+')}`;
+    const group = `${disp.Location.split(' ').join('+')}-${disp.Tag.split(' ').join('+')}`;
     ApiAxios.get(environment.gateway + `groups/${group}/user/${username}`)
     .then(resp => {
       console.log(resp.status)
@@ -215,9 +216,11 @@ export class MessagesComponent extends React.Component<IProps, any> {
     e.preventDefault();
     const location = this.state.location;
     const tag = this.state.tag;
+    console.log(tag);
     const box = this.props.newPost;
     const user = this.state.user
     this.props.submitNewPost(location, tag, user, box);
+    this.props.clearMessageBar();
   }
 
   // public submit = (e: any) => {
