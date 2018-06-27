@@ -35,8 +35,8 @@ export const submitNewPost = (location: string, tag: string, user:string, newPos
       "Location": location,
       "Tag": tag,
       "messages": {
-        "box": newPost1,
         "time": "Posted on: " + currentTime, 
+        "box": newPost1,
         "user": "From: " + user
       }
     }),
