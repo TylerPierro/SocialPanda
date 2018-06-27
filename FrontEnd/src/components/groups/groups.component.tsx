@@ -65,7 +65,8 @@ export class GroupsComponent extends React.Component<IProps, any> {
   public displayMessageGroup = (msgBoard: CityTag, e: any) => {
     e.preventDefault();
     let test: boolean = true;
-    const group = `${msgBoard.Location.replace(' ','+')}-${msgBoard.Tag.replace(' ','+')}`;
+    console.log(msgBoard.Tag);
+    const group = `${msgBoard.Location.split(' ').join('+')}-${msgBoard.Tag.split(' ').join('+')}`;
     console.log(group);
     const username = cognitoUser&&cognitoUser.getUsername();
     console.log(username);
@@ -91,7 +92,7 @@ export class GroupsComponent extends React.Component<IProps, any> {
           // .replace(' ','+')
           ,
           tag: msgBoard.Tag 
-          // .replace(' ','+')
+          .replace(' ','+')
           ,
           toMessages: 1
         }))
@@ -104,7 +105,7 @@ export class GroupsComponent extends React.Component<IProps, any> {
           // .replace(' ','+')
           ,
           tag: msgBoard.Tag
-          // .replace(' ','+')
+          .replace(' ','+')
           ,
           toMessages: 0
         }))
@@ -177,7 +178,7 @@ export class GroupsComponent extends React.Component<IProps, any> {
     if (this.state.toMessages === 1) {
       // console.log("message state is 1")
       // console.log(`/messages/${this.state.location}/${this.state.tag}`)
-      return <Redirect to={`/messages/${String(this.state.location).replace(' ', '+')}/${String(this.state.tag).replace(' ', '+')}`} />
+      return <Redirect to={`/messages/${String(this.state.location).split(' ').join('+')}/${String(this.state.tag).split(' ').join('+')}`} />
     }
     return (
       <div id="groupBody">

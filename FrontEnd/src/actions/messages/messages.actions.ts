@@ -28,7 +28,8 @@ export const submitNewPost = (location: string, tag: string, user:string, newPos
       "user": "From: " + user
     }
   }
-
+  console.log(tag);
+  console.log(location);
   fetch("https://dwbbn4f58g.execute-api.us-east-2.amazonaws.com/dev/messages", {
     body: JSON.stringify({
       "Location": location,
@@ -69,6 +70,12 @@ export const submitNewPost = (location: string, tag: string, user:string, newPos
   .catch(err => {
     console.log('Unable to log in at this time, please try again later');
   })
+}
+
+export const clearMessageBar = () => {
+  return{
+    type: messagesTypes.CLEAR_MESSAGE_BAR 
+  }
 }
 
 export const updateMsgBoard = (msgBoard: object) => {
