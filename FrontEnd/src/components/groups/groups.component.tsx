@@ -38,8 +38,9 @@ if (cognitoUser != null) {
 const groupsStyle = {
   background: "#c9ff9e",
   borderRadius: 30,
-  margin: "20px",
-  padding: "20px"
+  margin: "2%",
+  padding: "20px",
+  width: "20%"
 };
 
 export class GroupsComponent extends React.Component<IProps, any> {
@@ -155,8 +156,9 @@ export class GroupsComponent extends React.Component<IProps, any> {
       return <Redirect to={`/messages/${String(this.state.location).split(' ').join('+')}/${String(this.state.tag).split(' ').join('+')}`} />
     }
     return (
-      <div id="groupBody">
-        <form onSubmit={this.submit}>
+      <form onSubmit={this.submit} className="form-groups-body">
+      {/* <div id="groupBody"> */}
+          <br/>
           <div className="allSearch">
             <input className="searchBar"
               type="string"
@@ -171,10 +173,11 @@ export class GroupsComponent extends React.Component<IProps, any> {
               value={this.props.tagSearch}
               onChange={(e: any) => this.props.updateTag(e.target.value)}
               placeholder="Search a Tag" />
-          </div>
-        </form>
+          {/* </div> */}
+        {/* </form> */}
         <br />
-        <div className="tagList">
+        <br/>
+        {/* <div className="tagList"> */}
           {this.props.displayGroups.length > 0
             ?
             this.props.displayGroups.map(disp =>
@@ -182,13 +185,15 @@ export class GroupsComponent extends React.Component<IProps, any> {
                 onClick={this.displayMessageGroup.bind(this, disp)}
               >{disp.Tag} <br /> <h5>{disp.Description}</h5></h3>)
             :
-            this.props.citySearch !== "" ? <h3 id="noMessages">There are no groups in this area.<br /> Don't be shy! Start a group !</h3> : null
+            this.props.citySearch !== "" ? <h3 id="noGroups">There are no groups in this area.<br /> Don't be shy! Start a group !</h3> : null
           }
         </div>
         <div className="join">
           {this.state.toMessages ? null : <button type="button" id="joinButton" onClick={this.joinGroup.bind(this, `${this.state.location}-${this.state.tag}`)}>Join Group</button>}
-        </div>
-      </div>
+        </div><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        <h1 id="test">Find a group now!</h1>
+      
+      </form>
     );
   }
 }

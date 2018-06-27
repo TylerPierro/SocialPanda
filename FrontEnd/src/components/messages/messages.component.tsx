@@ -124,56 +124,6 @@ export class MessagesComponent extends React.Component<IProps, any> {
     this.props.updateError(password);
   }
 
-  public displayMessageGroup(disp, e: any) {
-    const cognitoData = {
-      ClientId: '368mt4qt7ghc8jp8fsvu308i98',
-      UserPoolId: 'us-east-2_eoUFN3DJn'
-    };
-    const userPool = new awsCognito.CognitoUserPool(cognitoData);
-    const cognitoUser = userPool.getCurrentUser();
-
-    if (cognitoUser != null) {
-      cognitoUser.getSession((err, session) => {
-        if (err) {
-          return;
-        }
-        console.log('session validity: ' + session.isValid());
-      });
-    }
-
-    console.log(disp.username);
-    console.log(disp.Tag);
-    const username = cognitoUser && cognitoUser.getUsername();
-    const group = `${disp.Location.split(' ').join('+')}-${disp.Tag.split(' ').join('+')}`;
-    ApiAxios.get(environment.gateway + `groups/${group}/user/${username}`)
-      .then(resp => {
-        console.log(resp.status)
-        if (resp.status === 200) {
-          return resp;
-        } else {
-          console.log('Either no matching group or user');
-          return resp.status;
-        }
-      })
-      .then(data => {
-        console.log(data);
-        this.setState(() => ({
-          location: disp.Location,
-          tag: disp.Tag,
-          toMessages: 1
-        }))
-      })
-      .catch(err => {
-        console.log(err);
-        console.log('User is not in group');
-        this.setState(() => ({
-          location: disp.Location,
-          tag: disp.Tag,
-          toMessages: 0
-        }))
-      })
-  }
-
   public createPost = (e: any) => {
     e.preventDefault();
     const location = this.state.location;
