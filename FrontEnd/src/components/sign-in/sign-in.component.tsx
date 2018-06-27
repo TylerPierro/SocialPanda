@@ -131,7 +131,7 @@ export class SignInComponent extends React.Component<any, any> {
     e.preventDefault();
     const { password, passwordConfirmation } = this.props.firstSignIn;
     if (password !== passwordConfirmation) {
-      alert('passwords do not match');
+      // alert('passwords do not match');
       return;
     }
     const user: awsCognito.CognitoUser = this.props.cognito.user;

@@ -76,28 +76,6 @@ export class RegisterPageComponent extends React.Component<any, any> {
       }
       CognitoUser = result.user;
       console.log('user name is ' + CognitoUser.getUsername());
-
-
-      // CognitoUser.authenticateUser(authenticationDetails, {
-      //   onSuccess: function (result) {
-      //       var accessToken = result.getAccessToken().getJwtToken();
-
-      //       /* Use the idToken for Logins Map when Federating User Pools with identity pools or when passing through an Authorization Header to an API Gateway Authorizer*/
-      //       var idToken = result.idToken.jwtToken;
-      //   },
-
-      //   onFailure: function(err) {
-      //       alert(err);
-      //   },
-      // }
-
-
-
-
-
-
-
-
     });
   }
 

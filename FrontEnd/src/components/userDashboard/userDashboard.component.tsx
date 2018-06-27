@@ -47,10 +47,8 @@ export class DashboardComponent extends React.Component<IProps, any> {
     if (cognitoUser != null) {
       cognitoUser.getSession((err, session) => {
         if (err) {
-          alert(err);
           return;
         }
-        console.log('session validity: ' + session.isValid());
       });
     }
 
