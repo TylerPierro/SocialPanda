@@ -182,12 +182,7 @@ export class GroupsComponent extends React.Component<IProps, any> {
                 onClick={this.displayMessageGroup.bind(this, disp)}
               >{disp.Tag} <br /> <h5>{disp.Description}</h5></h3>)
             :
-            this.props.citySearch !== "" ?
-              <h3 id="noMessages">There are no groups in this area.<br /> Don't be shy! Start a group !</h3>
-              :
-              null
-            // <h3>-{disp.}</h3>
-            // <img src={disp.groupPic}/>
+            this.props.citySearch !== "" ? <h3 id="noMessages">There are no groups in this area.<br /> Don't be shy! Start a group !</h3> : null
           }
         </div>
         <div className="join">
