@@ -1,2 +1,2 @@
-# TightKnit
+# SocialPanda
 Knitting a tighter community

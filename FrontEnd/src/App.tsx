@@ -13,6 +13,7 @@ import { RegisterPageComponent } from './components/register/register.page.compo
 import { ProfileComponent } from './components/profile/profile.component';
 import { NewGroupComponent } from './components/newGroup/newGroup.component';
 import { MessagesContainer } from './components/messages/messages.container';
+import { DashboardContainer } from './components/userDashboard/userDashboard.container';
 // import { MessagesComponent } from './components/messages/messages.component';
 
 class App extends React.Component<any, any> {
@@ -24,6 +25,7 @@ class App extends React.Component<any, any> {
           <div>
             <NavComponent />
             <Switch>
+              <Route path="/dashboard" component={DashboardContainer} />
               <Route path="/groups" component={GroupsContainer} />
               <Route path="/newGroup" component={NewGroupComponent} />
               <Route path="/sign-in" component={SignInContainer} />
