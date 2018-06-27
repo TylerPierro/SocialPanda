@@ -29,10 +29,8 @@ const cognitoUser = userPool.getCurrentUser();
 if (cognitoUser != null) {
   cognitoUser.getSession((err, session) => {
     if (err) {
-      alert(err);
       return;
     }
-    console.log('session validity: ' + session.isValid());
   });
 }
 
@@ -40,16 +38,16 @@ if (cognitoUser != null) {
 const groupsStyle = {
   background: "#c9ff9e",
   borderRadius: 30,
-  margin: "20px",
-  padding: "20px"
+  margin: "2%",
+  padding: "20px",
+  width: "20%"
 };
-
 
 export class GroupsComponent extends React.Component<IProps, any> {
   public state = {
     location: this.props.updateCity,
     tag: this.props.updateTag,
-    toMessages: -1
+    toMessages: -1,
   }
 
   constructor(props: any) {
@@ -68,12 +66,12 @@ export class GroupsComponent extends React.Component<IProps, any> {
     console.log(msgBoard.Tag);
     const group = `${msgBoard.Location.split(' ').join('+')}-${msgBoard.Tag.split(' ').join('+')}`;
     console.log(group);
-    const username = cognitoUser&&cognitoUser.getUsername();
+    const username = cognitoUser && cognitoUser.getUsername();
     console.log(username);
-    fetch (`https://dwbbn4f58g.execute-api.us-east-2.amazonaws.com/dev/groups/${group}/user/${username}`, {
+    fetch(`https://dwbbn4f58g.execute-api.us-east-2.amazonaws.com/dev/groups/${group}/user/${username}`, {
       headers: {
         'content-type': 'application/json'
-      } 
+      }
     })
       .then(resp => {
         console.log(resp.status)
@@ -86,14 +84,9 @@ export class GroupsComponent extends React.Component<IProps, any> {
       })
       .then(data => {
         console.log(data);
-        // loadMessagesComponent(msgBoard.Location.replace(' ','+'), msgBoard.Tag.replace(' ','+'));
         this.setState(() => ({
-          location: msgBoard.Location
-          // .replace(' ','+')
-          ,
-          tag: msgBoard.Tag 
-          .replace(' ','+')
-          ,
+          location: msgBoard.Location,
+          tag: msgBoard.Tag,
           toMessages: 1
         }))
       })
@@ -101,36 +94,33 @@ export class GroupsComponent extends React.Component<IProps, any> {
         console.log(err);
         console.log('User is not in group');
         this.setState(() => ({
-          location: msgBoard.Location
-          // .replace(' ','+')
-          ,
-          tag: msgBoard.Tag
-          .replace(' ','+')
-          ,
+          location: msgBoard.Location,
+          tag: msgBoard.Tag,
           toMessages: 0
         }))
         test = false;
       })
-    if(test === true) {
+    if (test === true) {
       // Then switch to messages component
       // Pass paramaters msgBoard.location, msgBoard.tag
     } else {
       // Display "join group button"
-       // if (group.privacy === 'private') {
-         // Send request to admins
-         // Display request sent to admin
-       // }
+      // if (group.privacy === 'private') {
+      // Send request to admins
+      // Display request sent to admin// if (group.privacy === 'private') {
+      // Send request to admins
+      // Display request sent to admin
+      // }
     }
   }
 
-
   public joinGroup = (locationTag: string, e: any) => {
     console.log(locationTag);
-    console.log(cognitoUser&&cognitoUser.getUsername());
+    console.log(cognitoUser && cognitoUser.getUsername());
     ApiAxios.patch(environment.gateway + 'groups', {
       "Admin": "false",
       "Location_Tag": locationTag,
-      "Users": cognitoUser&&cognitoUser.getUsername()
+      "Users": cognitoUser && cognitoUser.getUsername()
     })
       .then(resp => {
         return resp.status;
@@ -147,20 +137,7 @@ export class GroupsComponent extends React.Component<IProps, any> {
       })
   }
 
-  // public createPost = (e: any) => {
-  //   e.preventDefault();
-  //   // if (cognitoUser !== null) {
-  //     const city = this.props.citySearch;
-  //     const box = this.props.newPost;
-  //     console.log(box);
-  //     this.props.submitNewPost(box, city);
-  //     // this.setState(this.props.updateDisplay2(this.props.citySearch, tagT));
-  //   // }
-  // }
-
   public submit = (e: any) => {
-    // console.log(this.props.citySearch);
-    // console.log(this.props.tagSearch);
     e.preventDefault();
     let location = this.props.citySearch;
     location = location.replace(' ', '+')
@@ -176,13 +153,12 @@ export class GroupsComponent extends React.Component<IProps, any> {
 
   public render() {
     if (this.state.toMessages === 1) {
-      // console.log("message state is 1")
-      // console.log(`/messages/${this.state.location}/${this.state.tag}`)
       return <Redirect to={`/messages/${String(this.state.location).split(' ').join('+')}/${String(this.state.tag).split(' ').join('+')}`} />
     }
     return (
-      <div id="groupBody">
-        <form onSubmit={this.submit}>
+      <form onSubmit={this.submit} className="form-groups-body">
+      {/* <div id="groupBody"> */}
+          <br/>
           <div className="allSearch">
             <input className="searchBar"
               type="string"
@@ -197,22 +173,27 @@ export class GroupsComponent extends React.Component<IProps, any> {
               value={this.props.tagSearch}
               onChange={(e: any) => this.props.updateTag(e.target.value)}
               placeholder="Search a Tag" />
-          </div>
-        </form>
+          {/* </div> */}
+        {/* </form> */}
         <br />
-        <div className="tagList">
-          {this.props.displayGroups.map(disp =>
-            <h3 style={groupsStyle} key={disp.Tag} 
-            onClick={this.displayMessageGroup.bind(this, disp)}
-            >{disp.Tag}</h3>
-            // <h3>-{disp.}</h3>
-            // <img src={disp.groupPic}/>
-          )}
+        <br/>
+        {/* <div className="tagList"> */}
+          {this.props.displayGroups.length > 0
+            ?
+            this.props.displayGroups.map(disp =>
+              <h3 style={groupsStyle} key={disp.Tag}
+                onClick={this.displayMessageGroup.bind(this, disp)}
+              >{disp.Tag} <br /> <h5>{disp.Description}</h5></h3>)
+            :
+            this.props.citySearch !== "" ? <h3 id="noGroups">There are no groups in this area.<br /> Don't be shy! Start a group !</h3> : null
+          }
         </div>
         <div className="join">
-          { this.state.toMessages ? null : <button type="button" id="joinButton" onClick={this.joinGroup.bind(this, `${this.state.location}-${this.state.tag}`)}>Join Group</button> }
-        </div>
-      </div>
+          {this.state.toMessages ? null : <button type="button" id="joinButton" onClick={this.joinGroup.bind(this, `${this.state.location}-${this.state.tag}`)}>Join Group</button>}
+        </div><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        <h1 id="test">Find a group now!</h1>
+      
+      </form>
     );
   }
 }

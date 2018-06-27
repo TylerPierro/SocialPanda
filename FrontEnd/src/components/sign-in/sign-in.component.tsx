@@ -131,7 +131,7 @@ export class SignInComponent extends React.Component<any, any> {
     e.preventDefault();
     const { password, passwordConfirmation } = this.props.firstSignIn;
     if (password !== passwordConfirmation) {
-      alert('passwords do not match');
+      // alert('passwords do not match');
       return;
     }
     const user: awsCognito.CognitoUser = this.props.cognito.user;
@@ -145,13 +145,10 @@ export class SignInComponent extends React.Component<any, any> {
   }
 
   public render() {
-    const signinDivStyle = {
-      // backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url('https://codetheweb.blog/assets/img/posts/full-image-hero/image.jpg')`
-      backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url(${this.state.url})`
-    }
     return (
-      <div id="signin-div" style={signinDivStyle} >
+      <div id="signin-div" >
       <form className="signin-form" /* onSubmit={this.registerUser} */ action="action_page.php" style={{ border: '1px solid #ccc' }}>
+      <br/><br/><br/>
           {!this.props.firstSignIn.isFirstSignIn &&
             <form className="form-signin" id="container" onSubmit={this.submit}>
               {/* <img className="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72" /> */}
@@ -213,9 +210,7 @@ export class SignInComponent extends React.Component<any, any> {
               <Link to="/register" className="unset-anchor nav-link">Sign up here!</Link>
             </button>
           </h5>
-          {/* <Link to="/register" className="unset-anchor nav-link">Sign up here!</Link> */}
       </form>
-      {/* <img src="https://s3.us-east-2.amazonaws.com/image-uploads-socialpanda/skylines/carl-solder-532353-unsplash.jpg" /> */}
       </div>
     );
   }

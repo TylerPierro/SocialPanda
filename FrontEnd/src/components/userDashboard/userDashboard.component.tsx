@@ -47,10 +47,8 @@ export class DashboardComponent extends React.Component<IProps, any> {
     if (cognitoUser != null) {
       cognitoUser.getSession((err, session) => {
         if (err) {
-          alert(err);
           return;
         }
-        console.log('session validity: ' + session.isValid());
       });
     }
 
@@ -76,7 +74,7 @@ export class DashboardComponent extends React.Component<IProps, any> {
 
   public render() {
     if (this.state.toMessages === 1) {
-      return <Redirect to={`/messages/${this.state.location}/${this.state.tag}`} />
+      return <Redirect to={`/messages/${this.state.location.split(' ').join('+')}/${this.state.tag.split(' ').join('+')}`} />
     }
     return (
       <div>
