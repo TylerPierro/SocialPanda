@@ -3,7 +3,6 @@ import './style.css'
 import * as awsCognito from 'amazon-cognito-identity-js';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Redirect, Link } from 'react-router-dom';
 // import { demoApiAxios } from '../../interceptors/demo-api-axios';
 // import { environment } from '../environment';
 
