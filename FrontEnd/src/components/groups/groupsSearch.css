@@ -78,10 +78,19 @@ h4{
 }
 
 body{
-  /* background-image: url(https://dtkp6g0samjql.cloudfront.net/uploads/photo/file/7834336/il_fullxfull.252642439.jpg);  */
   background-image: url(http://www.desktopwallpaperhd.net/wallpapers/5/e/skyline-desktop-wallpaper-night-photo-chicago-59774.jpg);
   background-repeat: no-repeat;
   background-size: cover; 
+}
+
+#noGroups{
+  color: rgb(223, 0, 0);
+  padding: 5pt;
+  background-color: rgba(255, 255, 255, 0.712);
+  width: 40%;
+  border-radius: 10px;
+  margin: auto;
+  margin-top: 20%;
 }
 
 .pointer {
@@ -91,4 +100,37 @@ body{
 .not-allowed-cursor {
   cursor: not-allowed;
 }
+
+#test{
+  /* position: fixed; */
+  bottom: 2px;
+  color: white;
+  text-align: center;
+}
+
+/* #groupBody{
+position:fixed !important;
+position: absolute;
+top: 60px;
+bottom: 0;
+left: 0;
+right: 0;
+} */
+
+.form-groups-body{
+  /* background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url('https://codetheweb.blog/assets/img/posts/full-image-hero/image.jpg'); */
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url('http://www.technocrazed.com/wp-content/uploads/2015/12/New-York-Wallpaper-Background-12.jpg');    
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+    /* margin: 0 auto; 
+    width:250px; */
+  /* text-align: center; */
+  margin-top: -1.5%;
+  padding-bottom: 2%
+}
+
+
+
 

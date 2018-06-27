@@ -85,9 +85,7 @@ export class RegisterPageComponent extends React.Component<any, any> {
         <div className="container">
           <br />
           <h1 id="registeText">Sign Up</h1>
-          {/* <p id="registeText">Tell us about you so we can create an account for you!</p> */}
           <hr />
-
 
           <label id="registeText" htmlFor="username"><b>Username</b></label>
           <input id="username1" className="registerFields" type="text" placeholder="Enter Username" name="eml" required />
@@ -104,9 +102,8 @@ export class RegisterPageComponent extends React.Component<any, any> {
           <label id="registeText" htmlFor="psw-repeat"><b>Repeat Password</b></label>
           <input id="password2" className="registerFields" type="password" placeholder="Repeat Password" name="psw-repeat" required />
 
-          {/* <p id="registeText" >By creating an account you agree to our <a href="#" style={{color: 'dodgerblue'}}>Terms &amp; Privacy</a>.</p> */}
           <div className="clearfix">
-            {/* <button type="button" className="cancelbtn">Cancel</button> */}
+          
             <button type="submit" className="signupbtn">Sign Up</button>
           </div>
         </div>
