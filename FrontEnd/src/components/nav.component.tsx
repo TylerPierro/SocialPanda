@@ -47,6 +47,7 @@ export const NavComponent: React.StatelessComponent<{}> = () => {
               <Link to="/profile" className="unset-anchor nav-link">Profile</Link>
             </li>
             <li className="nav-item active">
+              {/* This won't work unless this component is rerendered. */}
               { 
                 isLoggedIn()
                 ? <Link onClick={ () => logout() } to="/sign-in" className="unset-anchor nav-link">Log Out</Link>
