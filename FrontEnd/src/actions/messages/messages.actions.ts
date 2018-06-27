@@ -14,7 +14,9 @@ import { messagesTypes } from "./messages.types";
 
 export const submitNewPost = (location: string, tag: string, user:string, newPost: string) => (dispatch: any) => {
   console.log(newPost);
-  console.log(user)
+  console.log(user);
+  console.log(tag);
+  console.log(location);
 
   const dt = new Date(new Date().toUTCString());
   const currentTime = dt.toString();

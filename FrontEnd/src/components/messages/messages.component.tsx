@@ -63,7 +63,7 @@ export class MessagesComponent extends React.Component<IProps, any> {
     toMessages: -1,
     user: cognitoUser&&cognitoUser.getUsername()
   }
-  console.log(this.state.user)
+  // console.log(this.state.user)
   // updateGroups(this.state.user);
   
 }
@@ -82,7 +82,7 @@ export class MessagesComponent extends React.Component<IProps, any> {
           alert(err);
           return;
         }
-        console.log('session validity: ' + session.isValid());
+        // console.log('session validity: ' + session.isValid());
       });
     }
 
@@ -94,11 +94,11 @@ export class MessagesComponent extends React.Component<IProps, any> {
     this.setState({
       user: cognitoUser&&cognitoUser.getUsername()
     })
-    console.log(this.state.user)
+    // console.log(this.state.user)
 
     ApiAxios.get(environment.gateway + `messages/${location}/${tag}`)
       .then(resp => {
-        console.log(resp.status)
+        // console.log(resp.status)
         if (resp.status === 200) {
           // console.log(resp.data);
           this.setState({
@@ -116,7 +116,7 @@ export class MessagesComponent extends React.Component<IProps, any> {
         }
       })
       .then(data => {
-        console.log(data.Item.messages);
+        // console.log(data.Item.messages);
         if(data.Item.messages !== undefined){
           this.props.updateMsgBoard(data.Item.messages.values);
 
@@ -133,7 +133,7 @@ export class MessagesComponent extends React.Component<IProps, any> {
           tag: params[6],
         })
       })
-    console.log(this.state.user)
+    // console.log(this.state.user)
     updateGroups(this.state.user);
   }
 

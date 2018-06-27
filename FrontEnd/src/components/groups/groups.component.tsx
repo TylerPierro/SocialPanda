@@ -87,8 +87,12 @@ export class GroupsComponent extends React.Component<IProps, any> {
         console.log(data);
         // loadMessagesComponent(msgBoard.Location.replace(' ','+'), msgBoard.Tag.replace(' ','+'));
         this.setState(() => ({
-          location: msgBoard.Location.replace(' ','+'),
-          tag: msgBoard.Tag.replace(' ','+'),
+          location: msgBoard.Location
+          // .replace(' ','+')
+          ,
+          tag: msgBoard.Tag 
+          // .replace(' ','+')
+          ,
           toMessages: 1
         }))
       })
@@ -96,8 +100,12 @@ export class GroupsComponent extends React.Component<IProps, any> {
         console.log(err);
         console.log('User is not in group');
         this.setState(() => ({
-          location: msgBoard.Location.replace(' ','+'),
-          tag: msgBoard.Tag.replace(' ','+'),
+          location: msgBoard.Location
+          // .replace(' ','+')
+          ,
+          tag: msgBoard.Tag
+          // .replace(' ','+')
+          ,
           toMessages: 0
         }))
         test = false;
@@ -169,7 +177,7 @@ export class GroupsComponent extends React.Component<IProps, any> {
     if (this.state.toMessages === 1) {
       // console.log("message state is 1")
       // console.log(`/messages/${this.state.location}/${this.state.tag}`)
-      return <Redirect to={`/messages/${this.state.location}/${this.state.tag}`} />
+      return <Redirect to={`/messages/${String(this.state.location).replace(' ', '+')}/${String(this.state.tag).replace(' ', '+')}`} />
     }
     return (
       <div id="groupBody">
