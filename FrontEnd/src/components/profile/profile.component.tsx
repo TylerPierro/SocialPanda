@@ -3,7 +3,7 @@ import './style.css'
 import * as awsCognito from 'amazon-cognito-identity-js';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 // import { demoApiAxios } from '../../interceptors/demo-api-axios';
 // import { environment } from '../environment';
 
@@ -126,11 +126,10 @@ export class ProfileComponent extends React.Component<any, any> {
 
   }
 
-  public logout() {
-    console.log("asd")
-    localStorage.clear()
-    // this.props.history.push('/sign-in')
-  }
+  // public logout() {
+  //   localStorage.clear()
+  //   return <Redirect to={'/sign-in'} />
+  // }
   public updateDescription = (event: any) =>{
     event.preventDefault()
 
@@ -475,7 +474,7 @@ export class ProfileComponent extends React.Component<any, any> {
           <i className="fa fa-linkedin w3-hover-opacity" />
           <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
         </footer>
-        <button onClick={this.logout} ><Redirect to="/sign-in">LOGOUT</Redirect></button>
+        {/* <button><Link onClick={this.logout} to="/sign-in">LOGOUT</Link></button> */}
       </div>
 
 
