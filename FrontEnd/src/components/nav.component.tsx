@@ -35,6 +35,9 @@ export const NavComponent: React.StatelessComponent<{}> = () => {
         <div className="collapse navbar-collapse" id="navbarsExample04">
           <ul className="navbar-nav ml-auto margin-nav">
             <li className="nav-item active">
+              <Link to="/dashboard" className="unser-anchor nav-link">{cognitoUser && cognitoUser.getUsername()}'s Dashboard</Link>
+            </li>
+            <li className="nav-item active">
               <Link to="/groups" className="unset-anchor nav-link">Explore Groups</Link>
             </li>
             <li className="nav-item active">
