@@ -12,19 +12,29 @@ import { messagesTypes } from "./messages.types";
 // // //   username = cognitoUser.getUsername();
 // // // }
 
-export const submitNewPost = (location: string, tag: string, user:string, newPost: string) => (dispatch: any) => {
-  console.log(newPost);
+export const submitNewPost = (location: string, tag: string, user:string, newPost1: string) => (dispatch: any) => {
+  // console.log(newPost);
   console.log(user)
 
   const dt = new Date(new Date().toUTCString());
   const currentTime = dt.toString();
+
+  const sendObj ={
+    "Location": location,
+    "Tag": tag,
+    "messages": {
+      "box": newPost1,
+      "time": "Posted on: " + currentTime, 
+      "user": "From: " + user
+    }
+  }
 
   fetch("https://dwbbn4f58g.execute-api.us-east-2.amazonaws.com/dev/messages", {
     body: JSON.stringify({
       "Location": location,
       "Tag": tag,
       "messages": {
-        "box": newPost,
+        "box": newPost1,
         "time": "Posted on: " + currentTime, 
         "user": "From: " + user
       }
@@ -46,9 +56,11 @@ export const submitNewPost = (location: string, tag: string, user:string, newPos
       return;
     })
     .then(data => {
+      console.log("Dispatching...")
+      console.log(newPost1)
       dispatch({
         payload: {
-          newPost: data
+          newPost: sendObj
           // .Items.messages.values
         },
         type: messagesTypes.SUBMIT_NEW_POST

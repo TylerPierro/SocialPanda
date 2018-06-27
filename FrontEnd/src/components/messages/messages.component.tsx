@@ -116,7 +116,7 @@ export class MessagesComponent extends React.Component<IProps, any> {
         }
       })
       .then(data => {
-        console.log(data.Item.messages);
+        console.log(data.Item.messages.values);
         if(data.Item.messages !== undefined){
           this.props.updateMsgBoard(data.Item.messages.values);
 
