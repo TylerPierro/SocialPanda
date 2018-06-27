@@ -18,6 +18,7 @@ export class ProfileComponent extends React.Component<any, any> {
       name: '',
       phoneNumber: '',
       showEdit: '',
+      showEditAddress: '',
       showEditEmail: '',
       showEditPhone: '',
       username: "TOM"
@@ -110,25 +111,12 @@ export class ProfileComponent extends React.Component<any, any> {
     //   console.log("WHere dey at doe?")
     // }
   }
-
-  public submitForm = (event: any) => {
-    event.preventDefault()
-    const form = event.target;
-
-    const formObj = {
-      email: form.email1.value,
-      password: form.password1.value,
-      username: form.username1.value
-
-    }
-    console.log(formObj)
-
+  
+  public logout() {
+    console.log("asd")
+    localStorage.clear()
+    // this.props.history.push('/sign-in')
   }
-
-  // public logout() {
-  //   localStorage.clear()
-  //   return <Redirect to={'/sign-in'} />
-  // }
   public updateDescription = (event: any) =>{
     event.preventDefault()
 
@@ -176,6 +164,7 @@ export class ProfileComponent extends React.Component<any, any> {
     // Get rid of textbox and update state
     this.setState((prevState) => {
       return {
+        description: formObj.Value,
         showEdit: '',
       };
     },()=>{
@@ -183,7 +172,7 @@ export class ProfileComponent extends React.Component<any, any> {
     });
 
     // Reload Page
-    window.location.reload();
+    // window.location.reload();
 
   }
 
@@ -233,25 +222,102 @@ export class ProfileComponent extends React.Component<any, any> {
     }
 
     // Get rid of textbox and update state
+
+
+
     this.setState((prevState) => {
       return {
+
+        address: prevState.address,
+        description: prevState. description,
+        email: prevState.email,
+        name: prevState.name,
+        phoneNumber: formObj.Value,
+        showEdit: '',
+        showEditEmail: '',
         showEditPhone: '',
+        username: "BLANK"        
       };
     },()=>{
       console.log('sdad')
     });
 
     // Reload Page
-    window.location.reload();
-
-    
+    // window.location.reload();
 
   }
 
 
+  public updateAddress = (event: any) =>{
+    event.preventDefault()
+
+    const data = {
+      ClientId: '368mt4qt7ghc8jp8fsvu308i98',
+      UserPoolId: 'us-east-2_eoUFN3DJn'
+
+    };
+    const userPool = new awsCognito.CognitoUserPool(data);
+    const cognitoUser = userPool.getCurrentUser();
+
+    // Grab from event
+    const formObj = {
+      Name: 'address',
+      Value: event.target.address1.value
+
+    }
+
+    console.log('STAGING CHANGES')
+    console.log(formObj)
+
+
+    // Authenticate User
+    if (cognitoUser != null) {
+      cognitoUser.getSession((err, session) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        console.log('session validity: ' + session.isValid());
+      });
+    }
+
+    // Update Cognito User Description
+    if (cognitoUser != null) {
+      cognitoUser.updateAttributes([formObj], (err, result) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        console.log('success')
+        console.log('call result: ' + result);
+      });
+    }
+
+    this.setState((prevState) => {
+      return {
+
+        address: formObj.Value,
+        description: prevState. description,
+        email: prevState.email,
+        name: prevState.name,
+        phoneNumber: formObj.Value,
+        showEdit: '',
+        showEditAddress: '',
+        showEditEmail: '',
+        showEditPhone: '',
+        username: "BLANK"        
+      };
+    },()=>{
+      console.log('sdad')
+    });
+
+  }
+
+
+
+
   public updateEmail = (event: any) =>{
    
-
 
     event.preventDefault()
 
@@ -297,17 +363,28 @@ export class ProfileComponent extends React.Component<any, any> {
       });
     }
 
+
+
     // Get rid of textbox and update state
+    
     this.setState((prevState) => {
       return {
+
+        address: prevState.address,
+        description: prevState. description,
+        email: formObj.Value,
+        name: prevState.name,
+        phoneNumber: prevState.phoneNumber,
         showEditEmail: '',
+        showEdit: '',
+        username: "BLANK"        
       };
     },()=>{
       console.log('sdad')
     });
 
     // Reload Page
-    window.location.reload();
+    // window.location.reload();
 
   }
 
@@ -353,6 +430,19 @@ export class ProfileComponent extends React.Component<any, any> {
       })}
     }
 
+    public editAddress = (e: any) => {
+      e.preventDefault()
+      console.log("editing email...")
+  
+      console.log(this.state.showEditAddress)
+      if(this.state.showEditAddress === ''){
+      this.setState({
+        showEditAddress: 'true'
+      })} else{
+        this.setState({
+          showEditAddress: ''
+        })}
+      }
 
 
   
@@ -384,7 +474,18 @@ export class ProfileComponent extends React.Component<any, any> {
                 <div className="w3-container">
                   <br></br>
                   <p><i className="fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-teal" />{this.state.username}</p>
-                  <p><i className="fa fa-home fa-fw w3-margin-right w3-large w3-text-teal" />{this.state.address}</p>
+                  <p><i  onClick={this.editAddress}  className="fa fa-home fa-fw w3-margin-right w3-large w3-text-teal" />{this.state.address}</p>
+                  {this.state.showEditAddress ?
+                    <form onSubmit={this.updateAddress}>
+                      Edit: <input id="address1" type="text" name="address" size={512} /><br />
+                      <input type="submit" defaultValue="Submit" />
+                    </form>
+
+
+
+                    : null
+
+                  }
                   <p><i  onClick={this.editEmail} className="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-teal" />{this.state.email}</p>
                   {this.state.showEditEmail ?
                     <form onSubmit={this.updateEmail}>
