@@ -6,9 +6,14 @@ import { CityTag } from "../model/CityTag";
 import { CognitoUser } from "amazon-cognito-identity-js";
 import { cognitoUserReducer } from "./cognito-user-reducer";
 import { messagesReducer } from "./messages.reducer";
+import { dashboardReducer } from "./userDashboard.reducer";
 
 export interface ICognitoUser { 
   user: CognitoUser | null
+}
+
+export interface IDashboard {
+  displayGroups: string[];
 }
 
 export interface IGroups {
@@ -47,6 +52,7 @@ export interface ISignIn {
 
 export interface IState {
   cognitoUser: ICognitoUser,
+  dashboard: IDashboard,
   groups: IGroups,
   messages: IMessages,
   register: IRegister,
@@ -55,6 +61,7 @@ export interface IState {
 
 export const state = combineReducers<IState>({
   cognitoUser: cognitoUserReducer,
+  dashboard: dashboardReducer,
   groups: groupsReducer,
   messages: messagesReducer,
   signIn: signInReducer

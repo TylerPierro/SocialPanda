@@ -20,8 +20,8 @@ interface IProps extends IGroups {
 }
 
 const cognitoData = {
-  ClientId: '2mrd11cqf2anle4nsid84uv5hj',
-  UserPoolId: 'us-east-2_vCSElhZSd'
+  ClientId: '368mt4qt7ghc8jp8fsvu308i98',
+  UserPoolId: 'us-east-2_eoUFN3DJn'
 };
 const userPool = new awsCognito.CognitoUserPool(cognitoData);
 const cognitoUser = userPool.getCurrentUser();
@@ -62,10 +62,11 @@ export class GroupsComponent extends React.Component<IProps, any> {
     this.props.updateError(password);
   }
 
-  public displayMessageGroup(msgBoard: CityTag, e: any) {
+  public displayMessageGroup = (msgBoard: CityTag, e: any) => {
     e.preventDefault();
     let test: boolean = true;
-    const group = `${msgBoard.Location.replace(' ','+')}-${msgBoard.Tag.replace(' ','+')}`;
+    console.log(msgBoard.Tag);
+    const group = `${msgBoard.Location.split(' ').join('+')}-${msgBoard.Tag.split(' ').join('+')}`;
     console.log(group);
     const username = cognitoUser&&cognitoUser.getUsername();
     console.log(username);
@@ -87,8 +88,12 @@ export class GroupsComponent extends React.Component<IProps, any> {
         console.log(data);
         // loadMessagesComponent(msgBoard.Location.replace(' ','+'), msgBoard.Tag.replace(' ','+'));
         this.setState(() => ({
-          location: msgBoard.Location.replace(' ','+'),
-          tag: msgBoard.Tag.replace(' ','+'),
+          location: msgBoard.Location
+          // .replace(' ','+')
+          ,
+          tag: msgBoard.Tag 
+          .replace(' ','+')
+          ,
           toMessages: 1
         }))
       })
@@ -96,8 +101,12 @@ export class GroupsComponent extends React.Component<IProps, any> {
         console.log(err);
         console.log('User is not in group');
         this.setState(() => ({
-          location: msgBoard.Location.replace(' ','+'),
-          tag: msgBoard.Tag.replace(' ','+'),
+          location: msgBoard.Location
+          // .replace(' ','+')
+          ,
+          tag: msgBoard.Tag
+          .replace(' ','+')
+          ,
           toMessages: 0
         }))
         test = false;
@@ -113,6 +122,7 @@ export class GroupsComponent extends React.Component<IProps, any> {
        // }
     }
   }
+
 
   public joinGroup = (locationTag: string, e: any) => {
     console.log(locationTag);
@@ -137,16 +147,16 @@ export class GroupsComponent extends React.Component<IProps, any> {
       })
   }
 
-  public createPost = (e: any) => {
-    e.preventDefault();
-    // if (cognitoUser !== null) {
-      const city = this.props.citySearch;
-      const box = this.props.newPost;
-      console.log(box);
-      this.props.submitNewPost(box, city);
-      // this.setState(this.props.updateDisplay2(this.props.citySearch, tagT));
-    // }
-  }
+  // public createPost = (e: any) => {
+  //   e.preventDefault();
+  //   // if (cognitoUser !== null) {
+  //     const city = this.props.citySearch;
+  //     const box = this.props.newPost;
+  //     console.log(box);
+  //     this.props.submitNewPost(box, city);
+  //     // this.setState(this.props.updateDisplay2(this.props.citySearch, tagT));
+  //   // }
+  // }
 
   public submit = (e: any) => {
     // console.log(this.props.citySearch);
@@ -166,7 +176,9 @@ export class GroupsComponent extends React.Component<IProps, any> {
 
   public render() {
     if (this.state.toMessages === 1) {
-      return <Redirect to={`/messages/${this.state.location}/${this.state.tag}`} />
+      // console.log("message state is 1")
+      // console.log(`/messages/${this.state.location}/${this.state.tag}`)
+      return <Redirect to={`/messages/${String(this.state.location).split(' ').join('+')}/${String(this.state.tag).split(' ').join('+')}`} />
     }
     return (
       <div id="groupBody">

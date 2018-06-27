@@ -3,6 +3,16 @@
 margin-left: 10%;
 }
 
+#noMessages{
+  color: rgb(223, 0, 0);
+  padding: 5pt;
+  background-color: rgba(255, 255, 255, 0.712);
+  width: 43%;
+  border-radius: 10px;
+  margin: auto;
+  margin-top: 25%;
+}
+
  .searchBar {
   padding: 10px;
   display: inline-block;

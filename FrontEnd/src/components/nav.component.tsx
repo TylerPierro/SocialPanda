@@ -1,6 +1,24 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import PandaLogo from '../assets/SocialPanda1.png';
+import * as awsCognito from 'amazon-cognito-identity-js';
+
+const data = {
+  ClientId: '368mt4qt7ghc8jp8fsvu308i98',
+  UserPoolId: 'us-east-2_eoUFN3DJn'
+
+};
+const userPool = new awsCognito.CognitoUserPool(data);
+const cognitoUser = userPool.getCurrentUser();
+console.log(cognitoUser);
+export function isLoggedIn() {
+  return cognitoUser !== null ? true : false;
+}
+
+function logout() {
+  localStorage.clear()
+  return <Redirect to={'/sign-in'} />
+}
 
 export const NavComponent: React.StatelessComponent<{}> = () => {
   return (
@@ -17,19 +35,27 @@ export const NavComponent: React.StatelessComponent<{}> = () => {
         <div className="collapse navbar-collapse" id="navbarsExample04">
           <ul className="navbar-nav ml-auto margin-nav">
             <li className="nav-item active">
+              <Link to="/dashboard" className="unser-anchor nav-link">{cognitoUser && cognitoUser.getUsername()}'s Dashboard</Link>
+            </li>
+            <li className="nav-item active">
               <Link to="/groups" className="unset-anchor nav-link">Explore Groups</Link>
             </li>
             <li className="nav-item active">
               <Link to="/newGroup" className="unset-anchor nav-link">Create Group</Link>
             </li>
             <li className="nav-item active">
-              <Link to="/sign-in" className="unset-anchor nav-link">Sign In</Link>
-            </li>
-            <li className="nav-item active">
               <Link to="/register" className="unset-anchor nav-link">Register</Link>
             </li>
             <li className="nav-item active">
               <Link to="/profile" className="unset-anchor nav-link">Profile</Link>
+            </li>
+            <li className="nav-item active">
+              {/* This won't work unless this component is rerendered. */}
+              { 
+                isLoggedIn()
+                ? <Link onClick={ () => logout() } to="/sign-in" className="unset-anchor nav-link">Log Out</Link>
+                : <Link to="/sign-in" className="unset-anchor nav-link">Sign In</Link>
+              }
             </li>
             {/* <li className="nav-item active">
               <Link to="/second" className="unset-anchor nav-link">Second</Link>

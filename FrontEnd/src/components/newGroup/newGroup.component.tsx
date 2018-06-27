@@ -21,12 +21,12 @@ export class NewGroupComponent extends React.Component<any, any> {
     event.preventDefault()
 
     const cognitoData = {
-      ClientId: '2mrd11cqf2anle4nsid84uv5hj',
-      UserPoolId: 'us-east-2_vCSElhZSd'
+      ClientId: '368mt4qt7ghc8jp8fsvu308i98',
+      UserPoolId: 'us-east-2_eoUFN3DJn'
     };
     const userPool = new awsCognito.CognitoUserPool(cognitoData);
     const cognitoUser = userPool.getCurrentUser();
-    console.log(cognitoUser);
+    console.log(cognitoUser&&cognitoUser.getUsername());
 
     
     if (cognitoUser != null) {

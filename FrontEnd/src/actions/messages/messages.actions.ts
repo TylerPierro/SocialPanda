@@ -1,27 +1,43 @@
 import { messagesTypes } from "./messages.types";
-import * as awsCognito from 'amazon-cognito-identity-js';
+// import * as awsCognito from 'amazon-cognito-identity-js';
 
-const cognitoData = {
-  ClientId: '12345du353sm7khjj1q',
-  UserPoolId: 'us-east-1_Iqc12345'
-};
-const userPool = new awsCognito.CognitoUserPool(cognitoData);
-const cognitoUser = userPool.getCurrentUser();
-let username = '';
-if (cognitoUser !== null) {
-  username = cognitoUser.getUsername();
-}
+// const cognitoData = {
+//   ClientId: '12345du353sm7khjj1q',
+//   UserPoolId: 'us-east-1_Iqc12345'
+// };
+// // const userPool = new awsCognito.CognitoUserPool(cognitoData);
+// // const cognitoUser = userPool.getCurrentUser();
+// // // let username = '';
+// // // if (cognitoUser !== null) {
+// // //   username = cognitoUser.getUsername();
+// // // }
 
-export const submitNewPost = (newPost: string) => (dispatch: any) => {
-  console.log(newPost);
+export const submitNewPost = (location: string, tag: string, user:string, newPost1: string) => (dispatch: any) => {
+  // console.log(newPost);
+  console.log(user)
+
+  const dt = new Date(new Date().toUTCString());
+  const currentTime = dt.toString();
+
+  const sendObj ={
+    "Location": location,
+    "Tag": tag,
+    "messages": {
+      "box": newPost1,
+      "time": "Posted on: " + currentTime, 
+      "user": "From: " + user
+    }
+  }
+  console.log(tag);
+  console.log(location);
   fetch("https://dwbbn4f58g.execute-api.us-east-2.amazonaws.com/dev/messages", {
     body: JSON.stringify({
-      "Location": "Tampa",
-      "Tag": "LARP",
+      "Location": location,
+      "Tag": tag,
       "messages": {
-        "box": newPost,
-        "time": Date.now().toLocaleString('en-US'),
-        "user": username
+        "time": "Posted on: " + currentTime, 
+        "box": newPost1,
+        "user": "From: " + user
       }
     }),
     headers: {
@@ -36,14 +52,17 @@ export const submitNewPost = (newPost: string) => (dispatch: any) => {
         return;
       }
       if (resp.status === 200) {
-        return resp.json();
+        return resp;
       }
       return;
     })
     .then(data => {
+      console.log("Dispatching...")
+      console.log(newPost1)
       dispatch({
         payload: {
-          newPost: data.Items.messages.values
+          newPost: sendObj
+          // .Items.messages.values
         },
         type: messagesTypes.SUBMIT_NEW_POST
       });
@@ -53,6 +72,12 @@ export const submitNewPost = (newPost: string) => (dispatch: any) => {
   })
 }
 
+export const clearMessageBar = () => {
+  return{
+    type: messagesTypes.CLEAR_MESSAGE_BAR 
+  }
+}
+
 export const updateMsgBoard = (msgBoard: object) => {
   // console.log(msgBoard)
   return {
@@ -60,6 +85,15 @@ export const updateMsgBoard = (msgBoard: object) => {
       msgBoard
     },
     type: messagesTypes.UPDATE_MSG_BOARD
+  }
+}
+
+export const updateGroupsDisplay = (displayGroups: object) => {
+  return {
+    payload: {
+      displayGroups
+    },
+    type: messagesTypes.UPDATE_DISPLAY
   }
 }
 
@@ -73,9 +107,10 @@ export const updateNewPost = (newPost: string) => {
 }
 
 // SEARCHES BY USER
-export const updateGroups = (user: string) => (dispatch: any) => {
-  console.log("here in updateGroupsDisplay action")
-  fetch('https://dwbbn4f58g.execute-api.us-east-2.amazonaws.com/dev/messages/' + user, {
+export const  updateGroups = (user: string) => (dispatch: any) => {
+  console.log("here in updateGroupsDisplay action");
+  console.log(user);
+  fetch(' https://dwbbn4f58g.execute-api.us-east-2.amazonaws.com/dev/groups/user/' + user, {
     headers: {
       'content-type': 'application/json'
     }
