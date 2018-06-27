@@ -16,12 +16,12 @@ interface IProps extends IMessages {
 }
 
 // ADDED BACKGROUND COLOR AND STYLE TO EACH GROUP SO THEY ARE SEPERATED NOW!
-const groupsStyle = {
-  background: "#c9ff9e",
-  borderRadius: 30,
-  margin: "20px",
-  padding: "20px"
-};
+// const groupsStyle = {
+//   background: "#c9ff9e",
+//   borderRadius: 30,
+//   margin: "20px",
+//   padding: "20px"
+// };
 
 // ADDED BACKGROUND COLOR AND STYLE TO EACH MESSAGE SO THEY ARE SEPERATED NOW!
 const messageStyle = {
@@ -240,7 +240,7 @@ export class MessagesComponent extends React.Component<IProps, any> {
     // }
     return (
       <div>
-        <div className="tagList">
+        {/* <div className="tagList">
           {this.props.displayGroups.map(disp =>
             <h3 
             style={groupsStyle} 
@@ -250,7 +250,7 @@ export class MessagesComponent extends React.Component<IProps, any> {
             // <h3>-{disp.}</h3>
             // <img src={disp.groupPic}/>
           )}
-        </div>
+        </div> */}
         <div className="messageBoard">
           {
             // JSON.parse(JSON.stringify(this.props.msgBoard)).map(disp =>

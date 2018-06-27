@@ -83,7 +83,7 @@ export const updateNewPost = (newPost: string) => {
     payload: {
       newPost
     },
-    type: messagesTypes.UPDATE_DISPLAY
+    type: messagesTypes.UPDATE_NEW_POST
   }
 }
 
