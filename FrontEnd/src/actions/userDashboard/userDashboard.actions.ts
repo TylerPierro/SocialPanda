@@ -30,7 +30,7 @@ export const  updateGroups = (user: string) => (dispatch: any) => {
       return;
     })
     .then(data => {
-      console.log(data);
+      // console.log(JSON.parse(data));
       console.log("searching: " + user);
       dispatch({
         payload: {
@@ -40,6 +40,6 @@ export const  updateGroups = (user: string) => (dispatch: any) => {
       })
     })
     .catch(err => {
-      console.log('Unable to log in at this time, please try again later');
+      console.log('Unable to fetch groups');
     })
 }

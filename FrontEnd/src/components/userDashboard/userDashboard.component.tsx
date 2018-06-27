@@ -62,7 +62,6 @@ export class DashboardComponent extends React.Component<IProps, any> {
     }
     console.log(this.state.user)
     this.props.updateGroups(this.state.user);
-    console.log(this.props.displayGroups);
   }
 
   public displayMessageGroup(disp, e: any) {
@@ -81,14 +80,14 @@ export class DashboardComponent extends React.Component<IProps, any> {
     }
     return (
       <div>
-        <h1>{this.props.displayGroups[0]}</h1> 
+        {/* <h1>{this.props.displayGroups}</h1>  */}
         <div className="tagList">
           {this.props.displayGroups.map(disp =>
             <h3 
             style={groupsStyle} 
             key={disp.split('-')[0]} 
             onClick={this.displayMessageGroup.bind(this, disp)}
-            >{disp.split('-')[0]+'-'+disp.split('-')[1]}</h3>
+            >{`${disp.split('-')[0].split('+').join(' ')}-${disp.split('-')[1].split('+').join(' ')}`}</h3>
           )}
         </div>
       </div>
