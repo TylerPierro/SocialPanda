@@ -11,8 +11,6 @@ export const updateGroupsDisplay = (displayGroups: object) => {
 
 // SEARCHES BY USER
 export const  updateGroups = (user: string) => (dispatch: any) => {
-  console.log("here in updateGroupsDisplay action");
-  console.log(user);
   fetch(' https://dwbbn4f58g.execute-api.us-east-2.amazonaws.com/dev/groups/user/' + user, {
     headers: {
       'content-type': 'application/json'

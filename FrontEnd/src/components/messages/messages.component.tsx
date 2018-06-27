@@ -6,9 +6,11 @@ import { ApiAxios } from '../../interceptors/api-axios';
 import { environment } from '../environment';
 import { Redirect } from 'react-router';
 import { updateGroups } from '../../actions/messages/messages.actions';
+import { RouteProps } from 'react-router';
 
-interface IProps extends IMessages {
+interface IProps extends IMessages, RouteProps {
   clearMessageBar: () => void
+  history: any;
   submitNewPost: (location: string, tag: string, user: string, newPost: string) => void
   updateGroupsDisplay: (displayGroups: object) => void
   updateError: (error: string) => void
@@ -42,15 +44,41 @@ export class MessagesComponent extends React.Component<IProps, any> {
           return;
         }
       });
+    } else {
+      this.props.history.push('/sign-in');
     }
+
+    const params = window.location.href.split('/');
+    const loc = params[5];
+    const t = params[6];
 
     this.state = {
       hasMessages: true,
-      location: '',
-      tag: '',
+      location: loc,
+      locationTag: `${loc.split('+').join(' ')}-${t.split('+').join(' ')}`,
+      tag: t,
       toMessages: -1,
       user: cognitoUser && cognitoUser.getUsername()
     }
+
+    ApiAxios.get('https://dwbbn4f58g.execute-api.us-east-2.amazonaws.com/dev/groups/user/' + this.state.user)
+      .then(resp => {
+        if (resp.status === 200) {
+          return resp;
+        }
+        return;
+      })
+      .then(data => {
+        console.log("searching: " + this.state.user);
+        console.log(this.state.locationTag);
+        console.log(data&&data.data.indexOf(this.state.locationTag));
+        if(data&&data.data.indexOf(this.state.locationTag) === -1) {
+          this.props.history.push('/dashboard');
+        }
+      })
+      .catch(err => {
+        console.log('Unable to fetch groups');
+      })
   }
 
   public componentWillMount() {
@@ -124,28 +152,11 @@ export class MessagesComponent extends React.Component<IProps, any> {
     this.props.updateError(password);
   }
 
-  public displayMessageGroup(disp, e: any) {
-    const cognitoData = {
-      ClientId: '368mt4qt7ghc8jp8fsvu308i98',
-      UserPoolId: 'us-east-2_eoUFN3DJn'
-    };
-    const userPool = new awsCognito.CognitoUserPool(cognitoData);
-    const cognitoUser = userPool.getCurrentUser();
-
-    if (cognitoUser != null) {
-      cognitoUser.getSession((err, session) => {
-        if (err) {
-          return;
-        }
-        console.log('session validity: ' + session.isValid());
-      });
-    }
-
-    console.log(disp.username);
-    console.log(disp.Tag);
-    const username = cognitoUser && cognitoUser.getUsername();
-    const group = `${disp.Location.split(' ').join('+')}-${disp.Tag.split(' ').join('+')}`;
-    ApiAxios.get(environment.gateway + `groups/${group}/user/${username}`)
+  public removeUserFromGroup(e: any) {
+    e.preventDefault();
+    console.log(this.state.user);
+    const group = `${this.state.location}-${this.state.tag}`;
+    ApiAxios.delete(environment.gateway + `groups/${group}/user/${this.state.user}`)
       .then(resp => {
         console.log(resp.status)
         if (resp.status === 200) {
@@ -155,23 +166,14 @@ export class MessagesComponent extends React.Component<IProps, any> {
           return resp.status;
         }
       })
-      .then(data => {
-        console.log(data);
-        this.setState(() => ({
-          location: disp.Location,
-          tag: disp.Tag,
-          toMessages: 1
-        }))
-      })
       .catch(err => {
         console.log(err);
         console.log('User is not in group');
         this.setState(() => ({
-          location: disp.Location,
-          tag: disp.Tag,
           toMessages: 0
         }))
       })
+    this.props.history.push('/dashboard')
   }
 
   public createPost = (e: any) => {
@@ -194,6 +196,7 @@ export class MessagesComponent extends React.Component<IProps, any> {
     }
     return (
       <div>
+        <button onClick={this.removeUserFromGroup.bind(this)} >Leave Group</button>
         <div className="messageBoard">
           {
             this.props.msgBoard.length > 0 &&
