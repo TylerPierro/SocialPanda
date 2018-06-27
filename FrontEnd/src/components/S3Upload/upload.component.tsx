@@ -14,7 +14,7 @@ export class MovieImageUploaderComponent extends React.Component<any, any> {
   }
 
   public componentDidMount() {
-    ApiAxios.get(environment.context + '/upload-file/uploadz.jpg')
+    ApiAxios.get(environment.context + '/get-file/uploadz.jpg')
       .then(resp => {
         this.setState({
           url: resp.data
@@ -28,7 +28,7 @@ export class MovieImageUploaderComponent extends React.Component<any, any> {
   public onDrop = (files: any) => {
     const file = files[0];
     console.log(file);
-    ApiAxios.get(environment.context + 'movie/upload-file/' + file.name)
+    ApiAxios.get(environment.context + '/upload-file/' + file.name)
       .then(resp => {
         Axios.put(resp.data, file)
           .then(uploadResp => {
