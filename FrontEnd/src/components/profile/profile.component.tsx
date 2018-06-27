@@ -3,7 +3,7 @@ import './style.css'
 import * as awsCognito from 'amazon-cognito-identity-js';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 // import { demoApiAxios } from '../../interceptors/demo-api-axios';
 // import { environment } from '../environment';
 
@@ -475,7 +475,7 @@ export class ProfileComponent extends React.Component<any, any> {
           <i className="fa fa-linkedin w3-hover-opacity" />
           <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
         </footer>
-        <button onClick={this.logout} ><Link to="/sign-in">LOGOUT</Link></button>
+        <button onClick={this.logout} ><Redirect to="/sign-in">LOGOUT</Redirect></button>
       </div>
 
 
