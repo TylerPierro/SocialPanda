@@ -157,8 +157,9 @@ export class GroupsComponent extends React.Component<IProps, any> {
     }
     return (
       <form onSubmit={this.submit} className="form-groups-body">
+      <div id="offset"></div>
       {/* <div id="groupBody"> */}
-          <br/>
+          {/* <br/><br/><br/><br/> */}
           <div className="allSearch">
             <input className="searchBar"
               type="string"

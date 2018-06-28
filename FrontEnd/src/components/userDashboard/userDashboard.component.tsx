@@ -78,6 +78,7 @@ export class DashboardComponent extends React.Component<IProps, any> {
     }
     return (
       <div>
+        <div id="offset"></div>
         {/* <h1>{this.props.displayGroups}</h1>  */}
         <div className="tagList">
           {this.props.displayGroups.map(disp =>

@@ -147,6 +147,7 @@ export class SignInComponent extends React.Component<any, any> {
   public render() {
     return (
       <div id="signin-div" >
+      <div id="offset"></div>
       <form className="signin-form" /* onSubmit={this.registerUser} */ action="action_page.php" style={{ border: '1px solid #ccc' }}>
       <br/><br/><br/>
           {!this.props.firstSignIn.isFirstSignIn &&
