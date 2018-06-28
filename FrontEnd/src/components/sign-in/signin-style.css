@@ -41,3 +41,7 @@ input[type=text], input[type=password] {
   margin-top: -2%;
   margin-left: -1%;
 }
+
+form{
+  border: 0 !important;
+}
