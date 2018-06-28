@@ -41,7 +41,8 @@ const groupsStyle = {
   borderRadius: 30,
   margin: "2%",
   padding: "20px",
-  width: "20%"
+  width: "20%",
+  // textAlign: "center"
 };
 
 export class GroupsComponent extends React.Component<IProps, any> {
