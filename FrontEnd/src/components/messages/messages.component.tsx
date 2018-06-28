@@ -22,8 +22,11 @@ interface IProps extends IMessages, RouteProps {
 const messageStyle = {
   background: "#86b2d8",
   borderRadius: 20,
-  margin: "20px",
-  padding: "20px"
+  // margin: "20px",
+  padding: "20px",
+  marginTop: "2%",
+  marginLeft: "-15%",
+  marginRight: "21%"
 };
 
 export class MessagesComponent extends React.Component<IProps, any> {
@@ -197,7 +200,8 @@ export class MessagesComponent extends React.Component<IProps, any> {
     return (
       <div id="messageBody">
         <div id="offset"></div>
-        <button onClick={this.removeUserFromGroup.bind(this)} >Leave Group</button>
+        <button id="leaveGroupBtn" onClick={this.removeUserFromGroup.bind(this)} >Leave Group</button>
+        <h1 id="groupTitle">{this.state.tag.split('+').join(' ')} in {this.state.location.split('+').join(' ')}</h1>
         <div className="messageBoard">
           {
             this.props.msgBoard.length > 0 &&

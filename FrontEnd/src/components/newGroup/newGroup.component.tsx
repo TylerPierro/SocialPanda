@@ -82,7 +82,7 @@ export class NewGroupComponent extends React.Component<any, any> {
         <div className="container">
           <hr />
           <label htmlFor="newGroupLocation" id="newGroupLocationTitle"><b>What city is your new group in?</b></label>
-          <input id="newGroupLocation" type="text" placeholder="Ex. Tammpa, Orlando, etc..." name="newGroupLocation" required />
+          <input id="newGroupLocation" type="text" placeholder="Ex. Tampa, Orlando, etc..." name="newGroupLocation" required />
 
           <label htmlFor="newGroupName"><b>What will your group be named?</b></label>
           <input id="newGroupName" type="text" placeholder="Ex. Night life, Food, etc..." name="newGroupName" required />
