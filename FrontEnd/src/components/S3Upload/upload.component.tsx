@@ -28,6 +28,7 @@ export class MovieImageUploaderComponent extends React.Component<any, any> {
   public onDrop = (files: any) => {
     const file = files[0];
     console.log(file);
+
     ApiAxios.get(environment.context + '/upload-file/' + file.name)
       .then(resp => {
         Axios.put(resp.data, file)

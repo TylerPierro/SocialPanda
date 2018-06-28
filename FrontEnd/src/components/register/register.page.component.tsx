@@ -49,23 +49,31 @@ export class RegisterPageComponent extends React.Component<any, any> {
       Name: 'phone_number',
       Value: '+15555555555'
     };
+    
+    const dataProfile = {
+      Name: 'custom:profile',
+      Value: ' '
+    };
 
     const dataAddress = {
       Name: 'address',
       Value: 'N/A'
     };
 
+    const attributeProfile = new awsCognito.CognitoUserAttribute(dataProfile);
     const attributeAddress = new awsCognito.CognitoUserAttribute(dataAddress);
     const attributeEmail = new awsCognito.CognitoUserAttribute(dataEmail);
     const attributeDescription = new awsCognito.CognitoUserAttribute(dataDescription);
     const attributePhoneNumber = new awsCognito.CognitoUserAttribute(dataPhoneNumber);
     const attributeName = new awsCognito.CognitoUserAttribute(dataName);
 
+    attributeList.push(attributeProfile);
     attributeList.push(attributeAddress);
     attributeList.push(attributePhoneNumber);
     attributeList.push(attributeEmail);
     attributeList.push(attributeName);
     attributeList.push(attributeDescription);
+    
 
     let CognitoUser;
 

@@ -21,6 +21,7 @@ export class ProfileComponent extends React.Component<any, any> {
       email: '',
       name: '',
       phoneNumber: '',
+      profile: '',
       showEdit: '',
       showEditAddress: '',
       showEditEmail: '',
@@ -74,15 +75,30 @@ export class ProfileComponent extends React.Component<any, any> {
 
           this.setState((prevState) => {
             return {
-              address: result[1].getValue(),
-              description: result[6].getValue(),
-              email: result[7].getValue(),
-              name: result[3].getValue(),
-              phoneNumber: result[5].getValue(),
+              address: result[2].getValue(),
+              description: result[7].getValue(),
+              email: result[8].getValue(),
+              name: result[4].getValue(),
+              phoneNumber: result[6].getValue(),
+              profile: result[1].getValue(),
               showEdit: '',
               username: "BLANK"
             };
           });
+
+
+
+          console.log(this.state.profile)
+          ApiAxios.get(environment.context + '/get-file/' + this.state.profile)
+            .then(resp => {
+              this.setState({
+                // url: resp.data
+                url: resp.data
+              })
+            })
+            .catch(errz => {
+              console.log(errz);
+            })
 
 
           // this.state={
@@ -115,6 +131,11 @@ export class ProfileComponent extends React.Component<any, any> {
     // else{
     //   console.log("WHere dey at doe?")
     // }
+
+
+
+
+
   }
 
   public logout() {
@@ -478,25 +499,77 @@ export class ProfileComponent extends React.Component<any, any> {
 
 
   public componentDidMount() {
-    ApiAxios.get(environment.context + '/get-file/uploadz.jpg')
-      .then(resp => {
-        this.setState({
-          url: resp.data
-        })
-      })
-      .catch(err => {
-        console.log(err);
-      })
+
+
+    // ApiAxios.get(environment.context + '/get-file/' + this.state.profile)
+    //   .then(resp => {
+    //     this.setState({
+    //       // url: resp.data
+    //       url: this.state.profile
+    //     })
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   })
   }
 
   public onDrop = (files: any) => {
     const file = files[0];
     console.log(file);
+
+
+
+
+
+    const data = {
+      ClientId: '368mt4qt7ghc8jp8fsvu308i98',
+      UserPoolId: 'us-east-2_eoUFN3DJn'
+
+    };
+    const userPool = new awsCognito.CognitoUserPool(data);
+    const cognitoUser = userPool.getCurrentUser();
+
+    // Grab from event
+    const formObj = {
+      Name: 'custom:profile',
+      Value: file.name
+
+    }
+
+    // Authenticate User
+    if (cognitoUser != null) {
+      cognitoUser.getSession((err, session) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        console.log('session validity: ' + session.isValid());
+      });
+    }
+
+    // Update Cognito User Description
+    if (cognitoUser != null) {
+      cognitoUser.updateAttributes([formObj], (err, result) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        console.log('success')
+        console.log('call result: ' + result);
+      });
+    }
+
+
+    this.setState({
+      profile: file.name
+    })
+
+
     ApiAxios.get(environment.context + '/upload-file/' + file.name)
       .then(resp => {
         Axios.put(resp.data, file)
           .then(uploadResp => {
-            alert(uploadResp.status);
+            // alert(uploadResp.status);
           })
           .catch(err => {
             console.log(err);
@@ -505,6 +578,27 @@ export class ProfileComponent extends React.Component<any, any> {
       .catch(err => {
         console.log(err);
       })
+
+
+
+
+    // Profile should be changed, do rerender
+    ApiAxios.get(environment.context + '/get-file/' + file.name)
+      .then(resp => {
+        this.setState({
+          url: resp.data
+        })
+      })
+      .catch(err => {
+        console.log(err);
+      })
+
+
+      // Close Edit box
+      this.setState({
+        showEditProfilePic: ''
+      })
+
   }
 
 
@@ -527,7 +621,11 @@ export class ProfileComponent extends React.Component<any, any> {
             <div className="w3-third">
               <div className="w3-white w3-text-grey w3-card-4">
                 <div onClick={this.editProfilePic} className="w3-display-container">
-                  <img src={this.state.url} style={{ width: '100%' }} alt="Avatar" />
+
+                  {(this.state.profile === ' ') ?
+                    <img src={require("./Pop.jpg")} style={{ width: '100%' }} alt="Avatar" /> :
+                    <img src={this.state.url} style={{ width: '100%' }} alt="Avatary" />
+                  }
                   <div className="centered-content">
 
 
