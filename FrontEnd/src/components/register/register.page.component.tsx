@@ -32,7 +32,7 @@ export class RegisterPageComponent extends React.Component<any, any> {
       Value: formObj.email
     };
 
-    
+
 
     const dataName = {
       Name: 'name',
@@ -49,7 +49,7 @@ export class RegisterPageComponent extends React.Component<any, any> {
       Name: 'phone_number',
       Value: '+15555555555'
     };
-    
+
     const dataProfile = {
       Name: 'custom:profile',
       Value: ' '
@@ -73,7 +73,7 @@ export class RegisterPageComponent extends React.Component<any, any> {
     attributeList.push(attributeEmail);
     attributeList.push(attributeName);
     attributeList.push(attributeDescription);
-    
+
 
     let CognitoUser;
 
@@ -91,6 +91,7 @@ export class RegisterPageComponent extends React.Component<any, any> {
   public render() {
     return (
       <form onSubmit={this.registerUser} action="action_page.php" style={{ border: '1px solid #ccc' }} className="form-register-body">
+        <div id="offset"></div>
         <div className="container">
           <br />
           <h1 id="registeText">Sign Up</h1>
@@ -112,7 +113,7 @@ export class RegisterPageComponent extends React.Component<any, any> {
           <input id="password2" className="registerFields" type="password" placeholder="Repeat Password" name="psw-repeat" required />
 
           <div className="clearfix">
-          
+
             <button type="submit" className="signupbtn">Sign Up</button>
           </div>
         </div>
