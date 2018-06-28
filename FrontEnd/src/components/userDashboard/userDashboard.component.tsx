@@ -3,7 +3,7 @@ import { IDashboard } from '../../reducers';
 import * as awsCognito from 'amazon-cognito-identity-js';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
-import SocialPanda2 from './SocialPanda2.png';
+// import SocialPanda2 from './SocialPanda2.png';
 import "./userDashboard.css";
 import './dashboard.css';
 
@@ -94,9 +94,9 @@ export class DashboardComponent extends React.Component<IProps, any> {
               </div>
           }
         </div>
-        <div className="dashboardImageContainer">
+        {/* <div className="dashboardImageContainer">
           <img id="logoPanda2" src={SocialPanda2} alt="logo"/>
-        </div>
+        </div> */}
       </div>
     );
   }
