@@ -32,7 +32,7 @@ export class RegisterPageComponent extends React.Component<any, any> {
       Value: formObj.email
     };
 
-    
+
 
     const dataName = {
       Name: 'name',
@@ -50,22 +50,30 @@ export class RegisterPageComponent extends React.Component<any, any> {
       Value: '+15555555555'
     };
 
+    const dataProfile = {
+      Name: 'custom:profile',
+      Value: ' '
+    };
+
     const dataAddress = {
       Name: 'address',
       Value: 'N/A'
     };
 
+    const attributeProfile = new awsCognito.CognitoUserAttribute(dataProfile);
     const attributeAddress = new awsCognito.CognitoUserAttribute(dataAddress);
     const attributeEmail = new awsCognito.CognitoUserAttribute(dataEmail);
     const attributeDescription = new awsCognito.CognitoUserAttribute(dataDescription);
     const attributePhoneNumber = new awsCognito.CognitoUserAttribute(dataPhoneNumber);
     const attributeName = new awsCognito.CognitoUserAttribute(dataName);
 
+    attributeList.push(attributeProfile);
     attributeList.push(attributeAddress);
     attributeList.push(attributePhoneNumber);
     attributeList.push(attributeEmail);
     attributeList.push(attributeName);
     attributeList.push(attributeDescription);
+
 
     let CognitoUser;
 
@@ -83,6 +91,7 @@ export class RegisterPageComponent extends React.Component<any, any> {
   public render() {
     return (
       <form onSubmit={this.registerUser} action="action_page.php" style={{ border: '1px solid #ccc' }} className="form-register-body">
+        <div id="offset"></div>
         <div className="container">
           <br />
           <h1 id="registeText">Sign Up</h1>
@@ -104,7 +113,7 @@ export class RegisterPageComponent extends React.Component<any, any> {
           <input id="password2" className="registerFields" type="password" placeholder="Repeat Password" name="psw-repeat" required />
 
           <div className="clearfix">
-          
+
             <button type="submit" className="signupbtn">Sign Up</button>
           </div>
         </div>

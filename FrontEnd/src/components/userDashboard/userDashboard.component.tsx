@@ -5,6 +5,7 @@ import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import SocialPanda2 from './SocialPanda2.png';
 import "./userDashboard.css";
+import './dashboard.css';
 
 interface IProps extends IDashboard {
   updateGroups: (user: string) => void,
@@ -72,6 +73,7 @@ export class DashboardComponent extends React.Component<IProps, any> {
       return <Redirect to={`/messages/${this.state.location.split(' ').join('+')}/${this.state.tag.split(' ').join('+')}`} />
     }
     return (
+      <div id="dashboard-body">
       <div>
         <div id="offset"></div>
         <h1 id="welcome">My Dashboard</h1> 

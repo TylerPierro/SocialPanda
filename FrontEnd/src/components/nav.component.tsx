@@ -18,6 +18,7 @@ export function isLoggedIn() {
 
 function logout() {
   localStorage.clear()
+  window.location.reload();
   return <Redirect to={'/sign-in'} />
 }
 
