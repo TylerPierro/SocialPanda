@@ -37,10 +37,10 @@ margin-left: 10%;
   border-radius: 30px;
 } 
 
-.tagList {
+/* .tagList {
   float: left;
   position: fixed;
-}
+} */
 
 .messageBoard {
   float: unset;
@@ -83,6 +83,7 @@ h4{
   background-image: url(http://www.desktopwallpaperhd.net/wallpapers/5/e/skyline-desktop-wallpaper-night-photo-chicago-59774.jpg);
   background-repeat: no-repeat;
   background-size: cover; 
+  min-height: 1000px;
 }
 
 .pointer {
@@ -92,4 +93,5 @@ h4{
 .not-allowed-cursor {
   cursor: not-allowed;
 }
+
 

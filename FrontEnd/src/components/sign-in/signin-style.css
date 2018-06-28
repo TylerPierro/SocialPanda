@@ -1,26 +1,5 @@
 * {box-sizing: border-box}
 
-/* form { 
-  position: fixed;
-} */
-/* .signin-form{
-  background: white;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url('https://codetheweb.blog/assets/img/posts/full-image-hero/image.jpg');
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    margin-top: -2%;
-    margin-left: -1%;
-    height: 100%;
-
-}   */
-
-/* html,
-body {
-  height: 100%;
-} */
-
 h5 {
 text-align: center;
 }
@@ -33,15 +12,11 @@ text-align: center;
 }
 
 #signInRegisterButton{
-    /* text-align: center; */
     background-color: rgba(255, 255, 255, 0.815);
-    /* color: white; */
     padding: 0px 0px;
     margin-left: 10pt;
     border: none;
     cursor: pointer;
-    /* width: 12%; */
-    /* opacity: 0.9; */
     border-radius: 10px;
     width: 20%;
     margin-bottom: 14%;
@@ -58,15 +33,15 @@ input[type=text], input[type=password] {
 
 #signin-div{
   background: white;
-  /* background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url('https://codetheweb.blog/assets/img/posts/full-image-hero/image.jpg'); */
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url('https://codetheweb.blog/assets/img/posts/full-image-hero/image.jpg');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed;
-    /* margin: 0 auto; 
-    width:250px; */
-  /* text-align: center; */
   margin-top: -2%;
   margin-left: -1%;
-  height: 100%;
+}
+
+form{
+  border: 0 !important;
 }

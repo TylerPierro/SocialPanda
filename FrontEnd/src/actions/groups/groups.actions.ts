@@ -18,24 +18,34 @@ export const updateDisplay1 = (displayGroups: string) => (dispatch: any) => {
   })
     .then(resp => {
       console.log(resp.status)
-      if (resp.status === 401) {
-        console.log('Nothing in your area.')
-        return;
-      }
+      // if (resp.status === 401) {
+      //   console.log('Nothing in your area.')
+      //   return;
+      // }
       if (resp.status === 200) {
         return resp.json();
       }
       return;
     })
     .then(data => {
-      // console.log(data.Items);
-      // console.log("searching: " + displayGroups);
-      dispatch({
-        payload: {
-          displayGroups: data.Items
-        },
-        type: groupsTypes.UPDATE_DISPLAY
-      })
+      // console.log(data.Items.length);
+      if (data.Items.length === 0){
+        console.log("There are no groups in your area!")
+        dispatch({
+          payload: {
+            displayGroups: ''
+          },
+          type: groupsTypes.UPDATE_DISPLAY
+        })
+      }
+      else{
+        dispatch({
+          payload: {
+            displayGroups: data.Items
+          },
+          type: groupsTypes.UPDATE_DISPLAY
+        })
+      }
     })
     .catch(err => {
       console.log('Unable to log in at this time, please try again later');

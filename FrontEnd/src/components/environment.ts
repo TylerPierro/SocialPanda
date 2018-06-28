@@ -10,6 +10,7 @@ const prod = {
   gateway: 'https://dwbbn4f58g.execute-api.us-east-2.amazonaws.com/dev/'
 }
 
+
 export const environment = process.env.NODE_ENV === 'production'
   ? prod
   : dev
