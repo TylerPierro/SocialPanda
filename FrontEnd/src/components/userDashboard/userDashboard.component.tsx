@@ -2,6 +2,7 @@ import * as React from 'react';
 import { IDashboard } from '../../reducers';
 import * as awsCognito from 'amazon-cognito-identity-js';
 import { Redirect } from 'react-router';
+import './dashboard.css';
 
 interface IProps extends IDashboard {
   updateGroups: (user: string) => void,
@@ -77,7 +78,7 @@ export class DashboardComponent extends React.Component<IProps, any> {
       return <Redirect to={`/messages/${this.state.location.split(' ').join('+')}/${this.state.tag.split(' ').join('+')}`} />
     }
     return (
-      <div>
+      <div id="dashboard-body">
         {/* <h1>{this.props.displayGroups}</h1>  */}
         <div className="tagList">
           {this.props.displayGroups.map(disp =>
