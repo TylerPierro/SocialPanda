@@ -1,3 +1,8 @@
+#profileBackground{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url('http://paperlief.com/images/new-york-city-skyline-wallpaper-3.jpg');
+
+}
+
 .user-row {
     margin-bottom: 14px;
 }
