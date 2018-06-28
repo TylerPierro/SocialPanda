@@ -71,6 +71,7 @@ export class SignInComponent extends React.Component<any, any> {
 
     // navigate pages now that we have successfully logged in
     this.props.history.push('/groups');
+    window.location.reload();
   }
 
   public onFailure = (err: any) => {

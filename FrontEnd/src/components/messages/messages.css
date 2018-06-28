@@ -75,12 +75,12 @@ h3{
 h4{
   color: black;
   /* cursor: pointer; */
-
 }
 
-#groupBody{
+#messageBody{
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url('  http://whatson.ae/dubai/wp-content/uploads/2016/08/dubai-skyline-marina-jlt-clouds.jpg');
   /* background-image: url(https://dtkp6g0samjql.cloudfront.net/uploads/photo/file/7834336/il_fullxfull.252642439.jpg);  */
-  background-image: url(http://www.desktopwallpaperhd.net/wallpapers/5/e/skyline-desktop-wallpaper-night-photo-chicago-59774.jpg);
+  /* background-image: url(http://www.desktopwallpaperhd.net/wallpapers/5/e/skyline-desktop-wallpaper-night-photo-chicago-59774.jpg); */
   background-repeat: no-repeat;
   background-size: cover; 
   min-height: 1000px;
