@@ -1,0 +1,22 @@
+.dashboardImageContainer {
+    margin-right: auto !important;
+    margin-left: auto;
+    background-size: 100%;
+    background-image: "../../assets/SocialPanda2.png";
+    size: 45%;
+    border-radius: 50%;
+    background-repeat: no-repeat;
+}
+
+#welcome {
+    text-align: center;
+}
+
+.dashTagList {
+    float: left;
+}
+
+#logoPanda2 {
+    margin-right: auto;
+    margin-left: auto;
+}

@@ -76,6 +76,7 @@ export class RegisterPageComponent extends React.Component<any, any> {
       }
       CognitoUser = result.user;
       console.log('user name is ' + CognitoUser.getUsername());
+      this.props.history.push('/sign-in');
     });
   }
 

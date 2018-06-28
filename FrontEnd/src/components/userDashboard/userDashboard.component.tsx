@@ -2,6 +2,9 @@ import * as React from 'react';
 import { IDashboard } from '../../reducers';
 import * as awsCognito from 'amazon-cognito-identity-js';
 import { Redirect } from 'react-router';
+import { Link } from 'react-router-dom';
+import SocialPanda2 from './SocialPanda2.png';
+import "./userDashboard.css";
 
 interface IProps extends IDashboard {
   updateGroups: (user: string) => void,
@@ -15,14 +18,6 @@ const groupsStyle = {
   margin: "20px",
   padding: "20px"
 };
-
-// ADDED BACKGROUND COLOR AND STYLE TO EACH MESSAGE SO THEY ARE SEPERATED NOW!
-// const messageStyle = {
-//   background: "#86b2d8",
-//   borderRadius: 20,
-//   margin: "20px",
-//   padding: "20px"
-// };
 
 export class DashboardComponent extends React.Component<IProps, any> {
 
@@ -79,15 +74,27 @@ export class DashboardComponent extends React.Component<IProps, any> {
     return (
       <div>
         <div id="offset"></div>
-        {/* <h1>{this.props.displayGroups}</h1>  */}
-        <div className="tagList">
-          {this.props.displayGroups.map(disp =>
-            <h3 
-            style={groupsStyle} 
-            key={disp.split('-')[0]} 
-            onClick={this.displayMessageGroup.bind(this, disp)}
-            >{`${disp.split('-')[0].split('+').join(' ')}-${disp.split('-')[1].split('+').join(' ')}`}</h3>
-          )}
+        <h1 id="welcome">My Dashboard</h1> 
+        <div className="dashTagList">
+          {
+            this.props.displayGroups.length >= 0
+            ? this.props.displayGroups.map(disp =>
+              <h3 
+              style={groupsStyle} 
+              key={disp.split('-')[0]} 
+              onClick={this.displayMessageGroup.bind(this, disp)}
+              >{`${disp.split('-')[0].split('+').join(' ')}-${disp.split('-')[1].split('+').join(' ')}`}</h3>
+            )
+            : <div>
+                <h1>Be a Social Panda!
+                  <br/>
+                  <Link to="/groups" className="unset-anchor">Join some groups</Link>
+                </h1>
+              </div>
+          }
+        </div>
+        <div className="dashboardImageContainer">
+          <img id="logoPanda2" src={SocialPanda2} alt="logo"/>
         </div>
       </div>
     );
