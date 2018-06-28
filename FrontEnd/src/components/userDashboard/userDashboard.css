@@ -10,6 +10,12 @@
 
 #welcome {
     text-align: center;
+    color: white;
+    padding: 5px;
+    background-color: rgba(0, 0, 0, 0.623);
+    width: 25%;
+    border-radius: 10px;
+    margin: auto;
 }
 
 .dashTagList {
@@ -17,6 +23,9 @@
 }
 
 #logoPanda2 {
+    margin-top: 10%;
     margin-right: auto;
-    margin-left: auto;
+    margin-left: 30%;
+    border-radius: 90%;
+
 }

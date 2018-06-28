@@ -6,6 +6,7 @@ import * as awsCognito from 'amazon-cognito-identity-js';
 import { Redirect } from 'react-router';
 import { ApiAxios } from '../../interceptors/api-axios';
 import { environment } from '../environment';
+import SocialPandaThumb from './SocialPanda-thumb.png';
 
 
 interface IProps extends IGroups {
@@ -186,7 +187,7 @@ export class GroupsComponent extends React.Component<IProps, any> {
                 onClick={this.displayMessageGroup.bind(this, disp)}
               >{disp.Tag} <br /> <h5>{disp.Description}</h5></h3>)
             :
-            this.props.citySearch !== "" ? <h3 id="noGroups">There are no groups in this area.<br /> Don't be shy! Start a group !</h3> : null
+            this.props.citySearch !== "" ? <h3 id="noGroups">There are no groups in this area.<br /> Don't be shy! Start a group ! <img id="logoPandaThumb" src={SocialPandaThumb} alt="logo"/></h3> : null
           }
         </div>
         <div className="join">
