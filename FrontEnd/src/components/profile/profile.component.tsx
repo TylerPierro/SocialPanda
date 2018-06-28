@@ -86,6 +86,8 @@ export class ProfileComponent extends React.Component<any, any> {
             };
           });
 
+        
+
 
 
           console.log(this.state.profile)
@@ -131,11 +133,6 @@ export class ProfileComponent extends React.Component<any, any> {
     // else{
     //   console.log("WHere dey at doe?")
     // }
-
-
-
-
-
   }
 
   public logout() {
@@ -622,7 +619,7 @@ export class ProfileComponent extends React.Component<any, any> {
               <div className="w3-white w3-text-grey w3-card-4">
                 <div onClick={this.editProfilePic} className="w3-display-container">
 
-                  {(this.state.profile === ' ') ?
+                  {((this.state.profile === ' ') || (this.state.profile === '')) ?
                     <img src={require("./Pop.jpg")} style={{ width: '100%' }} alt="Avatar" /> :
                     <img src={this.state.url} style={{ width: '100%' }} alt="Avatary" />
                   }
