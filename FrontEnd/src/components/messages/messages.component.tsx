@@ -196,6 +196,7 @@ export class MessagesComponent extends React.Component<IProps, any> {
     }
     return (
       <div>
+        <div id="offset"></div>
         <button onClick={this.removeUserFromGroup.bind(this)} >Leave Group</button>
         <div className="messageBoard">
           {

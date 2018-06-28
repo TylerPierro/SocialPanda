@@ -79,6 +79,8 @@ export class DashboardComponent extends React.Component<IProps, any> {
     }
     return (
       <div id="dashboard-body">
+      <div>
+        <div id="offset"></div>
         {/* <h1>{this.props.displayGroups}</h1>  */}
         <div className="tagList">
           {this.props.displayGroups.map(disp =>
@@ -88,6 +90,7 @@ export class DashboardComponent extends React.Component<IProps, any> {
             onClick={this.displayMessageGroup.bind(this, disp)}
             >{`${disp.split('-')[0].split('+').join(' ')}-${disp.split('-')[1].split('+').join(' ')}`}</h3>
           )}
+          </div>
         </div>
       </div>
     );
