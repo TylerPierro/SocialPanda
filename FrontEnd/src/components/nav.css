@@ -1,0 +1,27 @@
+#offset {
+    height: 100px !important;
+    border: none;
+}
+
+#navContainer {
+    position: fixed;
+    display: inline-block;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.navbar-toggler {
+    float: right;
+    display: block;
+}
+
+.nav-item .active {
+    float: right;
+    display: block;
+}
+
+#navbar {
+    overflow: hidden;
+    background-color: #333;
+}

@@ -73,6 +73,7 @@ export class NewGroupComponent extends React.Component<any, any> {
   public render() {
     return (
       <form id="social-form" onSubmit={this.createNewGroup} action="action_page.php" style={{ border: '1px solid #ccc' }}>
+        <div id="offset"></div>
         <div id="social-div" className="stripe stripe--inverted stripe--photoHero inverted start-photo-banner">
           <div id="title">
             <h1 style={h1style}>Be a Social Panda and start your own group!</h1>

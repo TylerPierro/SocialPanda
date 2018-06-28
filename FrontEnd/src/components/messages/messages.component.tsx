@@ -195,7 +195,8 @@ export class MessagesComponent extends React.Component<IProps, any> {
       return <Redirect to={`/messages/${this.state.location}/${this.state.tag}`} />
     }
     return (
-      <div>
+      <div id="messageBody">
+        <div id="offset"></div>
         <button onClick={this.removeUserFromGroup.bind(this)} >Leave Group</button>
         <div className="messageBoard">
           {

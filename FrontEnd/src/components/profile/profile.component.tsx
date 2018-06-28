@@ -1,6 +1,10 @@
 import * as React from 'react';
 import './style.css'
-import * as awsCognito from 'amazon-cognito-identity-js';
+import * as awsCognito from 'amazon-cognito-identity-js';;
+import Dropzone from 'react-dropzone';
+import { ApiAxios } from '../../interceptors/api-axios';
+import { environment } from '../environment';
+import Axios from 'axios';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 // import { demoApiAxios } from '../../interceptors/demo-api-axios';
@@ -17,10 +21,12 @@ export class ProfileComponent extends React.Component<any, any> {
       email: '',
       name: '',
       phoneNumber: '',
+      profile: '',
       showEdit: '',
       showEditAddress: '',
       showEditEmail: '',
       showEditPhone: '',
+      showEditProfilePic: '',
       username: "TOM"
 
     }
@@ -69,15 +75,32 @@ export class ProfileComponent extends React.Component<any, any> {
 
           this.setState((prevState) => {
             return {
-              address: result[1].getValue(),
-              description: result[6].getValue(),
-              email: result[7].getValue(),
-              name: result[3].getValue(),
-              phoneNumber: result[5].getValue(),
+              address: result[2].getValue(),
+              description: result[7].getValue(),
+              email: result[8].getValue(),
+              name: result[4].getValue(),
+              phoneNumber: result[6].getValue(),
+              profile: result[1].getValue(),
               showEdit: '',
               username: "BLANK"
             };
           });
+
+        
+
+
+
+          console.log(this.state.profile)
+          ApiAxios.get(environment.context + '/get-file/' + this.state.profile)
+            .then(resp => {
+              this.setState({
+                // url: resp.data
+                url: resp.data
+              })
+            })
+            .catch(errz => {
+              console.log(errz);
+            })
 
 
           // this.state={
@@ -111,13 +134,13 @@ export class ProfileComponent extends React.Component<any, any> {
     //   console.log("WHere dey at doe?")
     // }
   }
-  
+
   public logout() {
     console.log("asd")
     localStorage.clear()
     // this.props.history.push('/sign-in')
   }
-  public updateDescription = (event: any) =>{
+  public updateDescription = (event: any) => {
     event.preventDefault()
 
     const data = {
@@ -167,7 +190,7 @@ export class ProfileComponent extends React.Component<any, any> {
         description: formObj.Value,
         showEdit: '',
       };
-    },()=>{
+    }, () => {
       console.log('sdad')
     });
 
@@ -176,7 +199,7 @@ export class ProfileComponent extends React.Component<any, any> {
 
   }
 
-  public updatePhone = (event: any) =>{
+  public updatePhone = (event: any) => {
     event.preventDefault()
 
     const data = {
@@ -229,16 +252,16 @@ export class ProfileComponent extends React.Component<any, any> {
       return {
 
         address: prevState.address,
-        description: prevState. description,
+        description: prevState.description,
         email: prevState.email,
         name: prevState.name,
         phoneNumber: formObj.Value,
         showEdit: '',
         showEditEmail: '',
         showEditPhone: '',
-        username: "BLANK"        
+        username: "BLANK"
       };
-    },()=>{
+    }, () => {
       console.log('sdad')
     });
 
@@ -248,7 +271,7 @@ export class ProfileComponent extends React.Component<any, any> {
   }
 
 
-  public updateAddress = (event: any) =>{
+  public updateAddress = (event: any) => {
     event.preventDefault()
 
     const data = {
@@ -297,7 +320,7 @@ export class ProfileComponent extends React.Component<any, any> {
       return {
 
         address: formObj.Value,
-        description: prevState. description,
+        description: prevState.description,
         email: prevState.email,
         name: prevState.name,
         phoneNumber: formObj.Value,
@@ -305,9 +328,9 @@ export class ProfileComponent extends React.Component<any, any> {
         showEditAddress: '',
         showEditEmail: '',
         showEditPhone: '',
-        username: "BLANK"        
+        username: "BLANK"
       };
-    },()=>{
+    }, () => {
       console.log('sdad')
     });
 
@@ -316,8 +339,8 @@ export class ProfileComponent extends React.Component<any, any> {
 
 
 
-  public updateEmail = (event: any) =>{
-   
+  public updateEmail = (event: any) => {
+
 
     event.preventDefault()
 
@@ -366,20 +389,20 @@ export class ProfileComponent extends React.Component<any, any> {
 
 
     // Get rid of textbox and update state
-    
+
     this.setState((prevState) => {
       return {
 
         address: prevState.address,
-        description: prevState. description,
+        description: prevState.description,
         email: formObj.Value,
         name: prevState.name,
         phoneNumber: prevState.phoneNumber,
         showEditEmail: '',
         showEdit: '',
-        username: "BLANK"        
+        username: "BLANK"
       };
-    },()=>{
+    }, () => {
       console.log('sdad')
     });
 
@@ -394,26 +417,30 @@ export class ProfileComponent extends React.Component<any, any> {
     e.preventDefault()
     console.log("editing description...")
 
-    if(this.state.showEdit === ''){
+    if (this.state.showEdit === '') {
       this.setState({
         showEdit: 'true'
-      })} else{
-        this.setState({
-          showEdit: ''
-        })}
+      })
+    } else {
+      this.setState({
+        showEdit: ''
+      })
+    }
   }
 
   public editPhone = (e: any) => {
     e.preventDefault()
     console.log("editing description...")
 
-    if(this.state.showEditPhone === ''){
+    if (this.state.showEditPhone === '') {
       this.setState({
         showEditPhone: 'true'
-      })} else{
-        this.setState({
-          showEditPhone: ''
-        })}
+      })
+    } else {
+      this.setState({
+        showEditPhone: ''
+      })
+    }
   }
 
   public editEmail = (e: any) => {
@@ -421,35 +448,162 @@ export class ProfileComponent extends React.Component<any, any> {
     console.log("editing email...")
 
     console.log(this.state.showEditEmail)
-    if(this.state.showEditEmail === ''){
-    this.setState({
-      showEditEmail: 'true'
-    })} else{
+    if (this.state.showEditEmail === '') {
+      this.setState({
+        showEditEmail: 'true'
+      })
+    } else {
       this.setState({
         showEditEmail: ''
-      })}
+      })
     }
+  }
 
-    public editAddress = (e: any) => {
-      e.preventDefault()
-      console.log("editing email...")
-  
-      console.log(this.state.showEditAddress)
-      if(this.state.showEditAddress === ''){
+  public editAddress = (e: any) => {
+    e.preventDefault()
+    console.log("editing email...")
+
+    console.log(this.state.showEditAddress)
+    if (this.state.showEditAddress === '') {
       this.setState({
         showEditAddress: 'true'
-      })} else{
+      })
+    } else {
+      this.setState({
+        showEditAddress: ''
+      })
+    }
+  }
+
+  // S3
+
+  public editProfilePic = (e: any) => {
+    e.preventDefault()
+    console.log("editing email...")
+
+    console.log(this.state.showEditProfilePic)
+    if (this.state.showEditProfilePic === '') {
+      this.setState({
+        showEditProfilePic: 'true'
+      })
+    } else {
+      this.setState({
+        showEditProfilePic: ''
+      })
+    }
+  }
+
+
+
+  public componentDidMount() {
+
+
+    // ApiAxios.get(environment.context + '/get-file/' + this.state.profile)
+    //   .then(resp => {
+    //     this.setState({
+    //       // url: resp.data
+    //       url: this.state.profile
+    //     })
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   })
+  }
+
+  public onDrop = (files: any) => {
+    const file = files[0];
+    console.log(file);
+
+
+
+
+
+    const data = {
+      ClientId: '368mt4qt7ghc8jp8fsvu308i98',
+      UserPoolId: 'us-east-2_eoUFN3DJn'
+
+    };
+    const userPool = new awsCognito.CognitoUserPool(data);
+    const cognitoUser = userPool.getCurrentUser();
+
+    // Grab from event
+    const formObj = {
+      Name: 'custom:profile',
+      Value: file.name
+
+    }
+
+    // Authenticate User
+    if (cognitoUser != null) {
+      cognitoUser.getSession((err, session) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        console.log('session validity: ' + session.isValid());
+      });
+    }
+
+    // Update Cognito User Description
+    if (cognitoUser != null) {
+      cognitoUser.updateAttributes([formObj], (err, result) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        console.log('success')
+        console.log('call result: ' + result);
+      });
+    }
+
+
+    this.setState({
+      profile: file.name
+    })
+
+
+    ApiAxios.get(environment.context + '/upload-file/' + file.name)
+      .then(resp => {
+        Axios.put(resp.data, file)
+          .then(uploadResp => {
+            // alert(uploadResp.status);
+          })
+          .catch(err => {
+            console.log(err);
+          })
+      })
+      .catch(err => {
+        console.log(err);
+      })
+
+
+
+
+    // Profile should be changed, do rerender
+    ApiAxios.get(environment.context + '/get-file/' + file.name)
+      .then(resp => {
         this.setState({
-          showEditAddress: ''
-        })}
-      }
+          url: resp.data
+        })
+      })
+      .catch(err => {
+        console.log(err);
+      })
 
 
-  
+      // Close Edit box
+      this.setState({
+        showEditProfilePic: ''
+      })
+
+  }
+
+
 
   public render() {
     return (
       <div>
+        <div id="offset"></div>
         <title>W3.CSS Template</title>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -464,8 +618,34 @@ export class ProfileComponent extends React.Component<any, any> {
             {/* Left Column */}
             <div className="w3-third">
               <div className="w3-white w3-text-grey w3-card-4">
-                <div className="w3-display-container">
-                  <img src={require('./Pop.jpg')} style={{ width: '100%' }} alt="Avatar" />
+                <div onClick={this.editProfilePic} className="w3-display-container">
+
+                  {((this.state.profile === ' ') || (this.state.profile === '')) ?
+                    <img src={require("./Pop.jpg")} style={{ width: '100%' }} alt="Avatar" /> :
+                    <img src={this.state.url} style={{ width: '100%' }} alt="Avatary" />
+                  }
+                  <div className="centered-content">
+
+
+                    {this.state.showEditProfilePic ?
+                      <Dropzone onDrop={this.onDrop}>
+                        <p>Upload a new Profile picture!</p>
+                      </Dropzone>
+
+
+
+                      : null
+
+                    }
+
+
+                    {/* <Dropzone onDrop={this.onDrop}>
+                      <p>Drop your files here or click to select one.</p>
+                    </Dropzone> */}
+
+
+                  </div>
+
                   <div className="w3-display-bottomleft w3-container w3-text-black">
                     <h2 style={{ color: 'white' }}>{this.state.name}</h2>
 
@@ -474,7 +654,7 @@ export class ProfileComponent extends React.Component<any, any> {
                 <div className="w3-container">
                   <br></br>
                   <p><i className="fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-teal" />{this.state.username}</p>
-                  <p><i  onClick={this.editAddress}  className="fa fa-home fa-fw w3-margin-right w3-large w3-text-teal" />{this.state.address}</p>
+                  <p><i onClick={this.editAddress} className="fa fa-home fa-fw w3-margin-right w3-large w3-text-teal" />{this.state.address}</p>
                   {this.state.showEditAddress ?
                     <form onSubmit={this.updateAddress}>
                       Edit: <input id="address1" type="text" name="address" size={512} /><br />
@@ -486,7 +666,7 @@ export class ProfileComponent extends React.Component<any, any> {
                     : null
 
                   }
-                  <p><i  onClick={this.editEmail} className="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-teal" />{this.state.email}</p>
+                  <p><i onClick={this.editEmail} className="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-teal" />{this.state.email}</p>
                   {this.state.showEditEmail ?
                     <form onSubmit={this.updateEmail}>
                       Edit: <input id="email1" type="text" name="email" size={512} /><br />

@@ -157,8 +157,9 @@ export class GroupsComponent extends React.Component<IProps, any> {
     }
     return (
       <form onSubmit={this.submit} className="form-groups-body">
+      <div id="offset"></div>
       {/* <div id="groupBody"> */}
-          <br/>
+          {/* <br/><br/><br/><br/> */}
           <div className="allSearch">
             <input className="searchBar"
               type="string"
@@ -190,8 +191,9 @@ export class GroupsComponent extends React.Component<IProps, any> {
         </div>
         <div className="join">
           {this.state.toMessages ? null : <button type="button" id="joinButton" onClick={this.joinGroup.bind(this, `${this.state.location}-${this.state.tag}`)}>Join Group</button>}
-        </div><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-        <h1 id="test">Find a group now!</h1>
+        </div>
+        {/* <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/> */}
+        {/* <h1 id="test">Find a group now!</h1> */}
       
       </form>
     );

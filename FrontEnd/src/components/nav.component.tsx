@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import PandaLogo from '../assets/SocialPanda1.png';
 import * as awsCognito from 'amazon-cognito-identity-js';
+import "./nav.css";
 
 const data = {
   ClientId: '368mt4qt7ghc8jp8fsvu308i98',
@@ -17,12 +18,13 @@ export function isLoggedIn() {
 
 function logout() {
   localStorage.clear()
+  window.location.reload();
   return <Redirect to={'/sign-in'} />
 }
 
 export const NavComponent: React.StatelessComponent<{}> = () => {
   return (
-    <div>
+    <div id="navContainer">
       <nav className="navbar navbar-toggleable-md navbar-expand-lg navbar-light bg-light display-front nav-pad">
         <div className="navbar-header c-pointer shift-left">
           <Link to="/home" className="unset-anchor">
@@ -35,19 +37,25 @@ export const NavComponent: React.StatelessComponent<{}> = () => {
         <div className="collapse navbar-collapse" id="navbarsExample04">
           <ul className="navbar-nav ml-auto margin-nav">
             <li className="nav-item active">
-              <Link to="/dashboard" className="unser-anchor nav-link">{cognitoUser && cognitoUser.getUsername()}'s Dashboard</Link>
+              {
+                isLoggedIn()
+                ? <Link to="/dashboard" className="unser-anchor nav-link">{cognitoUser && cognitoUser.getUsername()}'s Dashboard</Link> : null
+              }
             </li>
             <li className="nav-item active">
               <Link to="/groups" className="unset-anchor nav-link">Explore Groups</Link>
             </li>
             <li className="nav-item active">
-              <Link to="/newGroup" className="unset-anchor nav-link">Create Group</Link>
+              {
+                isLoggedIn()
+                ? <Link to="/newGroup" className="unset-anchor nav-link">Create Group</Link> : null
+              }
             </li>
             <li className="nav-item active">
-              <Link to="/register" className="unset-anchor nav-link">Register</Link>
-            </li>
-            <li className="nav-item active">
-              <Link to="/profile" className="unset-anchor nav-link">Profile</Link>
+              {
+                isLoggedIn() 
+                ? <Link to="/profile" className="unset-anchor nav-link">Profile</Link> : null
+              }
             </li>
             <li className="nav-item active">
               {/* This won't work unless this component is rerendered. */}
@@ -57,25 +65,6 @@ export const NavComponent: React.StatelessComponent<{}> = () => {
                 : <Link to="/sign-in" className="unset-anchor nav-link">Sign In</Link>
               }
             </li>
-            {/* <li className="nav-item active">
-              <Link to="/second" className="unset-anchor nav-link">Second</Link>
-            </li>
-            <li className="nav-item active">
-              <Link to="/clicker" className="unset-anchor nav-link">Clicker</Link>
-            </li> */}
-            {/* <li className="nav-item active dropdown">
-              <a className="nav-link dropdown-toggle pointer" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Examples</a>
-              <div className="dropdown-menu" aria-labelledby="dropdown04">
-                { <div className="dropdown-item"><Link to="/movies" className="unset-anchor nav-link active">Movies</Link></div>
-                <div className="dropdown-item"><Link to="/clicker" className="unset-anchor nav-link active">Clicker Game</Link></div>
-                <div className="dropdown-item"><Link to="/tic-tac-toe" className="unset-anchor nav-link active">Tic Tac Toe Game</Link></div>
-                <div className="dropdown-item"><Link to="/chuck-norris" className="unset-anchor nav-link active">Chuck Norris Jokes</Link></div>
-                <div className="dropdown-item"><Link to="/pokemon" className="unset-anchor nav-link active">Pokemon</Link></div> }
-              </div>
-            </li>
-            <li className="nav-item active">
-              <Link to="/nested" className="unset-anchor nav-link">Nested</Link>
-            </li> */}
           </ul>
         </div>
       </nav>

@@ -27,10 +27,10 @@ margin-left: 10%;
   border-radius: 30px;
 } 
 
-.tagList {
+/* .tagList {
   float: left;
   position: fixed;
-}
+} */
 
 .messageBoard {
   float: unset;
@@ -78,7 +78,7 @@ h4{
 }
 
 body{
-  background-image: url(http://www.desktopwallpaperhd.net/wallpapers/5/e/skyline-desktop-wallpaper-night-photo-chicago-59774.jpg);
+  /* background-image: url(http://www.desktopwallpaperhd.net/wallpapers/5/e/skyline-desktop-wallpaper-night-photo-chicago-59774.jpg); */
   background-repeat: no-repeat;
   background-size: cover; 
 }
@@ -118,17 +118,19 @@ right: 0;
 } */
 
 .form-groups-body{
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url('https://www.kimptonhotels.com/blog/wp-content/uploads/2015/06/seattle-skyline.jpg');
+  /* background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url('http://melbournestreet.net/wp-content/uploads/2017/10/melbournestreet-18-970x647.jpg'); */
   /* background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url('https://codetheweb.blog/assets/img/posts/full-image-hero/image.jpg'); */
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url('http://www.technocrazed.com/wp-content/uploads/2015/12/New-York-Wallpaper-Background-12.jpg');    
+  /* background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url('http://www.technocrazed.com/wp-content/uploads/2015/12/New-York-Wallpaper-Background-12.jpg');     */
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed;
-    /* margin: 0 auto; 
-    width:250px; */
-  /* text-align: center; */
   margin-top: -1.5%;
-  padding-bottom: 2%
+  padding-bottom: 2%;
+  min-height: 1000px;
+  padding: 0;
+/* margin: 0; */
 }
 
 

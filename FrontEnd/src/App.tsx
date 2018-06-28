@@ -14,6 +14,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { NewGroupComponent } from './components/newGroup/newGroup.component';
 import { MessagesContainer } from './components/messages/messages.container';
 import { DashboardContainer } from './components/userDashboard/userDashboard.container';
+import { MovieImageUploaderComponent } from './components/S3Upload/upload.component';
 // import { MessagesComponent } from './components/messages/messages.component';
 
 class App extends React.Component<any, any> {
@@ -31,6 +32,7 @@ class App extends React.Component<any, any> {
               <Route path="/sign-in" component={SignInContainer} />
               <Route path="/profile" component={ProfileComponent} />
               <Route path="/register" component={RegisterPageComponent} />
+              <Route path="/fun" component={MovieImageUploaderComponent} />
               {/* <Route path="/messages" component={MessagesComponent} /> */}
               {/* THIS LINE INITIALIZES TO WHATEVER PATH WE WANT ON LOAD */}
               {/* <Redirect from="/" to="/groups"/> */}
