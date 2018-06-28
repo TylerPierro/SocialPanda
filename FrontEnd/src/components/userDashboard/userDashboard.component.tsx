@@ -74,7 +74,6 @@ export class DashboardComponent extends React.Component<IProps, any> {
     }
     return (
       <div id="dashboard-body">
-      <div>
         <div id="offset"></div>
         <h1 id="welcome">My Dashboard</h1> 
         <div className="dashTagList">
