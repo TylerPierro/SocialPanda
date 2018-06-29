@@ -86,7 +86,7 @@ export class ProfileComponent extends React.Component<any, any> {
             };
           });
 
-        
+
 
 
 
@@ -562,47 +562,97 @@ export class ProfileComponent extends React.Component<any, any> {
     })
 
 
-    ApiAxios.get(environment.gateway + '/upload-file/' + file.name)
-      .then(resp => {
-        Axios.put(resp.data, file)
-          .then(uploadResp => {
-            // alert(uploadResp.status);
-          })
-          .catch(err => {
-            console.log(err);
-          })
-      })
-      .catch(err => {
-        console.log(err);
-      })
+    const uploader = (filez: any) => {
+      alert("uploading")
+      ApiAxios.get(environment.gateway + '/upload-file/' + filez.name)
+        .then(resp => {
+          Axios.put(resp.data, filez)
+            .then(uploadResp => {
+              // alert(uploadResp.status);
+
+
+              
+              // Profile should be changed, do rerender
+              ApiAxios.get(environment.gateway + '/get-file/' + filez.name)
+                .then(resp1 => {
+                  this.setState({
+                    url: resp1.data
+                  })
+                })
+                .catch(err => {
+                  console.log(err);
+                })
+              // Close Edit box
+              this.setState({
+                showEditProfilePic: ''
+              })
 
 
 
-
-    // Profile should be changed, do rerender
-    ApiAxios.get(environment.gateway + '/get-file/' + file.name)
-      .then(resp => {
-        this.setState({
-          url: resp.data
+            })
+            .catch(err => {
+              console.log(err);
+            })
         })
-      })
-      .catch(err => {
-        console.log(err);
-      })
+        .catch(err => {
+          console.log(err);
+        })
+    }
+
+    // const downloader = (filez: any) => {
+    //   alert("downloading")
+    //   // Profile should be changed, do rerender
+    //   ApiAxios.get(environment.gateway + '/get-file/' + filez.name)
+    //     .then(resp => {
+    //       this.setState({
+    //         url: resp.data
+    //       })
+    //     })
+    //     .catch(err => {
+    //       console.log(err);
+    //     })
 
 
-      // Close Edit box
-      this.setState({
-        showEditProfilePic: ''
-      })
+    //   // Close Edit box
+    //   this.setState({
+    //     showEditProfilePic: ''
+    //   })
+    // }
+
+    uploader(file)
+    alert("break")
+    // downloader(file)
 
   }
+
+  // public downloader = () => {
+  //   alert("downloading")
+  //   // Profile should be changed, do rerender
+  //   ApiAxios.get(environment.gateway + '/get-file/' + this.state.profile)
+  //     .then(resp => {
+  //       this.setState({
+  //         url: resp.data
+  //       })
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     })
+
+
+  //   // Close Edit box
+  //   this.setState({
+  //     showEditProfilePic: ''
+  //   })
+
+  //   console.log(this.state.url)
+  // }
+  
 
 
 
   public render() {
     return (
-      <div>
+      <div id="profileBackground">
         <div id="offset"></div>
         <title>W3.CSS Template</title>
         <meta charSet="UTF-8" />
@@ -628,10 +678,11 @@ export class ProfileComponent extends React.Component<any, any> {
 
 
                     {this.state.showEditProfilePic ?
-                      <Dropzone onDrop={this.onDrop}>
+                      <Dropzone onDrop={(event)=>{this.onDrop(event)}}>
+
                         <p>Upload a new Profile picture!</p>
                       </Dropzone>
-
+          
 
 
                       : null
@@ -754,10 +805,10 @@ export class ProfileComponent extends React.Component<any, any> {
           <i className="fa fa-linkedin w3-hover-opacity" />
           <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
         </footer>
-        {/* <button><Link onClick={this.logout} to="/sign-in">LOGOUT</Link></button> */}
+        {/* <button onClick={()=>{this.downloader()}}>WHATS THE URL</button> */}
       </div>
 
-
+                  
     );
   }
 }

@@ -37,6 +37,7 @@ class App extends React.Component<any, any> {
               {/* THIS LINE INITIALIZES TO WHATEVER PATH WE WANT ON LOAD */}
               {/* <Redirect from="/" to="/groups"/> */}
               <Route path="/messages/:location/:tag" component={MessagesContainer} />
+              <Route path="/" component={GroupsContainer} />
             </Switch>
           </div>
         </HashRouter>
