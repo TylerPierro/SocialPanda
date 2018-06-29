@@ -704,7 +704,7 @@ export class ProfileComponent extends React.Component<any, any> {
                 </div>
                 <div className="w3-container">
                   <br></br>
-                  <p><i className="fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-teal" />{this.state.username}</p>
+                  {/* <p><i className="fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-teal" />{this.state.username}</p> */}
                   <p><i onClick={this.editAddress} className="fa fa-home fa-fw w3-margin-right w3-large w3-text-teal" />{this.state.address}</p>
                   {this.state.showEditAddress ?
                     <form onSubmit={this.updateAddress}>
@@ -742,10 +742,10 @@ export class ProfileComponent extends React.Component<any, any> {
 
                   }
                   <hr />
-                  <p className="w3-large"><b><i className="fa fa-asterisk fa-fw w3-margin-right w3-text-teal" />Skills</b></p>
+                  {/* <p className="w3-large"><b><i className="fa fa-asterisk fa-fw w3-margin-right w3-text-teal" />Skills</b></p> */}
 
                   <br />
-                  <p className="w3-large w3-text-theme"><b><i className="fa fa-globe fa-fw w3-margin-right w3-text-teal" />Languages</b></p>
+                  {/* <p className="w3-large w3-text-theme"><b><i className="fa fa-globe fa-fw w3-margin-right w3-text-teal" />Languages</b></p> */}
 
                   <br />
                 </div>
