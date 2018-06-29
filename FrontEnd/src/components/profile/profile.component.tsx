@@ -91,7 +91,7 @@ export class ProfileComponent extends React.Component<any, any> {
 
 
           console.log(this.state.profile)
-          ApiAxios.get(environment.gateway + '/get-file/' + this.state.profile)
+          ApiAxios.get(environment.gateway + 'get-file/' + this.state.profile)
             .then(resp => {
               this.setState({
                 // url: resp.data
@@ -563,8 +563,8 @@ export class ProfileComponent extends React.Component<any, any> {
 
 
     const uploader = (filez: any) => {
-      alert("uploading")
-      ApiAxios.get(environment.gateway + '/upload-file/' + filez.name)
+      // alert("uploading")
+      ApiAxios.get(environment.gateway + 'upload-file/' + filez.name)
         .then(resp => {
           Axios.put(resp.data, filez)
             .then(uploadResp => {
@@ -573,7 +573,7 @@ export class ProfileComponent extends React.Component<any, any> {
 
               
               // Profile should be changed, do rerender
-              ApiAxios.get(environment.gateway + '/get-file/' + filez.name)
+              ApiAxios.get(environment.gateway + 'get-file/' + filez.name)
                 .then(resp1 => {
                   this.setState({
                     url: resp1.data
@@ -620,7 +620,7 @@ export class ProfileComponent extends React.Component<any, any> {
     // }
 
     uploader(file)
-    alert("break")
+    // alert("break")
     // downloader(file)
 
   }
