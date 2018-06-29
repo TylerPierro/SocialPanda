@@ -323,7 +323,7 @@ export class ProfileComponent extends React.Component<any, any> {
         description: prevState.description,
         email: prevState.email,
         name: prevState.name,
-        phoneNumber: formObj.Value,
+        phoneNumber: prevState.phoneNumber,
         showEdit: '',
         showEditAddress: '',
         showEditEmail: '',
@@ -732,7 +732,7 @@ export class ProfileComponent extends React.Component<any, any> {
                   <p><i onClick={this.editPhone} className="fa fa-phone fa-fw w3-margin-right w3-large w3-text-teal" />{this.state.phoneNumber}</p>
                   {this.state.showEditPhone ?
                     <form onSubmit={this.updatePhone}>
-                      Edit: <input id="phone1" type="text" name="email" size={512} /><br />
+                      Edit: <input id="phone1" type="text" name="phone" size={512} /><br />
                       <input type="submit" defaultValue="Submit" />
                     </form>
 
@@ -780,7 +780,7 @@ export class ProfileComponent extends React.Component<any, any> {
 
 
               </div>
-              <div className="w3-container w3-card w3-white">
+              {/* <div className="w3-container w3-card w3-white">
                 <h2 className="w3-text-grey w3-padding-16"><i className="fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text-teal" />Education</h2>
                 <div className="w3-container">
                   <h5 className="w3-opacity"><b>W3Schools.com</b></h5>
@@ -788,14 +788,14 @@ export class ProfileComponent extends React.Component<any, any> {
                   <p>Web Development! All I need to know in one place</p>
                   <hr />
                 </div>
-              </div>
+              </div> */}
               {/* End Right Column */}
             </div>
             {/* End Grid */}
           </div>
           {/* End Page Container */}
         </div>
-        <footer className="w3-container w3-teal w3-center w3-margin-top">
+        {/* <footer className="w3-container w3-teal w3-center w3-margin-top">
           <p>Find me on social media.</p>
           <i className="fa fa-facebook-official w3-hover-opacity" />
           <i className="fa fa-instagram w3-hover-opacity" />
@@ -804,7 +804,7 @@ export class ProfileComponent extends React.Component<any, any> {
           <i className="fa fa-twitter w3-hover-opacity" />
           <i className="fa fa-linkedin w3-hover-opacity" />
           <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
-        </footer>
+        </footer> */}
         {/* <button onClick={()=>{this.downloader()}}>WHATS THE URL</button> */}
       </div>
 
