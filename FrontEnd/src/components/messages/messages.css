@@ -89,6 +89,12 @@ h4{
   /* cursor: pointer; */
 }
 
+#joinButton{
+  position: fixed;
+  bottom: 30%;
+  width:10%;
+}
+
 #groupTitle{
   text-align: center;
   color: white;
