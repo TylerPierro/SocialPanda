@@ -78,7 +78,7 @@ export class GroupsComponent extends React.Component<IProps, any> {
       .then(resp => {
         console.log(resp.status)
         if (resp.status === 200) {
-          return resp.json();
+          return resp.json(); 
         } else {
           console.log('Either no matching group or user');
           return resp.status;
