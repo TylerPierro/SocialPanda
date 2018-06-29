@@ -208,8 +208,9 @@ export class SignInComponent extends React.Component<any, any> {
 
           <br />
           <h5 id="signinText">Don't have an account?
+          <br/>
           <button id="signInRegisterButton">
-              <Link to="/register" className="unset-anchor nav-link">Sign up here!</Link>
+              <Link to="/register" className="unset-anchor nav-link">Register here!</Link>
             </button>
           </h5>
       </form>
