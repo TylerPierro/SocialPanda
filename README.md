@@ -1,2 +1,2 @@
 # SocialPanda
-Knitting a tighter community
+You social panda you
